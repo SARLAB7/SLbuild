@@ -13,7 +13,7 @@ if (loginForm) {
         signInWithEmailAndPassword(auth, email, pass)
             .then((userCredential) => {
                 // Login exitoso, redirigir al Dashboard
-                window.location.href = 'index.html';
+                window.location.href = "panel.html";
             })
             .catch((error) => {
                 alert("Error de acceso: " + error.message);
