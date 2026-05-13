@@ -9,24 +9,36 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div class="app-container">
-        <aside class="sidebar">
-            <div class="logo-container">
-                <h2>SACLAB</h2>
-            </div>
-            <nav class="nav-menu">
-                <a href="#" class="nav-item active"><i data-feather="home"></i> Inicio</a>
-                <a href="#" class="nav-item"><i data-feather="file-text"></i> Facturas</a>
-                <a href="#" class="nav-item"><i data-feather="pie-chart"></i> Estadísticas</a>
-                <a href="#" class="nav-item"><i data-feather="users"></i> Clientes</a>
-                <a href="#" class="nav-item" id="btn-logout">
-                <i data-feather="log-out"></i> Cerrar Sesión
-              </a>
-            </nav>
+<body class="dashboard-layout">
+    <header class="top-navbar">
+        <div class="logo">SACLAB</div>
+        <nav class="main-topics">
+            <button class="topic-btn active" data-topic="finanzas">
+                <i data-feather="dollar-sign"></i> Finanzas
+            </button>
+            <button class="topic-btn" data-topic="gestion">
+                <i data-feather="briefcase"></i> Gestión
+            </button>
+            <button class="topic-btn" data-topic="legal">
+                <i data-feather="file-text"></i> Contabilidad
+            </button>
+        </nav>
+        <div class="user-actions">
+            <button id="theme-toggle"><i data-feather="moon"></i></button>
+            <div class="avatar"></div>
+        </div>
+    </header>
+
+    <div class="app-body">
+        <aside class="sidebar" id="sidebar-menu">
+            <nav class="side-nav" id="side-nav-content">
+                </nav>
+            <button id="btn-logout" class="nav-item logout-link">
+                <i data-feather="log-out"></i> Salir
+            </button>
         </aside>
 
-        <main class="main-content">
+        <main class="main-content" id="main-view">
     <header class="top-header">
         <div class="search-bar">
             <i data-feather="search"></i>
