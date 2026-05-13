@@ -115,7 +115,32 @@
             </div>
         </div>
     </section>
+<section id="sec-gastos" class="content-section" style="display: none;">
+    <header class="section-header">
+        <h2>Gestión de Egresos</h2>
+        <button class="btn-primary" id="btn-nuevo-gasto">
+            <i data-feather="minus-circle"></i> Registrar Gasto
+        </button>
+    </header>
+    <div class="summary-cards">
+        <div class="card dark-card">
+            <h3>Total Gastos (Mes)</h3>
+            <h2 id="total-gastos" class="amount" style="color: var(--status-danger);">$0.00</h2>
+        </div>
+    </div>
+    <div class="transactions-list" id="gastos-container"></div>
+</section>
 
+<section id="sec-productos" class="content-section" style="display: none;">
+    <header class="section-header">
+        <h2>Portafolio de Servicios</h2>
+        <button class="btn-primary" id="btn-nuevo-producto">
+            <i data-feather="package"></i> Añadir Servicio
+        </button>
+    </header>
+    <div id="productos-grid" class="grid-container">
+        </div>
+</section>
 </main>
     </div>
 
