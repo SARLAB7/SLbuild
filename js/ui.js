@@ -54,3 +54,53 @@ export function setupFormularioInteligente() {
         });
     }
 }
+// js/ui.js
+const menus = {
+    finanzas: [
+        { id: 'inicio', label: 'Dashboard', icon: 'home' },
+        { id: 'facturas', label: 'Ventas/Facturas', icon: 'file-plus' },
+        { id: 'gastos', label: 'Gastos/Egresos', icon: 'minus-circle' }
+    ],
+    gestion: [
+        { id: 'clientes', label: 'Clientes', icon: 'users' },
+        { id: 'productos', label: 'Servicios/Precios', icon: 'package' }
+    ],
+    legal: [
+        { id: 'asientos', label: 'Libro Diario', icon: 'book' },
+        { id: 'impuestos', label: 'Reporte DIAN', icon: 'pie-chart' }
+    ]
+};
+
+export function activarNavegacionPro() {
+    const topicBtns = document.querySelectorAll('.topic-btn');
+    const sideNav = document.getElementById('side-nav-content');
+
+    topicBtns.forEach(btn => {
+        btn.onclick = () => {
+            // 1. Switch visual arriba
+            topicBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // 2. Cambiar menú lateral
+            const topic = btn.dataset.topic;
+            renderSideMenu(topic);
+        };
+    });
+
+    // Carga inicial
+    renderSideMenu('finanzas');
+}
+
+function renderSideMenu(topic) {
+    const sideNav = document.getElementById('side-nav-content');
+    const items = menus[topic];
+    
+    sideNav.innerHTML = items.map(item => `
+        <a href="#" class="nav-item" data-section="sec-${item.id}">
+            <i data-feather="${item.icon}"></i> ${item.label}
+        </a>
+    `).join('');
+
+    feather.replace(); // Recargar iconos
+    conectarSecciones(); // Función para que al dar clic cambie el centro
+}
