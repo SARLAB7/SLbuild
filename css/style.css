@@ -25,20 +25,59 @@ body {
     overflow: hidden;
 }
 
-/* Layout Principal */
-.app-container {
-    display: flex;
-    width: 100%;
-}
 
-/* Sidebar Mejorada */
-.sidebar {
-    width: 260px;
-    background-color: var(--bg-card);
-    border-right: 1px solid var(--border-color);
-    padding: 24px;
+
+/* Layout General */
+.dashboard-layout {
     display: flex;
     flex-direction: column;
+    height: 100vh;
+}
+
+.top-navbar {
+    height: 64px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    justify-content: space-between;
+}
+
+.main-topics {
+    display: flex;
+    gap: 20px;
+}
+
+.topic-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px solid transparent;
+}
+
+.topic-btn.active {
+    color: var(--accent-neon);
+    border-bottom: 2px solid var(--accent-neon);
+}
+
+.app-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 240px;
+    background: var(--bg-card);
+    border-right: 1px solid var(--border-color);
+    padding: 20px 12px;
 }
 
 .nav-menu {
