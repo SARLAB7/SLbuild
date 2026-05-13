@@ -69,3 +69,48 @@ export async function guardarCliente(datosCliente) {
         return false;
     }
 }
+/**
+ * Lógica Profesional de Facturación con Impuestos
+ */
+export async function crearFacturaProfesional(datos) {
+    const subtotal = Number(datos.monto);
+    
+    // Cálculos automáticos (Localización Colombia)
+    const iva = subtotal * 0.19;
+    const retefuente = subtotal * 0.04; // Ejemplo: 4% para servicios
+    const total = subtotal + iva - retefuente;
+
+    try {
+        // 1. Guardar la Factura
+        const facturaRef = await addDoc(collection(db, "facturas"), {
+            ...datos,
+            subtotal,
+            iva,
+            retefuente,
+            total,
+            fecha: serverTimestamp()
+        });
+
+        // 2. GENERAR ASIENTO CONTABLE (Partida Doble)
+        await registrarAsiento({
+            facturaId: facturaRef.id,
+            tipo: 'ingreso',
+            descripcion: `Venta: ${datos.cliente}`,
+            debe: total,      // Entra a Bancos/Caja
+            haber: subtotal,  // Es un Ingreso
+            impuestos: iva    // Pasivo por pagar a la DIAN
+        });
+
+        return true;
+    } catch (e) {
+        console.error("Error contable:", e);
+        return false;
+    }
+}
+
+async function registrarAsiento(movimiento) {
+    return await addDoc(collection(db, "asientos"), {
+        ...movimiento,
+        fecha: serverTimestamp()
+    });
+}
