@@ -169,3 +169,85 @@ body {
     from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
+/* Contenedor principal de la navegación */
+.pill-navigation {
+    display: flex;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 4px;
+    border-radius: 40px; /* Estilo píldora */
+    border: 1px solid var(--border-color);
+}
+
+/* Cada grupo (Tema + Subsecciones) */
+.nav-group {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background-color: transparent;
+    border-radius: 30px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 50px; /* Solo se ve el icono inicialmente */
+}
+
+/* Cuando el grupo está activo, se expande */
+.nav-group.active {
+    max-width: 600px; /* Suficiente para mostrar las subsecciones */
+    background-color: var(--text-primary); /* Fondo blanco como en la imagen */
+}
+
+/* Botón principal del tema (El que tiene el icono) */
+.topic-header {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 10px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+}
+
+.nav-group.active .topic-header {
+    color: #000; /* Texto oscuro sobre fondo blanco */
+}
+
+/* Contenedor de las subpíldoras */
+.sub-pill-container {
+    display: flex;
+    padding-right: 8px;
+    gap: 4px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.nav-group.active .sub-pill-container {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Botones de subsección */
+.sub-item {
+    background: transparent;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.sub-item:hover { color: #000; }
+
+/* Subsección activa (Verde Neón como la imagen) */
+.sub-item.active {
+    background-color: var(--accent-neon);
+    color: #000 !important;
+    font-weight: 700;
+}
