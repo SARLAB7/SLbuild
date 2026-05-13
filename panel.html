@@ -84,6 +84,24 @@
         <div class="grid-clientes">
             <p>Lista de clientes registrados aparecerá aquí.</p>
         </div>
+        <div class="card dark-card">
+    <h3>Registrar Nuevo Cliente</h3>
+    <form id="form-nuevo-cliente" style="margin-top: 20px;">
+        <div class="input-group">
+            <label>Nombre o Razón Social</label>
+            <input type="text" id="cliente-nombre" placeholder="Ej: SARLAB Medellín" required>
+        </div>
+        <div class="input-group">
+            <label>NIT / Identificación</label>
+            <input type="text" id="cliente-id" placeholder="900.000.000-1" required>
+        </div>
+        <div class="input-group">
+            <label>Correo Electrónico</label>
+            <input type="email" id="cliente-email" placeholder="contacto@empresa.com" required>
+        </div>
+        <button type="submit" class="btn-primary">Guardar Cliente</button>
+    </form>
+</div>
     </section>
 
     <section id="sec-estadisticas" class="content-section" style="display: none;">
