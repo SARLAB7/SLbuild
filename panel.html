@@ -43,9 +43,56 @@
             <h1>Dashboard</h1>
             </section>
 
-        <section id="sec-facturas" class="content-section" style="display:none;">
-            <h1>Ventas y Facturación</h1>
-            </section>
+       <section id="sec-facturas" class="content-section active-section">
+    <header class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h1>Facturas e Ingresos</h1>
+        <button class="btn-primary" id="btn-nueva-factura">
+            <i data-feather="plus"></i> Crear Factura
+        </button>
+    </header>
+
+    <div class="kpi-cards-grid">
+        <div class="card dark-card">
+            <span class="label">Total Por Cobrar</span>
+            <h2 class="amount">$172,560.00</h2>
+            <div class="card-status badge warning" style="margin-top: 10px;">Vence este mes</div>
+        </div>
+        <div class="card highlight-card">
+            <span class="label">Pagos Recibidos (Mes)</span>
+            <h2 class="amount">$67,545.23</h2>
+        </div>
+        <div class="card dark-card">
+            <span class="label">Promedio de Pago</span>
+            <h2 class="amount">12 días</h2>
+        </div>
+        <div class="card dark-card">
+            <span class="label">Saldo Vencido</span>
+            <h2 class="amount" style="color: var(--status-danger);">$31,211.00</h2>
+        </div>
+    </div>
+
+    <div class="transactions-section" style="background-color: var(--bg-card); border-radius: var(--radius-lg); padding: 24px; border: 1px solid var(--border-color);">
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <h3 style="font-weight: 500;">Facturas Pendientes</h3>
+            
+            <div class="status-tabs">
+                <button class="tab-btn active" data-filter="todas">Todas</button>
+                <button class="tab-btn" data-filter="pendientes">Pendientes</button>
+                <button class="tab-btn status-pilled" data-filter="borrador">Sin Pagar</button>
+            </div>
+        </div>
+
+        <div class="transactions-list" id="transactions-container">
+            <div class="empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; color: var(--text-secondary); text-align: center;">
+                <i data-feather="inbox" style="width: 48px; height: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                <p>No hay facturas registradas aún.</p>
+                <button class="btn-primary" id="btn-nueva-factura-vacia" style="margin-top: 20px;">
+                    <i data-feather="plus"></i> Crear Primera Factura
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
 
         <section id="sec-clientes" class="content-section" style="display:none;">
             <h1>Directorio de Clientes</h1>
