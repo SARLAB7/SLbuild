@@ -27,60 +27,78 @@
         </aside>
 
         <main class="main-content">
-            <header class="top-header">
-                <div class="search-bar">
-                    <i data-feather="search"></i>
-                    <input type="text" placeholder="Buscar transacciones...">
-                </div>
-                <div class="user-profile">
-                    <button id="theme-toggle" class="icon-btn" title="Cambiar tema">
-                        <i data-feather="moon"></i>
-                    </button>
-                    <button class="icon-btn">
-                        <i data-feather="bell"></i>
-                    </button>
-                    <div class="avatar"></div>
-                </div>
-            </header>
-            
-            <section class="summary-cards">
-                <div class="card highlight-card">
-                    <h3>Balance Total</h3>
-                    <h1 class="amount">$786,898.67</h1>
-                    <div class="card-footer">
-                        <span>**** **** **** 5466</span>
-                        <i data-feather="credit-card"></i>
-                    </div>
-                </div>
-                
-                <div class="card dark-card">
-                    <h3>Ingresos Totales</h3>
-                    <h2 class="amount">$67,545.23</h2>
-                    <div class="chart-placeholder">Gráfico aquí</div>
-                </div>
-            </section>
-            
-            <section class="transactions-section">
-                <div class="section-header">
-                    <h3>Facturas Recientes</h3>
-                    <div class="filter-tabs">
-                        <button class="tab active">Todas</button>
-                        <button class="tab">Borradores</button>
-                        <button class="tab highlight">No Pagadas</button>
-                    </div>
-                </div>
+    <header class="top-header">
+        <div class="search-bar">
+            <i data-feather="search"></i>
+            <input type="text" placeholder="Buscar en el sistema...">
+        </div>
+        <div class="user-profile">
+            <button id="theme-toggle" class="icon-btn"><i data-feather="moon"></i></button>
+            <div class="avatar"></div>
+        </div>
+    </header>
 
-                <div class="transactions-list" id="transactions-container">
-                    <div class="empty-state">
-                        <i data-feather="inbox"></i>
-                        <p>No hay transacciones registradas aún.</p>
-                        <button class="btn-primary" id="btn-nueva-factura">
-                            <i data-feather="plus"></i> Crear Factura
-                        </button>
-                    </div>
-                </div>
-            </section>
-        </main>
+    <section id="sec-inicio" class="content-section">
+        <header class="section-header">
+            <h2>Resumen General</h2>
+            <p>Estado financiero actual de SACLAB</p>
+        </header>
+        
+        <div class="summary-cards">
+            <div class="card highlight-card">
+                <h3>Balance Disponible</h3>
+                <h1 class="amount">$786,898.67</h1>
+            </div>
+            <div class="card">
+                <h3>Ventas del Mes</h3>
+                <h2 class="amount" style="color: var(--success);">$12,450.00</h2>
+            </div>
+        </div>
+    </section>
+
+    <section id="sec-facturas" class="content-section" style="display: none;">
+        <header class="section-header">
+            <h2>Gestión de Facturación</h2>
+            <div class="action-buttons">
+                <button class="btn-primary" id="btn-nueva-factura">
+                    <i data-feather="plus"></i> Nueva Factura
+                </button>
+            </div>
+        </header>
+
+        <div class="filter-tabs">
+            <button class="tab active" data-filter="todas">Todas</button>
+            <button class="tab" data-filter="pendientes">Por Cobrar</button>
+            <button class="tab" data-filter="pagadas">Pagadas</button>
+        </div>
+
+        <div class="transactions-list" id="transactions-container">
+            </div>
+    </section>
+
+    <section id="sec-clientes" class="content-section" style="display: none;">
+        <header class="section-header">
+            <h2>Directorio de Clientes</h2>
+            <button class="btn-secondary"><i data-feather="user-plus"></i> Nuevo Cliente</button>
+        </header>
+        <div class="grid-clientes">
+            <p>Lista de clientes registrados aparecerá aquí.</p>
+        </div>
+    </section>
+
+    <section id="sec-estadisticas" class="content-section" style="display: none;">
+        <header class="section-header">
+            <h2>Reportes y Analítica</h2>
+        </header>
+        <div class="chart-container">
+            <div class="card dark-card">
+                <h3>Ingresos vs Egresos</h3>
+                <div class="chart-placeholder">Gráfico de barras aquí</div>
+            </div>
+        </div>
+    </section>
+
+</main>
     </div>
 
     <div class="modal-overlay" id="modal-factura" style="display: none;">
