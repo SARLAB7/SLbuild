@@ -17,6 +17,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 // js/ui.js
+export function activarInterfaz() {
+    const modal = document.getElementById('modal-factura');
+    const btnAbrir = document.getElementById('btn-nueva-factura');
+    const btnCerrar = document.getElementById('btn-cerrar-modal');
+    const themeBtn = document.getElementById('theme-toggle');
+
+    // Abrir modal
+    if (btnAbrir) {
+        btnAbrir.onclick = () => modal.style.display = 'flex';
+    }
+
+    // Cerrar modal
+    if (btnCerrar) {
+        btnCerrar.onclick = () => modal.style.display = 'none';
+    }
+
+    // Cambiar tema (Dark Mode)
+    if (themeBtn) {
+        themeBtn.onclick = () => {
+            document.body.classList.toggle('dark-theme');
+            feather.replace();
+        };
+    }
+
+    // Renderizar iconos de Feather
+    feather.replace();
+}
+// js/ui.js
 export function setupUI() {
     const modal = document.getElementById('modal-factura');
     const btnNuevaFactura = document.getElementById('btn-nueva-factura');
