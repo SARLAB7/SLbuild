@@ -1,7 +1,7 @@
 // js/auth.js
 import { auth } from './firebase-config.js';
 import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { activarInterfaz } from './ui.js';
+import { activarNavegacionPill } from './ui.js';
 import { cargarFacturas } from './db.js';
 
 // 1. Lógica para el Login (index.html)
@@ -29,7 +29,7 @@ onAuthStateChanged(auth, async (user) => {
     if (user) {
         if (esPanel) {
             console.log("Sesión activa: Activando panel de SACLAB");
-            activarInterfaz(); // Despierta botones y modales
+            activarNavegacionPill(); // Despierta botones y modales
             await cargarFacturas(); // Trae las facturas de Firebase
         }
     } else {
