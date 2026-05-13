@@ -11,7 +11,8 @@ const firebaseConfig = {
   messagingSenderId: "676234118482",
   appId: import.meta.env.VITE_FB_APP_ID
 };
-
+// AGREGA ESTA LÍNEA TEMPORALMENTE:
+console.log("¿Vite ve la llave?:", import.meta.env.VITE_FB_API_KEY ? "SÍ" : "NO, ES UNDEFINED");
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
