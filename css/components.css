@@ -7,15 +7,15 @@
     background-color: var(--accent-neon);
     color: #000000; /* Texto oscuro para contraste */
     border: none;
-    padding: 12px 24px;
+    padding: 8px 16px;
     border-radius: var(--radius-sm);
     font-weight: 600;
-    font-size: 14px;
+    font-size: var(--font-size-sm);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     transition: all 0.2s ease;
     width: fit-content; /* Botones a la medida */
 }
@@ -54,12 +54,12 @@
 .card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
-    padding: 24px;
+    padding: var(--spacing-md);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-card);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--spacing-sm);
 }
 
 .card.highlight-card {
@@ -69,8 +69,10 @@
 
 .card .label {
     color: var(--text-secondary);
-    font-size: 13px;
+    font-size: var(--font-size-xs);
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .card.highlight-card .label {
@@ -79,7 +81,7 @@
 
 .card .amount {
     color: var(--text-primary);
-    font-size: 28px;
+    font-size: var(--font-size-lg);
     font-weight: 700;
 }
 
@@ -102,10 +104,10 @@
     background: transparent;
     border: none;
     color: var(--text-secondary);
-    padding: 10px 20px;
+    padding: 6px 12px;
     cursor: pointer;
     font-weight: 600;
-    font-size: 14px;
+    font-size: var(--font-size-xs);
     border-radius: var(--radius-md);
     transition: 0.3s;
 }
@@ -123,9 +125,9 @@
 
 /* Etiquetas de estado (Badges) */
 .badge {
-    padding: 5px 12px;
+    padding: 2px 8px;
     border-radius: 20px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
 }
