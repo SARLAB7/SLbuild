@@ -2,53 +2,39 @@
 import { auth } from './firebase-config.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
+// js/ui.js
 export function activarInterfaz() {
-    const modal = document.getElementById('modal-factura');
-    const btnAbrir = document.getElementById('btn-nueva-factura');
-    const btnCerrar = document.getElementById('btn-cerrar-modal');
-    const themeBtn = document.getElementById('theme-toggle');
-    const btnLogout = document.getElementById('btn-logout'); // Asegúrate de que este ID esté en tu HTML
+    const navItems = document.querySelectorAll('.nav-item');
+    const sections = document.querySelectorAll('.content-section');
 
-    // 1. Abrir modal
-    if (btnAbrir) {
-        btnAbrir.onclick = () => modal.style.display = 'flex';
-    }
-
-    // 2. Cerrar modal
-    if (btnCerrar) {
-        btnCerrar.onclick = () => modal.style.display = 'none';
-    }
-
-    // 3. Lógica de Cerrar Sesión (Esto es lo que te faltaba)
-    if (btnLogout) {
-        btnLogout.onclick = (e) => {
+    navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
             e.preventDefault();
-            signOut(auth).then(() => {
-                console.log("Cerrando sesión en SACLAB...");
-                window.location.href = 'index.html';
-            }).catch((error) => {
-                console.error("Error al salir:", error);
-            });
-        };
-    }
+            
+            // 1. Estilo visual: Quitar 'active' de todos y poner al actual
+            navItems.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
 
-    // 4. Cambio de Pestañas (Filtros)
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => {
-        tab.onclick = () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-        };
+            // 2. Lógica de navegación:
+            // Obtenemos el texto del botón (ej: "Inicio", "Facturas")
+            const targetName = item.textContent.trim().toLowerCase();
+            
+            // Escondemos todas las secciones
+            sections.forEach(s => s.style.display = 'none');
+
+            // Mostramos la sección que coincida
+            if (targetName.includes("inicio")) {
+                document.getElementById('sec-inicio').style.display = 'block';
+            } else if (targetName.includes("facturas")) {
+                document.getElementById('sec-facturas').style.display = 'block';
+            } else if (targetName.includes("clientes")) {
+                document.getElementById('sec-clientes').style.display = 'block';
+            } else if (targetName.includes("estadísticas")) {
+                document.getElementById('sec-estadisticas').style.display = 'block';
+            }
+        });
     });
 
-    // 5. Cambiar tema (Dark Mode)
-    if (themeBtn) {
-        themeBtn.onclick = () => {
-            document.body.classList.toggle('dark-theme');
-            feather.replace();
-        };
-    }
-
-    // Renderizar iconos de Feather al final
+    // No olvides llamar a Feather para que los iconos no desaparezcan
     feather.replace();
 }
