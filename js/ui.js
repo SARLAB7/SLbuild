@@ -73,3 +73,27 @@ export function activarNavegacionPill() {
         navGroups[0].querySelector('.topic-header').click();
     }
 }
+// Función para mostrar notificaciones personalizadas
+export function showToast(mensaje, tipo = 'success') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${tipo}`;
+    
+    // Icono según el tipo (usando tus nuevos Material Symbols)
+    const icon = tipo === 'error' ? 'report' : (tipo === 'success' ? 'check_circle' : 'info');
+    
+    toast.innerHTML = `
+        <span class="material-symbols-outlined">${icon}</span>
+        <span>${mensaje}</span>
+    `;
+
+    container.appendChild(toast);
+
+    // Eliminar automáticamente después de 4 segundos
+    setTimeout(() => {
+        toast.classList.add('fade-out');
+        setTimeout(() => toast.remove(), 500);
+    }, 4000);
+}
