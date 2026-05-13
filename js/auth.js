@@ -31,3 +31,34 @@ export function vigilarSesion() {
         }
     });
 }
+// auth.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    // --- LÓGICA DEL MODAL ---
+    const modal = document.getElementById('modal-factura');
+    const btnAbrirModal = document.getElementById('btn-nueva-factura');
+    const btnCerrarModal = document.getElementById('btn-cerrar-modal');
+
+    if (btnAbrirModal) {
+        btnAbrirModal.onclick = () => modal.style.display = 'flex';
+    }
+
+    if (btnCerrarModal) {
+        btnCerrarModal.onclick = () => modal.style.display = 'none';
+    }
+
+    // Cerrar modal al hacer clic fuera del contenido
+    window.onclick = (event) => {
+        if (event.target == modal) modal.style.display = 'none';
+    }
+
+    // --- LÓGICA DE NAVEGACIÓN (Tabs de filtrado) ---
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            // Aquí podrías añadir lógica para filtrar facturas por estado
+        });
+    });
+});
