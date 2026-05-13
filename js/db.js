@@ -53,3 +53,19 @@ export async function cargarFacturas() {
         console.error("Error al cargar las facturas: ", error);
     }
 }
+
+// Referencia para la sección de clientes
+const clientesRef = collection(db, "clientes");
+
+export async function guardarCliente(datosCliente) {
+    try {
+        await addDoc(clientesRef, {
+            ...datosCliente,
+            creadoEn: new Date()
+        });
+        return true;
+    } catch (error) {
+        console.error("Error al crear cliente:", error);
+        return false;
+    }
+}
