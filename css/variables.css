@@ -1,5 +1,25 @@
 /* css/variables.css */
+/* css/variables.css */
 :root {
+
+
+    /* Escala Tipográfica Reducida */
+    --font-size-xs: 11px;
+    --font-size-sm: 12px;
+    --font-size-base: 13px; /* Antes era 14px o 16px */
+    --font-size-md: 15px;
+    --font-size-lg: 18px;
+    --font-size-xl: 22px;   /* Para títulos grandes */
+
+    /* Espaciados Compactos */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 20px;
+    
+    --radius-md: 8px;
+    --radius-lg: 12px;
+}
     /* Paleta Principal - Dark Mode Profesional Industrial */
     --bg-main: #0B0E14;          /* Fondo base muy oscuro (como la imagen) */
     --bg-card: #151921;          /* Fondo para módulos, tarjetas y sidebar */
