@@ -3,6 +3,10 @@ import { auth } from './firebase-config.js';
 import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { activarNavegacionPill } from './ui.js';
 import { cargarFacturas } from './db.js';
+import { 
+    signInWithEmailAndPassword, 
+    sendPasswordResetEmail // <-- Nueva función
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 // 1. Lógica para el Login (index.html)
 const loginForm = document.getElementById('login-form');
@@ -39,3 +43,45 @@ onAuthStateChanged(auth, async (user) => {
         }
     }
 });
+// --- MANEJO DE VISTAS (Toggle) ---
+const loginView = document.getElementById('login-view');
+const forgotView = document.getElementById('forgot-view');
+const linkForgot = document.getElementById('link-forgot');
+const linkBack = document.getElementById('link-back-login');
+
+if (linkForgot) {
+    linkForgot.onclick = (e) => {
+        e.preventDefault();
+        loginView.style.display = 'none';
+        forgotView.style.display = 'block';
+    };
+}
+
+if (linkBack) {
+    linkBack.onclick = (e) => {
+        e.preventDefault();
+        forgotView.style.display = 'none';
+        loginView.style.display = 'block';
+    };
+}
+
+// --- LÓGICA DE RECUPERACIÓN ---
+const forgotForm = document.getElementById('forgot-form');
+if (forgotForm) {
+    forgotForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('forgot-email').value;
+
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                alert("¡Enlace enviado! Revisa tu bandeja de entrada o spam.");
+                // Regresar al login automáticamente
+                forgotView.style.display = 'none';
+                loginView.style.display = 'block';
+            })
+            .catch((error) => {
+                alert("Error: " + error.message);
+            });
+    });
+}
+
