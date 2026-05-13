@@ -10,23 +10,44 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="dashboard-layout">
-   <header class="top-navbar">
+  <header class="top-navbar">
     <div class="logo">SACLAB</div>
-    <nav class="main-topics">
-        <button class="topic-btn active" data-topic="finanzas">
-            <i data-feather="dollar-sign"></i> Finanzas
-        </button>
-        <button class="topic-btn" data-topic="gestion">
-            <i data-feather="briefcase"></i> Gestión
-        </button>
-        <button class="topic-btn" data-topic="legal">
-            <i data-feather="file-text"></i> Contabilidad
-        </button>
+    
+    <nav class="pill-navigation">
+        <div class="nav-group active" data-topic="finanzas">
+            <button class="topic-header">
+                <i data-feather="dollar-sign"></i> <span>Finanzas</span>
+            </button>
+            <div class="sub-pill-container">
+                <button class="sub-item active" data-section="sec-inicio">Dashboard</button>
+                <button class="sub-item" data-section="sec-facturas">Invoices</button>
+                <button class="sub-item" data-section="sec-gastos">Egresos</button>
+            </div>
+        </div>
+
+        <div class="nav-group" data-topic="gestion">
+            <button class="topic-header">
+                <i data-feather="briefcase"></i> <span>Gestión</span>
+            </button>
+            <div class="sub-pill-container">
+                <button class="sub-item" data-section="sec-clientes">Clientes</button>
+                <button class="sub-item" data-section="sec-productos">Servicios</button>
+            </div>
+        </div>
+
+        <div class="nav-group" data-topic="legal">
+            <button class="topic-header">
+                <i data-feather="file-text"></i> <span>Contabilidad</span>
+            </button>
+            <div class="sub-pill-container">
+                <button class="sub-item" data-section="sec-asientos">Libro Diario</button>
+                <button class="sub-item" data-section="sec-impuestos">DIAN</button>
+            </div>
+        </div>
     </nav>
+
     <div class="user-actions">
-        <button id="theme-toggle" class="icon-btn"><i data-feather="moon"></i></button>
-        <div class="avatar"></div>
-    </div>
+        </div>
 </header>
 
 <div class="app-body">
