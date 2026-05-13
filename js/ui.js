@@ -38,3 +38,19 @@ export function activarInterfaz() {
     // No olvides llamar a Feather para que los iconos no desaparezcan
     feather.replace();
 }
+export function setupFormularioInteligente() {
+    const inputMonto = document.getElementById('factura-monto');
+    
+    if (inputMonto) {
+        inputMonto.addEventListener('input', (e) => {
+            const valor = Number(e.target.value);
+            const iva = valor * 0.19;
+            const rete = valor * 0.04;
+            const total = valor + iva - rete;
+
+            // Actualizar vista previa en el modal (puedes añadir estos span en tu HTML)
+            document.getElementById('preview-iva').textContent = `IVA (19%): $${iva.toLocaleString()}`;
+            document.getElementById('preview-total').textContent = `Total Neto: $${total.toLocaleString()}`;
+        });
+    }
+}
