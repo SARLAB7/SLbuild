@@ -88,47 +88,6 @@ body {
     display: flex;
     flex: 1; /* Ocupa el resto del alto */
 }
-
-.sidebar {
-    width: 210px;
-    background-color: var(--bg-card);
-    border-right: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    padding: var(--spacing-md) var(--spacing-sm);
-}
-/* Sidebar Nav Items */
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 12px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    border-radius: 12px;
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    transition: all 0.2s ease-in-out;
-    margin-bottom: 8px;
-    border: 1px solid transparent;
-}
-
-/* Efecto al pasar el mouse (Hover) */
-.nav-item:hover {
-    color: var(--text-primary);
-    background-color: rgba(255, 255, 255, 0.03);
-}
-
-/* Efecto cuando está seleccionado (Active) */
-.nav-item.active {
-    background-color: rgba(197, 255, 50, 0.08); /* Fondo neón ultra suave */
-    color: var(--accent-neon);
-    border: 1px solid rgba(197, 255, 50, 0.2); /* Borde sutil */
-}
-.nav-item svg {
-    width: 16px; /* Iconos más pequeños */
-    height: 16px;
-}
 /* Animación de entrada suave para el contenido central */
 .content-section {
     opacity: 0;
