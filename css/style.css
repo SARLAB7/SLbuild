@@ -20,7 +20,7 @@ body {
    1. BARRA SUPERIOR (Temas Principales)
    ========================================= */
 .top-navbar {
-    height: 50px;
+    height: 60px;
     background-color: var(--bg-card);
     border-bottom: 1px solid var(--border-color);
     display: flex;
@@ -30,41 +30,11 @@ body {
     z-index: 10;
 }
 
-.logo-container h1 {
+.logo {
     color: var(--text-primary);
     font-size: 16px;
     letter-spacing: 1.5px;
     font-weight: 800;
-}
-
-.main-topics {
-    display: flex;
-    gap: 15px;
-}
-
-.topic-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    padding: 6px 12px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: var(--font-size-sm);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-    border-bottom: 2px solid transparent;
-}
-
-.topic-btn.active {
-    color: var(--accent-neon);
-    border-bottom: 2px solid var(--accent-neon);
-}
-
-.topic-btn:hover:not(.active) {
-    color: var(--text-primary);
-    background-color: rgba(255,255,255,0.03);
 }
 
 .user-actions {
@@ -74,93 +44,45 @@ body {
 }
 
 .avatar {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background-color: #2b303b;
     border: 2px solid var(--border-color);
 }
 
 /* =========================================
-   2. CUERPO (Sidebar + Main)
+   2. NAVEGACIÓN TIPO ACORDEÓN (Pill)
    ========================================= */
-.app-body {
-    display: flex;
-    flex: 1; /* Ocupa el resto del alto */
-}
-/* Animación de entrada suave para el contenido central */
-.content-section {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.content-section.active-section {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.main-content {
-    flex: 1;
-    padding: var(--spacing-lg);
-    overflow-y: auto;
-    background-color: var(--bg-main);
-}
-.main-content h1 {
-    font-size: var(--font-size-lg);
-    margin-bottom: var(--spacing-md) !important;
-}
-/* Gestión de visibilidad de secciones */
-.content-section {
-    display: none;
-    animation: slideUp 0.4s ease;
-}
-
-.content-section.active-section {
-    display: block;
-}
-/* Grilla de transacciones */
-.transaction-row {
-    padding: 10px 14px !important;
-    font-size: var(--font-size-sm);
-}
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-/* Contenedor principal de la navegación */
 .pill-navigation {
     display: flex;
     gap: 8px;
     background-color: rgba(255, 255, 255, 0.03);
     padding: 4px;
-    border-radius: 40px; /* Estilo píldora */
+    border-radius: 40px;
     border: 1px solid var(--border-color);
 }
 
-/* Cada grupo (Tema + Subsecciones) */
 .nav-group {
     display: flex;
     align-items: center;
     overflow: hidden;
     background-color: transparent;
     border-radius: 30px;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    max-width: 50px; /* Solo se ve el icono inicialmente */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 44px; /* Oculta el texto, solo deja ver el icono */
 }
 
-/* Cuando el grupo está activo, se expande */
 .nav-group.active {
-    max-width: 600px; /* Suficiente para mostrar las subsecciones */
-    background-color: var(--text-primary); /* Fondo blanco como en la imagen */
+    max-width: 500px; 
+    background-color: var(--text-primary); 
 }
 
-/* Botón principal del tema (El que tiene el icono) */
 .topic-header {
     background: transparent;
     border: none;
     color: var(--text-secondary);
-    padding: 10px 14px;
+    padding: 8px 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -171,10 +93,9 @@ body {
 }
 
 .nav-group.active .topic-header {
-    color: #000; /* Texto oscuro sobre fondo blanco */
+    color: #000; 
 }
 
-/* Contenedor de las subpíldoras */
 .sub-pill-container {
     display: flex;
     padding-right: 8px;
@@ -189,24 +110,56 @@ body {
     pointer-events: auto;
 }
 
-/* Botones de subsección */
 .sub-item {
     background: transparent;
     border: none;
     padding: 6px 12px;
     border-radius: 20px;
     font-size: var(--font-size-xs);
-    font-weight: 500;
+    font-weight: 600;
     color: #555;
     cursor: pointer;
     white-space: nowrap;
+    transition: 0.2s;
 }
 
 .sub-item:hover { color: #000; }
 
-/* Subsección activa (Verde Neón como la imagen) */
 .sub-item.active {
     background-color: var(--accent-neon);
     color: #000 !important;
-    font-weight: 700;
+}
+
+/* =========================================
+   3. CUERPO Y SECCIONES
+   ========================================= */
+.app-body {
+    display: flex;
+    flex: 1;
+}
+
+.main-content {
+    flex: 1;
+    padding: var(--spacing-lg);
+    overflow-y: auto;
+    background-color: var(--bg-main);
+}
+
+.main-content h1 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.content-section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.content-section.active-section {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
