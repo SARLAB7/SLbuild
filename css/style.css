@@ -13,25 +13,26 @@ body {
     flex-direction: column;
     height: 100vh;
     overflow: hidden;
+    font-size: var(--font-size-base);
 }
 
 /* =========================================
    1. BARRA SUPERIOR (Temas Principales)
    ========================================= */
 .top-navbar {
-    height: 64px;
+    height: 50px;
     background-color: var(--bg-card);
     border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
-    padding: 0 24px;
+    padding: 0 var(--spacing-lg);
     justify-content: space-between;
     z-index: 10;
 }
 
 .logo-container h1 {
     color: var(--text-primary);
-    font-size: 22px;
+    font-size: 16px;
     letter-spacing: 1.5px;
     font-weight: 800;
 }
@@ -45,10 +46,10 @@ body {
     background: transparent;
     border: none;
     color: var(--text-secondary);
-    padding: 10px 18px;
+    padding: 6px 12px;
     cursor: pointer;
     font-weight: 600;
-    font-size: 14px;
+    font-size: var(--font-size-sm);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -89,23 +90,23 @@ body {
 }
 
 .sidebar {
-    width: 250px;
+    width: 210px;
     background-color: var(--bg-card);
     border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
-    padding: 20px 12px;
+    padding: var(--spacing-md) var(--spacing-sm);
 }
 /* Sidebar Nav Items */
 .nav-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 16px;
+    padding: 8px 12px;
     color: var(--text-secondary);
     text-decoration: none;
     border-radius: 12px;
-    font-size: 14px;
+    font-size: var(--font-size-sm);
     font-weight: 500;
     transition: all 0.2s ease-in-out;
     margin-bottom: 8px;
@@ -124,7 +125,10 @@ body {
     color: var(--accent-neon);
     border: 1px solid rgba(197, 255, 50, 0.2); /* Borde sutil */
 }
-
+.nav-item svg {
+    width: 16px; /* Iconos más pequeños */
+    height: 16px;
+}
 /* Animación de entrada suave para el contenido central */
 .content-section {
     opacity: 0;
@@ -139,11 +143,14 @@ body {
 
 .main-content {
     flex: 1;
-    padding: 40px;
+    padding: var(--spacing-lg);
     overflow-y: auto;
     background-color: var(--bg-main);
 }
-
+.main-content h1 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md) !important;
+}
 /* Gestión de visibilidad de secciones */
 .content-section {
     display: none;
@@ -153,7 +160,11 @@ body {
 .content-section.active-section {
     display: block;
 }
-
+/* Grilla de transacciones */
+.transaction-row {
+    padding: 10px 14px !important;
+    font-size: var(--font-size-sm);
+}
 @keyframes slideUp {
     from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
