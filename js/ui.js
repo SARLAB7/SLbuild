@@ -50,9 +50,26 @@ export function activarNavegacionPill() {
             }
         });
     });
+// --- NUEVA LÓGICA PARA LOGOUT ---
+    const btnLogout = document.getElementById('btn-logout');
+    if (btnLogout) {
+        btnLogout.onclick = (e) => {
+            e.preventDefault();
+            // Animación opcional: desvanecer la pantalla antes de salir
+            document.body.style.opacity = '0.5';
+            
+            signOut(auth).then(() => {
+                console.log("Sesión terminada en SACLAB");
+                window.location.href = 'index.html'; // Regresa al login
+            }).catch((error) => {
+                console.error("Error al cerrar sesión:", error);
+                document.body.style.opacity = '1';
+            });
+        };
+    }
 
-    // Abrir "Finanzas" por defecto al cargar la página
-    if (navGroups.length > 0) {
+    // Abrir "Finanzas" por defecto
+    if (navGroups.length > 0 && !document.querySelector('.nav-group.active')) {
         navGroups[0].querySelector('.topic-header').click();
     }
 }
