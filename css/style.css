@@ -16,49 +16,41 @@
     box-sizing: border-box;
 }
 
+/* Layout Principal */
 body {
-    font-family: var(--font-main);
-    background-color: var(--bg-main);
-    color: var(--text-primary);
     display: flex;
+    flex-direction: column;
     height: 100vh;
     overflow: hidden;
 }
 
-
-
-/* Layout General */
-.dashboard-layout {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-
 .top-navbar {
-    height: 64px;
-    background: var(--bg-card);
+    height: 70px;
+    background-color: var(--bg-card);
     border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
-    padding: 0 24px;
+    padding: 0 30px;
     justify-content: space-between;
+    z-index: 10;
 }
 
 .main-topics {
     display: flex;
-    gap: 20px;
+    gap: 15px;
 }
 
 .topic-btn {
     background: transparent;
     border: none;
     color: var(--text-secondary);
-    padding: 8px 16px;
+    padding: 10px 20px;
     cursor: pointer;
     font-weight: 600;
     display: flex;
     align-items: center;
     gap: 8px;
+    transition: 0.3s;
     border-bottom: 2px solid transparent;
 }
 
@@ -69,44 +61,28 @@ body {
 
 .app-body {
     display: flex;
-    flex: 1;
-    overflow: hidden;
+    flex: 1; /* Ocupa el resto del alto */
 }
 
 .sidebar {
-    width: 240px;
-    background: var(--bg-card);
+    width: 260px;
+    background-color: var(--bg-card);
     border-right: 1px solid var(--border-color);
-    padding: 20px 12px;
-}
-
-.nav-menu {
-    flex-grow: 1;
-    margin-top: 30px;
-}
-
-.nav-item {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 16px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    border-radius: 10px;
-    transition: 0.3s;
-    margin-bottom: 5px;
+    flex-direction: column;
+    padding: 20px 15px;
 }
 
-.nav-item.active, .nav-item:hover {
-    background: var(--accent-soft);
-    color: var(--accent-neon);
+.side-nav {
+    flex: 1;
 }
 
-/* El botón de Cerrar Sesión siempre abajo */
-#btn-logout {
+/* El logout siempre al fondo */
+.nav-item.logout {
     margin-top: auto;
     color: var(--status-danger);
-    opacity: 0.8;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
 }
 
 #btn-logout:hover {
