@@ -183,7 +183,7 @@ body {
 .top-navbar-right {
     display: flex;
     align-items: center;
-    gap: 15px; /* Espacio entre campana, avatar y salir */
+    gap: 12px; /* Espacio entre campana, avatar y salir */
 }
 /* Ajuste del botón logout para que no rompa la línea */
 .logout-btn {
@@ -209,7 +209,7 @@ body {
 .user-actions {
     display: flex;
     align-items: center;
-    gap: 12px; /* Espacio horizontal entre iconos y avatar */
+    gap: 8px; /* Espacio horizontal entre iconos y avatar */
 }
 
 /* Evitar que los iconos de Google se deformen */
