@@ -12,7 +12,9 @@
 <body>
 
     <div class="login-container">
-        <div class="login-box">
+    <div class="login-box">
+        
+        <div id="login-view">
             <header>
                 <h1>SACLAB</h1>
                 <p>Sistemas de Automatización Contable</p>
@@ -33,44 +35,29 @@
             </form>
             
             <footer>
-                <a href="#">¿Olvidaste tu contraseña?</a>
+                <a href="#" id="link-forgot">¿Olvidaste tu contraseña?</a>
             </footer>
         </div>
-    </div>
 
-<div class="login-box">
-    <div id="login-view">
-        <header>
-            <h1>SACLAB</h1>
-            <p>Sistemas de Automatización Contable</p>
-        </header>
-        
-        <form id="login-form">
-            <button type="submit" class="btn-primary">Entrar al Sistema</button>
-        </form>
-        
-        <footer>
-            <a href="#" id="link-forgot">¿Olvidaste tu contraseña?</a>
-        </footer>
-    </div>
+        <div id="forgot-view" style="display: none;">
+            <header>
+                <h1>Recuperar</h1>
+                <p>Enviaremos un enlace a tu correo para restablecer tu clave.</p>
+            </header>
+            
+            <form id="forgot-form">
+                <div class="input-group">
+                    <label>Correo Electrónico</label>
+                    <input type="email" id="forgot-email" placeholder="tu-correo@empresa.com" required>
+                </div>
+                <button type="submit" class="btn-primary">Enviar Enlace</button>
+            </form>
+            
+            <footer>
+                <a href="#" id="link-back-login">Volver al inicio de sesión</a>
+            </footer>
+        </div>
 
-    <div id="forgot-view" style="display: none;">
-        <header>
-            <h1>Recuperar</h1>
-            <p>Enviaremos un enlace a tu correo para restablecer tu clave.</p>
-        </header>
-        
-        <form id="forgot-form">
-            <div class="input-group">
-                <label>Correo Electrónico</label>
-                <input type="email" id="forgot-email" placeholder="tu-correo@empresa.com" required>
-            </div>
-            <button type="submit" class="btn-primary">Enviar Enlace</button>
-        </form>
-        
-        <footer>
-            <a href="#" id="link-back-login">Volver al inicio de sesión</a>
-        </footer>
     </div>
 </div>
     <div id="toast-container" class="toast-container"></div>
