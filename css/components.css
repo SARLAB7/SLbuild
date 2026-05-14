@@ -303,3 +303,74 @@
 @keyframes fadeOut {
     to { transform: translateX(20px); opacity: 0; }
 }
+
+/* Contenedor relativo para el menú desplegable */
+.avatar-container {
+    position: relative;
+    display: inline-block;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--bg-main);
+    border: 1.5px solid var(--accent-neon);
+    color: var(--accent-neon);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.avatar:hover {
+    box-shadow: 0 0 10px var(--accent-soft);
+    transform: scale(1.05);
+}
+
+/* El selector de iconos */
+.avatar-selector {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    box-shadow: var(--shadow-card);
+    display: none; /* Se activa con JS */
+    z-index: 100;
+    width: 180px;
+}
+
+.avatar-selector p {
+    font-size: 10px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.icons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.sel-icon {
+    font-family: 'Material Symbols Outlined';
+    font-size: 20px;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    transition: 0.2s;
+    background: var(--bg-main);
+}
+
+.sel-icon:hover {
+    background: var(--accent-soft);
+    color: var(--accent-neon);
+}
