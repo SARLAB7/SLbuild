@@ -97,3 +97,45 @@ export function showToast(mensaje, tipo = 'success') {
         setTimeout(() => toast.remove(), 500);
     }, 4000);
 }
+
+export function configurarAvatar(user) {
+    const avatarContent = document.getElementById('avatar-content');
+    const avatarContainer = document.getElementById('user-avatar');
+    const selector = document.getElementById('avatar-selector');
+
+    // 1. Mostrar iniciales por defecto desde Firebase
+    if (user && user.displayName) {
+        const nombres = user.displayName.split(" ");
+        const iniciales = nombres.map(n => n[0]).join("").toUpperCase().substring(0, 2);
+        avatarContent.innerText = iniciales;
+    }
+
+    // 2. Toggle del menú
+    avatarContainer.onclick = () => {
+        selector.style.display = selector.style.display === 'block' ? 'none' : 'block';
+    };
+
+    // 3. Selección de icono o volver a iniciales
+    document.querySelectorAll('.sel-icon').forEach(icon => {
+        icon.onclick = (e) => {
+            const type = e.target.dataset.type;
+            if (type === 'icon') {
+                avatarContent.classList.add('material-symbols-outlined');
+                avatarContent.innerText = e.target.innerText;
+            } else {
+                avatarContent.classList.remove('material-symbols-outlined');
+                // Re-ejecutar lógica de iniciales
+                const nombres = user.displayName ? user.displayName.split(" ") : ["User"];
+                avatarContent.innerText = nombres.map(n => n[0]).join("").toUpperCase().substring(0, 2);
+            }
+            selector.style.display = 'none';
+        };
+    });
+
+    // Cerrar si se hace clic fuera
+    document.addEventListener('click', (e) => {
+        if (!avatarContainer.contains(e.target) && !selector.contains(e.target)) {
+            selector.style.display = 'none';
+        }
+    });
+}
