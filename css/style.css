@@ -65,17 +65,18 @@ body {
 .nav-group {
     display: flex;
     align-items: center;
-    background-color: transparent;
+    background-color: transparent; /* Antes esto causaba el círculo blanco */
     border-radius: 30px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    max-width: 40px; /* Ancho suficiente solo para el icono */
+    max-width: 44px;
     white-space: nowrap;
-    overflow: hidden; /* Corta todo lo que sobresalga */
+    overflow: hidden;
 }
 
+/* 2. Cuando está ACTIVO, se vuelve una pastilla blanca/gris clara */
 .nav-group.active {
-    max-width: 600px; /* Permite que se expanda */
-    background-color: var(--text-primary);
+    max-width: 600px; 
+    background-color: #FFFFFF; /* Fondo de la pastilla expandida */
     padding-right: 12px;
 }
 
@@ -89,30 +90,42 @@ body {
     opacity: 1;
 }
 
-/* Asegurar que el icono siempre sea visible y centrado cuando está cerrado */
-.topic-header .material-symbols-outlined {
-    min-width: 20px;
+/* 3. Ajuste de los botones de los temas (Finanzas, Gestión, etc.) */
+.topic-header {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary); /* Color gris cuando está cerrado */
+    padding: 8px 14px;
+    cursor: pointer;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: var(--font-size-sm);
 }
 
+/* 4. Cuando el grupo está ACTIVO, el texto y el icono pasan a NEGRO */
 .nav-group.active .topic-header {
-    color: #000; 
+    color: #000000; 
 }
 
+/* 5. El texto que se asomaba raro (ahora solo se ve al estar activo) */
+.topic-header span:not(.material-symbols-outlined) {
+    display: none; /* Escondido por defecto */
+}
+
+.nav-group.active .topic-header span:not(.material-symbols-outlined) {
+    display: inline; /* Se muestra al expandir */
+}
+
+/* 6. Contenedor de las subsecciones (Dashboard, Facturación...) */
 .sub-pill-container {
     display: flex;
-    padding-right: 8px;
     gap: 4px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
+    margin-left: 5px;
 }
 
-.nav-group.active .sub-pill-container {
-    opacity: 1;
-    pointer-events: auto;
-}
+
 
 .sub-item {
     background: transparent;
