@@ -45,22 +45,6 @@ body {
     font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
 }
 
-.avatar {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--accent-neon);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    cursor: pointer;
-}
-
 /* =========================================
    2. NAVEGACIÓN TIPO ACORDEÓN (Pill)
    ========================================= */
@@ -204,4 +188,15 @@ body {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espacio horizontal entre iconos y avatar */
+}
+
+/* Evitar que los iconos de Google se deformen */
+.material-symbols-outlined {
+    display: block;
+    user-select: none;
 }
