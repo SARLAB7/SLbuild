@@ -128,6 +128,11 @@ export function configurarAvatar(user) {
                 const nombres = user.displayName ? user.displayName.split(" ") : ["User"];
                 avatarContent.innerText = nombres.map(n => n[0]).join("").toUpperCase().substring(0, 2);
             }
+            if (type === 'icon') {
+    avatarContent.style.fontFamily = "'Material Symbols Outlined'"; // Forzar fuente de iconos
+    avatarContent.innerText = e.target.innerText;
+} else {
+    avatarContent.style.fontFamily = "var(--font-main)"; // Volver a fuente de texto
             selector.style.display = 'none';
         };
     });
