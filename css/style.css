@@ -76,30 +76,35 @@ body {
 .nav-group {
     display: flex;
     align-items: center;
-    overflow: hidden;
     background-color: transparent;
     border-radius: 30px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    max-width: 44px; /* Oculta el texto, solo deja ver el icono */
+    max-width: 40px; /* Ancho suficiente solo para el icono */
+    white-space: nowrap;
+    overflow: hidden; /* Corta todo lo que sobresalga */
 }
 
 .nav-group.active {
-    max-width: 500px; 
-    background-color: var(--text-primary); 
+    max-width: 600px; /* Permite que se expanda */
+    background-color: var(--text-primary);
+    padding-right: 12px;
 }
 
-.topic-header {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    padding: 8px 14px;
-    cursor: pointer;
+/* CRUCIAL: El texto del botón principal */
+.topic-header span {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.nav-group.active .topic-header span {
+    opacity: 1;
+}
+
+/* Asegurar que el icono siempre sea visible y centrado cuando está cerrado */
+.topic-header .material-symbols-outlined {
+    min-width: 20px;
     display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-    font-size: var(--font-size-sm);
-    white-space: nowrap;
+    justify-content: center;
 }
 
 .nav-group.active .topic-header {
@@ -173,8 +178,23 @@ body {
 .content-section.active-section {
     display: block;
 }
+/* Contenedor de la derecha (Notificaciones, Avatar, Logout) */
+.top-navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre campana, avatar y salir */
+}
+/* Ajuste del botón logout para que no rompa la línea */
 .logout-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: var(--radius-sm);
     color: var(--status-danger);
+    transition: 0.2s;
 }
 
 .logout-btn:hover {
