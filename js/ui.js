@@ -111,7 +111,8 @@ export function configurarAvatar(user) {
     }
 
     // 2. Toggle del menú
-    avatarContainer.onclick = () => {
+    avatarContainer.onclick = (e) => {
+        e.stopPropagation(); // Evita que el click se propague al documento
         selector.style.display = selector.style.display === 'block' ? 'none' : 'block';
     };
 
@@ -119,23 +120,31 @@ export function configurarAvatar(user) {
     document.querySelectorAll('.sel-icon').forEach(icon => {
         icon.onclick = (e) => {
             const type = e.target.dataset.type;
+            
             if (type === 'icon') {
+                avatarContent.style.fontFamily = "'Material Symbols Outlined'"; // Forzar fuente de iconos
                 avatarContent.classList.add('material-symbols-outlined');
                 avatarContent.innerText = e.target.innerText;
             } else {
+                avatarContent.style.fontFamily = "var(--font-main)"; // Volver a fuente de texto
                 avatarContent.classList.remove('material-symbols-outlined');
+                
                 // Re-ejecutar lógica de iniciales
-                const nombres = user.displayName ? user.displayName.split(" ") : ["User"];
+                const nombres = (user && user.displayName) ? user.displayName.split(" ") : ["User"];
                 avatarContent.innerText = nombres.map(n => n[0]).join("").toUpperCase().substring(0, 2);
             }
-            if (type === 'icon') {
-    avatarContent.style.fontFamily = "'Material Symbols Outlined'"; // Forzar fuente de iconos
-    avatarContent.innerText = e.target.innerText;
-} else {
-    avatarContent.style.fontFamily = "var(--font-main)"; // Volver a fuente de texto
-            selector.style.display = 'none';
+            
+            selector.style.display = 'none'; // Cerrar el menú tras elegir
         };
     });
+
+    // 4. Cerrar si se hace clic fuera
+    document.addEventListener('click', (e) => {
+        if (!avatarContainer.contains(e.target) && !selector.contains(e.target)) {
+            selector.style.display = 'none';
+        }
+    });
+}
 
     // Cerrar si se hace clic fuera
     document.addEventListener('click', (e) => {
