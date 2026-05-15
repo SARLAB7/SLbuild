@@ -140,79 +140,31 @@ export function configurarAvatar(user) {
 /* =========================================
    3. CONFIGURACIÓN DEL SISTEMA
    ========================================= */
+// js/ui.js
+
 export function vincularBotonConfiguracion() {
     const btn = document.getElementById('btn-open-config');
     if (!btn) return;
 
-    btn.onclick = () => {
-        // Ocultar TODO lo demás
+    btn.onclick = (e) => {
+        e.preventDefault();
+        
+        // 1. Ocultar TODAS las secciones de contenido
         document.querySelectorAll('.content-section').forEach(s => {
             s.style.display = 'none';
             s.classList.remove('active-section');
         });
 
-        // Desactivar el Pill Navigation visualmente para que no parezca que hay dos cosas abiertas
+        // 2. Quitar el estado activo de los "Pills" (Finanzas, Gestión, etc.)
         document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('active'));
         document.querySelectorAll('.sub-item').forEach(i => i.classList.remove('active'));
 
-        const sec = document.getElementById('sec-configuracion');
-        if (sec) {
-            sec.style.display = 'block';
-            sec.classList.add('active-section');
+        // 3. Mostrar la sección de configuración
+        const secConfig = document.getElementById('sec-configuracion');
+        if (secConfig) {
+            secConfig.style.display = 'block';
+            // Delay mínimo para que la animación de entrada funcione
+            setTimeout(() => secConfig.classList.add('active-section'), 10);
         }
     };
-}
-
-export function inicializarConfiguracion(user) {
-    const nameInput = document.getElementById('config-name');
-    const nameDisplay = document.getElementById('profile-name-display');
-    const emailDisplay = document.getElementById('profile-email-display');
-    const avatarDisplay = document.getElementById('profile-avatar-display');
-    const form = document.getElementById('form-update-profile');
-
-    if (user) {
-        nameInput.value = user.displayName || "";
-        nameDisplay.innerText = user.displayName || "Usuario SACLAB";
-        emailDisplay.innerText = user.email;
-        
-        const nombres = (user.displayName || "U").trim().split(/\s+/);
-        avatarDisplay.innerText = nombres.length > 1 
-            ? (nombres[0][0] + nombres[nombres.length - 1][0]).toUpperCase()
-            : nombres[0].substring(0, 2).toUpperCase();
-    }
-
-    if (form) {
-        form.onsubmit = async (e) => {
-            e.preventDefault();
-            const nuevoNombre = nameInput.value.trim();
-            if (!nuevoNombre) return notify("El nombre no puede estar vacío", "error");
-
-            try {
-                // 1. Actualizar en Firebase
-                await updateProfile(user, { displayName: nuevoNombre });
-                notify("Perfil actualizado en SACLAB");
-                
-                // 2. Actualizar textos en la página de configuración
-                nameDisplay.innerText = nuevoNombre;
-                
-                // 3. Calcular nuevas iniciales
-                const nombresArr = nuevoNombre.split(/\s+/);
-                const iniciales = nombresArr.length > 1 
-                    ? (nombresArr[0][0] + nombresArr[nombresArr.length - 1][0]).toUpperCase()
-                    : nombresArr[0].substring(0, 2).toUpperCase();
-
-                // 4. Actualizar el avatar de la sección configuración
-                avatarDisplay.innerText = iniciales;
-
-                // 5. Si el usuario tiene activo el modo "iniciales", actualizar el avatar de la barra superior
-                if (localStorage.getItem('saclab_avatar_tipo') === 'initials') {
-                    document.getElementById('avatar-content').innerText = iniciales;
-                }
-                
-            } catch (error) {
-                console.error(error);
-                notify("Error al actualizar perfil", "error");
-            }
-        };
-    }
 }
