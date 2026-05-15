@@ -60,6 +60,14 @@
 
     </div>
 </div>
+    <script type="module">
+    import { vigilarSesion } from './js/auth.js';
+
+    vigilarSesion(
+        () => window.location.href = 'panel.html', // Si ya está logueado, mándalo al panel
+        () => console.log("Invitado listo para loguearse") // Si no, deja que vea el login
+    );
+</script>
     <div id="toast-container" class="toast-container"></div>
 <script type="module" src="./js/firebase-config.js"></script>
 <script type="module" src="./js/auth.js"></script>
