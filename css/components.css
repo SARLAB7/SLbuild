@@ -492,3 +492,50 @@
 .btn-primary:hover {
     background-color: #00cc00;
 }
+/* =========================================
+   TARJETAS DE CONTENIDO (CONTRASTE INDUSTRIAL)
+   ========================================= */
+
+.content-card {
+    /* ... estilos de tarjeta existentes ... */
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: 24px;
+}
+
+/* CLASE DE TARJETA BLANCA DE ALTO CONTRASTE */
+.white-card {
+    background-color: var(--bg-white) !important;
+    color: var(--text-on-white-primary) !important;
+    border: none; /* No suele necesitar borde en blanco */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Una sombra suave para dar profundidad */
+}
+
+/* Forzar textos oscuros dentro de la tarjeta blanca */
+.white-card h1,
+.white-card h2,
+.white-card h3,
+.white-card h4,
+.white-card p,
+.white-card label {
+    color: var(--text-on-white-primary) !important;
+}
+
+.white-card .material-symbols-outlined {
+    color: var(--text-on-white-secondary) !important;
+}
+/* Inputs claros para usar en .white-card */
+.light-input {
+    background-color: #f5f6f7 !important; /* Gris muy claro */
+    border: 1px solid #d8dee4 !important;
+    color: var(--text-on-white-primary) !important;
+}
+
+.light-input::placeholder {
+    color: #888888;
+}
+
+.light-input:focus {
+    border-color: var(--accent-neon);
+    box-shadow: 0 0 0 3px rgba(170, 255, 0, 0.2);
+}
