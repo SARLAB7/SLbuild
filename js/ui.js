@@ -168,14 +168,13 @@ export function vincularBotonConfiguracion() {
 export async function inicializarConfiguracion(user) {
     if (!user) return;
 
-    // 1. Referencias y carga inicial (Auth)
     const nameInput = document.getElementById('config-name');
     const emailDisplay = document.getElementById('profile-email-display');
     
     if (nameInput) nameInput.value = user.displayName || "";
     if (emailDisplay) emailDisplay.value = user.email || "";
 
-    // 2. Cargar datos de Firestore
+    // 1. CARGAR DATOS DE LA BASE DE DATOS (Incluyendo imágenes)
     const configData = await obtenerConfiguracion(user.uid);
     if (configData) {
         if (configData.empresa) {
@@ -192,9 +191,22 @@ export async function inicializarConfiguracion(user) {
             if(document.getElementById('cuenta-numero')) document.getElementById('cuenta-numero').value = pag.cuenta || '';
             if(document.getElementById('instrucciones-pago')) document.getElementById('instrucciones-pago').value = pag.instrucciones || '';
         }
+        if (configData.branding) {
+            // Mostrar imágenes si ya estaban guardadas
+            if (configData.branding.logo) {
+                document.getElementById('preview-logo').src = configData.branding.logo;
+                document.getElementById('preview-logo').style.display = 'block';
+                document.getElementById('text-logo').style.display = 'none';
+            }
+            if (configData.branding.firma) {
+                document.getElementById('preview-firma').src = configData.branding.firma;
+                document.getElementById('preview-firma').style.display = 'block';
+                document.getElementById('text-firma').style.display = 'none';
+            }
+        }
     }
 
-    // 3. Manejo de formularios
+    // 2. FORMULARIOS DE TEXTO
     const formPerfil = document.getElementById('form-update-profile');
     if (formPerfil) {
         formPerfil.onsubmit = async (e) => {
@@ -213,11 +225,11 @@ export async function inicializarConfiguracion(user) {
         formEmpresa.onsubmit = async (e) => {
             e.preventDefault();
             const datos = {
-                nombre: document.getElementById('empresa-nombre').value.trim(),
-                nit: document.getElementById('empresa-nit').value.trim(),
-                regimen: document.getElementById('empresa-regimen').value,
-                direccion: document.getElementById('empresa-direccion').value.trim(),
-                ciudad: document.getElementById('empresa-ciudad').value.trim()
+                nombre: document.getElementById('empresa-nombre').value.trim() || "",
+                nit: document.getElementById('empresa-nit').value.trim() || "",
+                regimen: document.getElementById('empresa-regimen').value || "",
+                direccion: document.getElementById('empresa-direccion').value.trim() || "",
+                ciudad: document.getElementById('empresa-ciudad').value.trim() || ""
             };
             await guardarConfiguracion(user.uid, 'empresa', datos);
         };
@@ -228,11 +240,46 @@ export async function inicializarConfiguracion(user) {
         formPagos.onsubmit = async (e) => {
             e.preventDefault();
             const datos = {
-                banco: document.getElementById('banco-principal').value,
-                cuenta: document.getElementById('cuenta-numero').value.trim(),
-                instrucciones: document.getElementById('instrucciones-pago').value.trim()
+                banco: document.getElementById('banco-principal').value || "",
+                cuenta: document.getElementById('cuenta-numero').value.trim() || "",
+                instrucciones: document.getElementById('instrucciones-pago').value.trim() || ""
             };
             await guardarConfiguracion(user.uid, 'pagos', datos);
         };
     }
+
+    // 3. GESTIÓN DE CARGA DE IMÁGENES (Logo y Firma)
+    const procesarImagen = (zoneId, inputId, previewId, textId, dbField) => {
+        const zone = document.getElementById(zoneId);
+        const input = document.getElementById(inputId);
+        const preview = document.getElementById(previewId);
+        const text = document.getElementById(textId);
+
+        if (!zone || !input) return;
+
+        zone.onclick = () => input.click(); // Al hacer clic en el cuadro, abre el selector de archivos
+
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                // Convertir la imagen a Base64 para guardarla como texto
+                const reader = new FileReader();
+                reader.onloadend = async () => {
+                    const base64String = reader.result;
+                    
+                    // Mostrar la vista previa
+                    preview.src = base64String;
+                    preview.style.display = 'block';
+                    text.style.display = 'none';
+
+                    // Guardar automáticamente en Firestore
+                    await guardarConfiguracion(user.uid, 'branding', { [dbField]: base64String });
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+    };
+
+    procesarImagen('zone-logo', 'input-logo', 'preview-logo', 'text-logo', 'logo');
+    procesarImagen('zone-firma', 'input-firma', 'preview-firma', 'text-firma', 'firma');
 }
