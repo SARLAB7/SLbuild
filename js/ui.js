@@ -141,7 +141,30 @@ export function configurarAvatar(user) {
 /* =========================================
    3. CONFIGURACIÓN DEL SISTEMA
    ========================================= */
+export function vincularBotonConfiguracion() {
+    const btn = document.getElementById('btn-open-config');
+    if (!btn) return;
 
+    btn.onclick = (e) => {
+        e.preventDefault();
+        
+        // 1. Ocultar todas las secciones
+        document.querySelectorAll('.content-section').forEach(s => {
+            s.style.display = 'none';
+            s.classList.remove('active-section');
+        });
+
+        // 2. Quitar estados activos de la nav principal
+        document.querySelectorAll('.nav-group, .sub-item').forEach(el => el.classList.remove('active'));
+
+        // 3. Mostrar configuración
+        const secConfig = document.getElementById('sec-configuracion');
+        if (secConfig) {
+            secConfig.style.display = 'block';
+            setTimeout(() => secConfig.classList.add('active-section'), 10);
+        }
+    };
+}
 export async function inicializarConfiguracion(user) {
     if (!user) return;
 
