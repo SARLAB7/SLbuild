@@ -338,60 +338,62 @@
    1. LAYOUT PRINCIPAL (SIDEBAR + CONTENIDO)
    ========================================= */
 .config-layout {
-    display: flex !important; /* Fuerza la estructura de columnas */
+    display: flex !important;
     flex-direction: row;
-    gap: 40px;
+    gap: 30px; /* Reducimos la separación */
     align-items: flex-start;
-    max-width: 1200px;
+    max-width: 100%; /* Ahora ocupa todo el ancho de la pantalla */
     width: 100%;
-    margin: 0 auto;
-    padding-top: 20px;
+    margin: 0; /* Evita que flote en el centro */
+    padding-top: 10px;
 }
 
 /* LA SIDEBAR (Barra lateral) */
 .config-sidebar {
-    width: 260px;
+    width: 220px; /* Un poco más delgada */
     flex-shrink: 0;
-    background: var(--bg-card, #16181D); /* Fondo oscuro sutil para la barra */
-    padding: 25px 20px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color, #2A2D3A);
+    background: transparent; /* Quitamos el fondo y el borde para que se vea como un menú pegado */
+    padding: 10px 0; /* Padding más compacto */
 }
 
 .menu-category-title {
-    font-size: 0.75rem;
+    font-size: 0.7rem; /* Reducido */
     text-transform: uppercase;
     color: var(--text-secondary, #8B949E);
     letter-spacing: 1px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     padding-left: 10px;
 }
 
 .config-menu {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px; /* Botones más juntos */
 }
 
 .config-menu button {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     background: transparent;
     border: none;
     color: var(--text-primary, #C9D1D9);
-    font-size: 0.95rem;
-    padding: 12px 15px;
-    border-radius: 8px;
+    font-size: 0.85rem; /* Letra más sobria y profesional */
+    padding: 10px 12px;
+    border-radius: 6px;
     cursor: pointer;
     text-align: left;
     transition: all 0.2s ease;
 }
 
-.config-menu button:hover {
-    background: rgba(255, 255, 255, 0.05);
+/* ESTADO ACTIVO (VERDE NEÓN) */
+.config-menu button.active {
+    background: rgba(0, 255, 0, 0.05); /* Tinte súper sutil */
+    color: #00FF00; /* Verde Neón */
+    font-weight: 500;
+    border-left: 2px solid #00FF00; /* Línea lateral más fina */
+    border-radius: 0 6px 6px 0;
 }
-
 /* ESTADO ACTIVO (VERDE NEÓN) */
 .config-menu button.active {
     background: rgba(0, 255, 0, 0.08); /* Fondo con un tinte súper ligero de verde */
@@ -405,28 +407,26 @@
    2. ÁREA DE CONTENIDO Y TARJETAS
    ========================================= */
 .config-content {
-    flex: 1; /* Toma todo el espacio restante a la derecha */
+    flex: 1;
     min-width: 0;
 }
 
 .config-card {
     background: var(--bg-card, #16181D);
     border: 1px solid var(--border-color, #2A2D3A);
-    border-radius: 12px;
-    padding: 30px;
+    border-radius: 10px;
+    padding: 20px 25px; /* Tarjetas menos abultadas */
     margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .config-card h4 {
-    font-size: 1.15rem;
+    font-size: 1rem; /* Título reducido */
     color: #FFFFFF;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     font-weight: 500;
     border-bottom: 1px solid #2A2D3A;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
 }
-
 /* =========================================
    3. ESTILIZACIÓN DE FORMULARIOS (Adiós blanco feo)
    ========================================= */
@@ -443,12 +443,14 @@
 .input-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .input-group label {
-    font-size: 0.85rem;
+    font-size: 0.75rem; /* Etiquetas más pequeñas */
     color: var(--text-secondary, #8B949E);
+    text-transform: uppercase; /* Da un toque más técnico */
+    letter-spacing: 0.5px;
     font-weight: 500;
 }
 
@@ -456,13 +458,13 @@
 .input-group input,
 .input-group select,
 .input-group textarea {
-    background-color: #0D1117; /* Fondo súper oscuro, casi negro */
-    color: #FFFFFF; /* Texto blanco */
-    border: 1px solid #30363D; /* Borde gris oscuro */
-    padding: 12px 16px;
+    background-color: #0D1117; 
+    color: #FFFFFF; 
+    border: 1px solid #30363D; 
+    padding: 10px 14px; /* Menos padding para que no se vean gigantes */
     border-radius: 6px;
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: 0.85rem; /* Texto ingresado más pequeño */
     transition: all 0.3s ease;
 }
 
@@ -486,7 +488,8 @@
     background-color: #00FF00;
     color: #000000;
     font-weight: 600;
-    padding: 12px 24px;
+    font-size: 0.85rem; /* Botón escalado con el resto del UI */
+    padding: 10px 20px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
