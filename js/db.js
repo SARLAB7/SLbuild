@@ -1,8 +1,9 @@
 import { db } from './firebase-config.js';
+// Cambiamos la URL larguísima por la importación directa de NPM
 import { 
     collection, addDoc, serverTimestamp, 
     doc, setDoc, getDoc 
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+} from "firebase/firestore"; 
 import { notify } from './utils.js';
 
 export async function guardarFactura(datos) {
