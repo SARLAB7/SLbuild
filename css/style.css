@@ -7,16 +7,16 @@
 
 body {
     font-family: var(--font-main);
-    /* El degradado industrial de SACLAB */
-    background: radial-gradient(circle at top center, #1a1e29 0%, #050608 100%);
-    background-attachment: fixed;
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    /* Degradado industrial de SACLAB */
     background-color: var(--bg-dark-gradient-end);
     background-image: radial-gradient(circle at 50% 0%, var(--bg-dark-gradient-start) 0%, var(--bg-dark-gradient-end) 100%);
+    background-attachment: fixed;
 }
+
 /* El contenedor del login debe ocupar toda la pantalla */
 .login-container {
     flex: 1;
