@@ -1,4 +1,6 @@
 // js/auth.js
+
+// 1. IMPORTS (Solo una vez al principio)
 import { auth } from './firebase-config.js';
 import { 
     signInWithEmailAndPassword, 
@@ -45,7 +47,6 @@ if (loginForm) {
         signInWithEmailAndPassword(auth, email, pass)
             .then(() => {
                 showToast("Bienvenido a SACLAB", "success");
-                // Pequeño delay para que el usuario vea el Toast antes de redirigir
                 setTimeout(() => window.location.href = "panel.html", 800);
             })
             .catch((error) => {
@@ -77,34 +78,27 @@ if (forgotForm) {
 }
 
 /* =========================================
-   3. OBSERVADOR DE SESIÓN (PROTECCIÓN)
+   3. EXPORTACIONES Y OBSERVADOR
    ========================================= */
-onAuthStateChanged(auth, async (user) => {
-    const esPanel = window.location.pathname.includes('panel.html');
 
-    if (user) {
-        if (esPanel) {
-            console.log("SACLAB: Acceso autorizado");
-            activarNavegacionPill(); 
-            await cargarFacturas(); 
-        }
-    } else {
-        if (esPanel) {
-            window.location.href = 'index.html';
-        }
-    }
-});
-
-import { auth } from './firebase-config.js';
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-// Solo definimos la lógica, no la activamos aquí
+// Esta es la función limpia que exportamos para usar en el panel
 export function vigilarSesion(encontrado, noEncontrado) {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
+        const esPanel = window.location.pathname.includes('panel.html');
+        
         if (user) {
-            encontrado(user);
+            // Lógica interna para el panel si se carga auth.js directamente
+            if (esPanel) {
+                activarNavegacionPill(); 
+                await cargarFacturas(); 
+            }
+            // Ejecutar el callback que pidas desde afuera (ej: configurarAvatar)
+            if (encontrado) encontrado(user);
         } else {
-            noEncontrado();
+            if (esPanel) {
+                window.location.href = 'index.html';
+            }
+            if (noEncontrado) noEncontrado();
         }
     });
 }
