@@ -1,61 +1,128 @@
 /* css/style.css */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: var(--font-main);
-    background: radial-gradient(circle at top center, #1a1e29 0%, #050608 100%);
-    background-attachment: fixed;
-    color: var(--text-primary);
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
+    font-family: var(--font-main);
+    /* Degradado oscuro: de carbón en el centro a negro en los bordes */
+    background: radial-gradient(circle at top center, #1a1e29 0%, #050608 100%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    font-size: var(--font-size-base);
 }
 
+/* =========================================
+   1. BARRA SUPERIOR (Temas Principales)
+   ========================================= */
 .top-navbar {
-    height: 60px;
-    background-color: var(--bg-card);
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    padding: 0 var(--spacing-lg);
-    justify-content: space-between;
-    z-index: 10;
+    height: 60px;
+    background-color: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-lg);
+    justify-content: space-between; /* Mantiene logo a la izq y acciones a la der */
+    gap: 20px; /* Espacio mínimo entre logo, nav y acciones */
+    z-index: 10;
 }
 
 .logo {
-    color: var(--text-primary);
-    font-size: 16px;
-    letter-spacing: 1.5px;
-    font-weight: 800;
+    color: var(--text-primary);
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    font-weight: 800;
 }
 
+
+
+/* =========================================
+   2. NAVEGACIÓN TIPO ACORDEÓN (Pill)
+   ========================================= */
+
+
+
+
+/* 3. El header del botón (Icono + Texto) */
+.topic-header {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary); /* Gris cuando está cerrado */
+    padding: 0 12px;
+    height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    font-weight: 600;
+    width: 100%;
+}
+
+/* =========================================
+   3. CUERPO Y SECCIONES
+   ========================================= */
 .app-body {
-    display: flex;
-    flex: 1;
+    display: flex;
+    flex: 1;
 }
 
+/* El fondo principal debe ser transparente para que el degradado del body se vea */
 .main-content {
-    flex: 1;
-    padding: var(--spacing-lg);
-    overflow-y: auto;
-    background-color: transparent; 
+    flex: 1;
+    padding: var(--spacing-lg);
+    overflow-y: auto;
+    background-color: transparent; 
+}
+
+.main-content h1 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
 }
 
 .content-section {
-    display: none;
-    animation: fadeIn 0.3s ease;
+    display: none;
+    animation: fadeIn 0.3s ease;
 }
 
 .content-section.active-section {
-    display: block;
+    display: block;
+}
+/* Contenedor de la derecha (Notificaciones, Avatar, Logout) */
+.top-navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espacio entre campana, avatar y salir */
+}
+/* Ajuste del botón logout para que no rompa la línea */
+.logout-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    color: var(--status-danger);
+    transition: 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: rgba(239, 68, 68, 0.1);
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio horizontal entre iconos y avatar */
 }
