@@ -2,6 +2,7 @@
 import { auth } from './firebase-config.js';
 import { signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { notify } from './utils.js';
+import { guardarConfiguracion, obtenerConfiguracion } from './db.js';
 
 /* =========================================
    1. NAVEGACIÓN PRINCIPAL (Pill Navigation)
@@ -169,59 +170,69 @@ export function vincularBotonConfiguracion() {
 }
 
 // ESTA ES LA FUNCIÓN QUE FALTABA EXPORTAR PARA RENDER
-export function inicializarConfiguracion(user) {
-    const nameInput = document.getElementById('config-name');
-    const nameDisplay = document.getElementById('profile-name-display');
-    const emailDisplay = document.getElementById('profile-email-display');
-    const avatarDisplay = document.getElementById('profile-avatar-display');
-    const form = document.getElementById('form-update-profile');
+export async function inicializarConfiguracion(user) {
+    if (!user) return;
 
-    if (user) {
-        // Llenar campos con info de Firebase
-        if(nameInput) nameInput.value = user.displayName || "";
-        if(nameDisplay) nameDisplay.innerText = user.displayName || "Usuario SACLAB";
-        if(emailDisplay) emailDisplay.innerText = user.email;
-        
-        // Iniciales para el avatar de la sección configuración
-        if(avatarDisplay && user.displayName) {
-            const nombres = user.displayName.trim().split(/\s+/);
-            avatarDisplay.innerText = nombres.length > 1 
-                ? (nombres[0][0] + nombres[nombres.length - 1][0]).toUpperCase()
-                : nombres[0].substring(0, 2).toUpperCase();
+    // Referencias a elementos del DOM
+    const nameInput = document.getElementById('config-name');
+    const emailDisplay = document.getElementById('profile-email-display');
+    const formPerfil = document.getElementById('form-update-profile');
+    
+    // 1. Cargar datos iniciales de Firebase Auth
+    if (nameInput) nameInput.value = user.displayName || "";
+    if (emailDisplay) emailDisplay.value = user.email || "";
+
+    // 2. Cargar datos adicionales de Firestore
+    const configData = await obtenerConfiguracion(user.uid);
+    if (configData) {
+        if (configData.empresa) {
+            if(document.getElementById('empresa-nombre')) document.getElementById('empresa-nombre').value = configData.empresa.nombre || '';
+            if(document.getElementById('empresa-nit')) document.getElementById('empresa-nit').value = configData.empresa.nit || '';
+            if(document.getElementById('empresa-regimen')) document.getElementById('empresa-regimen').value = configData.empresa.regimen || 'responsable';
+        }
+        if (configData.pagos) {
+            if(document.getElementById('banco-principal')) document.getElementById('banco-principal').value = configData.pagos.banco || 'bancolombia';
+            if(document.getElementById('cuenta-numero')) document.getElementById('cuenta-numero').value = configData.pagos.cuenta || '';
+            if(document.getElementById('instrucciones-pago')) document.getElementById('instrucciones-pago').value = configData.pagos.instrucciones || '';
         }
     }
 
-    // Lógica para guardar el nuevo nombre
-    if (form) {
-        form.onsubmit = async (e) => {
+    // 3. Listeners de formularios
+    if (formPerfil) {
+        formPerfil.onsubmit = async (e) => {
             e.preventDefault();
             const nuevoNombre = nameInput.value.trim();
             if (!nuevoNombre) return notify("El nombre no puede estar vacío", "error");
-
             try {
                 await updateProfile(user, { displayName: nuevoNombre });
-                notify("Perfil actualizado en SACLAB");
-                
-                if(nameDisplay) nameDisplay.innerText = nuevoNombre;
-                
-                // Actualizar avatares en tiempo real (Pillar y Config)
-                const nombresArr = nuevoNombre.split(/\s+/);
-                const iniciales = nombresArr.length > 1 
-                    ? (nombresArr[0][0] + nombresArr[nombresArr.length - 1][0]).toUpperCase()
-                    : nombresArr[0].substring(0, 2).toUpperCase();
-                
-                if(avatarDisplay) avatarDisplay.innerText = iniciales;
-                
-                // Si el modo actual es "iniciales", actualizar la barra superior también
-                if (localStorage.getItem('saclab_avatar_tipo') === 'initials') {
-                    const topAvatar = document.getElementById('avatar-content');
-                    if(topAvatar) topAvatar.innerText = iniciales;
-                }
-                
-            } catch (error) {
-                console.error(error);
-                notify("Error al actualizar perfil", "error");
-            }
+                notify("Perfil actualizado");
+            } catch (error) { notify("Error al actualizar perfil", "error"); }
+        };
+    }
+
+    const formEmpresa = document.getElementById('form-update-empresa');
+    if (formEmpresa) {
+        formEmpresa.onsubmit = async (e) => {
+            e.preventDefault();
+            const datos = {
+                nombre: document.getElementById('empresa-nombre').value,
+                nit: document.getElementById('empresa-nit').value,
+                regimen: document.getElementById('empresa-regimen').value
+            };
+            await guardarConfiguracion(user.uid, 'empresa', datos);
+        };
+    }
+
+    const formPagos = document.getElementById('form-update-pagos');
+    if (formPagos) {
+        formPagos.onsubmit = async (e) => {
+            e.preventDefault();
+            const datos = {
+                banco: document.getElementById('banco-principal').value,
+                cuenta: document.getElementById('cuenta-numero').value,
+                instrucciones: document.getElementById('instrucciones-pago').value
+            };
+            await guardarConfiguracion(user.uid, 'pagos', datos);
         };
     }
 }
