@@ -1,5 +1,60 @@
 /* css/components.css */
 
+
+/* =========================================
+   5. CORRECCIONES DE NAVEGACIÓN Y RENDERIZADO
+   ========================================= */
+
+/* REGLA MAESTRA: Mostrar el submenú cuando el grupo está activo */
+.sub-pill-container {
+    display: none; /* Oculto por defecto */
+    gap: 8px;
+    margin-top: 10px;
+    padding: 5px 0;
+}
+
+.nav-group.active .sub-pill-container {
+    display: flex; /* Se muestra solo cuando el padre es .active */
+    flex-wrap: wrap;
+    animation: fadeIn 0.3s ease;
+}
+
+/* REGLA MAESTRA: Forzar que los iconos sean iconos y no texto */
+.material-symbols-outlined, .sel-icon {
+    font-family: 'Material Symbols Outlined' !important;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 1;
+    display: inline-block;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased; /* Suaviza el borde del icono */
+    text-transform: none;
+}
+
+/* Excepción: Cuando el avatar muestra iniciales (ABC) */
+#avatar-content:not(.material-symbols-outlined) {
+    font-family: var(--font-main) !important;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+/* Ajuste de los sub-items para que no se vean como botones de Windows viejos */
+.sub-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    transition: 0.2s;
+}
+
+.sub-item.active {
+    background-color: var(--accent-neon) !important;
+    color: #000 !important;
+    border-color: var(--accent-neon);
+}
 /* =========================================
    1. BOTONES PROFESIONALES
    ========================================= */
