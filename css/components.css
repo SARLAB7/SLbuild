@@ -338,22 +338,28 @@
    1. LAYOUT PRINCIPAL (SIDEBAR + CONTENIDO)
    ========================================= */
 .config-layout {
-    display: flex !important;
-    flex-direction: row;
-    gap: 30px; /* Reducimos la separación */
-    align-items: flex-start;
-    max-width: 100%; /* Ahora ocupa todo el ancho de la pantalla */
+    display: flex !important; /* FORZAMOS Flexbox */
+    flex-direction: row !important; /* FORZAMOS que se alineen uno al LADO del otro */
+    gap: 30px; /* Espacio de separación entre la sidebar y el contenido */
+    align-items: flex-start; /* Los alinea por la parte superior */
+    max-width: 100%; /* Ocupa todo el ancho de la pantalla */
     width: 100%;
-    margin: 0; /* Evita que flote en el centro */
-    padding-top: 10px;
+    margin: 0;
+    padding-top: 20px;
 }
 
 /* LA SIDEBAR (Barra lateral) */
 .config-sidebar {
-    width: 220px; /* Un poco más delgada */
-    flex-shrink: 0;
-    background: transparent; /* Quitamos el fondo y el borde para que se vea como un menú pegado */
-    padding: 10px 0; /* Padding más compacto */
+    width: 240px; /* Un ancho fijo para la sidebar */
+    flex-shrink: 0; /* Evita que la sidebar se encoja */
+    background: transparent; /* Mantenemos el estilo minimalista sin fondo de tarjeta */
+    padding: 10px 0;
+}
+
+/* ÁREA DE CONTENIDO (A la derecha de la sidebar) */
+.config-content {
+    flex: 1; /* Esto hace que el contenido ocupe todo el espacio restante a la derecha */
+    min-width: 0; /* Previene problemas de desbordamiento de Flexbox */
 }
 
 .menu-category-title {
@@ -406,10 +412,6 @@
 /* =========================================
    2. ÁREA DE CONTENIDO Y TARJETAS
    ========================================= */
-.config-content {
-    flex: 1;
-    min-width: 0;
-}
 
 .config-card {
     background: var(--bg-card, #16181D);
