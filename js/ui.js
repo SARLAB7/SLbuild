@@ -118,30 +118,29 @@ export function configurarAvatar(user) {
 
     // 3. Cambio de iconos e iniciales (Uso de delegación de eventos)
     document.querySelectorAll('.sel-icon').forEach(iconBtn => {
-        iconBtn.onclick = (e) => {
-            const type = iconBtn.dataset.type;
-            
-            if (type === 'icon') {
-                // Configuración para Iconos de Google
-                avatarContent.className = "material-symbols-outlined"; 
-                avatarContent.style.fontFamily = "'Material Symbols Outlined'";
-                avatarContent.innerText = iconBtn.innerText.trim();
-            } else {
-                // Volver a las Iniciales dinámicas
-                avatarContent.className = ""; // Limpia clases de iconos
-                avatarContent.style.fontFamily = "var(--font-main)";
-                
-                if (user && user.displayName) {
-                    const nombres = user.displayName.trim().split(/\s+/);
-                    avatarContent.innerText = nombres.length > 1 
-                        ? (nombres[0][0] + nombres[nombres.length - 1][0]).toUpperCase()
-                        : nombres[0].substring(0, 2).toUpperCase();
-                } else {
-                    avatarContent.innerText = "US";
-                }
-            }
-            selector.style.display = 'none';
-        };
+       // Dentro de la lógica de cambio de iconos en ui.js
+iconBtn.onclick = (e) => {
+    const type = iconBtn.dataset.type;
+    
+    if (type === 'icon') {
+        avatarContent.classList.add('material-symbols-outlined');
+        avatarContent.innerText = iconBtn.innerText;
+    } else {
+        // Al elegir iniciales, quitamos la fuente de iconos de Google
+        avatarContent.classList.remove('material-symbols-outlined');
+        avatarContent.style.fontFamily = "var(--font-main)";
+        
+        // Aquí pones tus iniciales reales
+        const user = auth.currentUser;
+        if (user && user.displayName) {
+            const names = user.displayName.split(" ");
+            avatarContent.innerText = names.map(n => n[0]).join("").toUpperCase().substring(0, 2);
+        } else {
+            avatarContent.innerText = "US";
+        }
+    }
+    selector.style.display = 'none';
+};
     });
 
     // 4. Cerrar al hacer clic fuera de cualquier parte del documento
