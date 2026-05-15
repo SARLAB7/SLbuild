@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SACLAB | Automatización Contable</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="dashboard-layout">
   <header class="top-navbar">
@@ -109,24 +111,84 @@
         <h1 style="margin-bottom: 24px;">Servicios Profesionales</h1>
         <div class="card dark-card"><p>Catálogo de servicios en construcción...</p></div>
     </section>
-<section id="sec-configuracion" class="content-section" style="display: none;">
+<section id="sec-configuracion" class="content-section" style="display: none;" x-data="{ tabActiva: 'empresa' }">
     <div class="section-header">
-        <h1>Configuración de Perfil</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 24px;">Actualiza tu información profesional en SACLAB.</p>
+        <h1>Configuración del Sistema</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 24px;">Administra tu cuenta, datos fiscales y preferencias de pago.</p>
     </div>
 
-    <div class="card" style="max-width: 500px;">
-        <form id="form-update-profile">
-            <div class="input-group">
-                <label>Nombre de Usuario</label>
-                <input type="text" id="config-name" placeholder="Tu nombre">
-            </div>
-            <div class="input-group">
-                <label>Correo (Solo lectura)</label>
-                <input type="email" id="profile-email-display" disabled style="opacity: 0.6;">
-            </div>
-            <button type="submit" class="btn-primary">Guardar Cambios</button>
-        </form>
+    <!-- Navegación de Pestañas Internas -->
+    <div class="config-tabs-nav">
+        <button @click="tabActiva = 'perfil'" :class="tabActiva === 'perfil' ? 'active-tab' : ''">Mi Perfil</button>
+        <button @click="tabActiva = 'empresa'" :class="tabActiva === 'empresa' ? 'active-tab' : ''">Datos de Empresa</button>
+        <button @click="tabActiva = 'pagos'" :class="tabActiva === 'pagos' ? 'active-tab' : ''">Cuentas y Pagos</button>
+    </div>
+
+    <div class="card config-card-container">
+        
+        <!-- ================= PESTAÑA: PERFIL ================= -->
+        <div x-show="tabActiva === 'perfil'" x-transition class="tab-content">
+            <form id="form-update-profile">
+                <div class="input-group">
+                    <label>Nombre de Usuario</label>
+                    <input type="text" id="config-name" placeholder="Tu nombre">
+                </div>
+                <div class="input-group">
+                    <label>Correo (Solo lectura)</label>
+                    <input type="email" id="profile-email-display" disabled style="opacity: 0.6;">
+                </div>
+                <button type="submit" class="btn-primary">Actualizar Perfil</button>
+            </form>
+        </div>
+
+        <!-- ================= PESTAÑA: EMPRESA ================= -->
+        <div x-show="tabActiva === 'empresa'" x-transition class="tab-content" style="display: none;">
+            <form id="form-update-empresa">
+                <div class="input-group">
+                    <label>Razón Social o Nombre Comercial</label>
+                    <input type="text" id="empresa-nombre" placeholder="Ej. SARLAB Medellín">
+                </div>
+                <div class="input-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="input-group">
+                        <label>NIT / RUT</label>
+                        <input type="text" id="empresa-nit" placeholder="Ej. 900.XXX.XXX-X">
+                    </div>
+                    <div class="input-group">
+                        <label>Régimen</label>
+                        <select id="empresa-regimen">
+                            <option value="responsable">Responsable de IVA</option>
+                            <option value="no-responsable">No Responsable de IVA</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Guardar Datos Fiscales</button>
+            </form>
+        </div>
+
+        <!-- ================= PESTAÑA: PAGOS ================= -->
+        <div x-show="tabActiva === 'pagos'" x-transition class="tab-content" style="display: none;">
+            <form id="form-update-pagos">
+                <div class="input-group">
+                    <label>Entidad Bancaria Principal</label>
+                    <select id="banco-principal">
+                        <option value="bancolombia">Bancolombia</option>
+                        <option value="nequi">Nequi</option>
+                        <option value="nu">Nu (Nubank)</option>
+                        <option value="davivienda">Davivienda / Daviplata</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Número de Cuenta</label>
+                    <input type="text" id="cuenta-numero" placeholder="Ingresa el número de cuenta">
+                </div>
+                <div class="input-group">
+                    <label>Instrucciones en Factura</label>
+                    <textarea id="instrucciones-pago" rows="3" placeholder="Ej: Realizar transferencia manual y enviar comprobante al correo..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Guardar Preferencias</button>
+            </form>
+        </div>
+
     </div>
 </section>
     </main>
