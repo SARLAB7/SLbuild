@@ -390,3 +390,46 @@
     background-color: var(--accent-neon); /* Tu verde neón */
     color: #000 !important;
 }
+.icons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+    gap: 10px;
+    padding: 10px;
+}
+
+.sel-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05); /* Fondo sutil */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px; /* Tamaño pequeño para las iniciales */
+    font-weight: 600;
+    color: var(--text-secondary);
+    border: 1px solid transparent;
+}
+
+.sel-icon:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-neon);
+    color: var(--text-primary);
+}
+
+/* Evita que el avatar principal se deforme */
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Opcional: Círculo o cuadrado redondeado */
+    background: var(--accent-neon);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Crucial para que nada se salga */
+    font-weight: bold;
+    font-size: 14px;
+}
