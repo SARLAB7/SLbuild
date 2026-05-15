@@ -6,17 +6,23 @@
 }
 
 body {
-    font-family: var(--font-main), sans-serif;
-    /* Fondo profundo SACLAB */
+    font-family: var(--font-main);
+    /* El degradado industrial de SACLAB */
     background: radial-gradient(circle at top center, #1a1e29 0%, #050608 100%);
     background-attachment: fixed;
     color: var(--text-primary);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
 }
-
+/* El contenedor del login debe ocupar toda la pantalla */
+.login-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
 .top-navbar {
     height: 60px;
     background-color: var(--bg-card);
