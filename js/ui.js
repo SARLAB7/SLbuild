@@ -177,16 +177,26 @@ export function inicializarConfiguracion(user) {
             if (!nuevoNombre) return notify("El nombre no puede estar vacío", "error");
 
             try {
+                // 1. Actualizar en Firebase
                 await updateProfile(user, { displayName: nuevoNombre });
                 notify("Perfil actualizado en SACLAB");
                 
-                // Actualización inmediata de la UI
+                // 2. Actualizar textos en la página de configuración
                 nameDisplay.innerText = nuevoNombre;
-                const nombres = nuevoNombre.split(/\s+/);
-                const iniciales = nombres.length > 1 ? nombres[0][0] + nombres[nombres.length-1][0] : nombres[0][0];
                 
-                document.getElementById('avatar-content').innerText = iniciales.toUpperCase();
-                avatarDisplay.innerText = iniciales.toUpperCase();
+                // 3. Calcular nuevas iniciales
+                const nombresArr = nuevoNombre.split(/\s+/);
+                const iniciales = nombresArr.length > 1 
+                    ? (nombresArr[0][0] + nombresArr[nombresArr.length - 1][0]).toUpperCase()
+                    : nombresArr[0].substring(0, 2).toUpperCase();
+
+                // 4. Actualizar el avatar de la sección configuración
+                avatarDisplay.innerText = iniciales;
+
+                // 5. Si el usuario tiene activo el modo "iniciales", actualizar el avatar de la barra superior
+                if (localStorage.getItem('saclab_avatar_tipo') === 'initials') {
+                    document.getElementById('avatar-content').innerText = iniciales;
+                }
                 
             } catch (error) {
                 console.error(error);
