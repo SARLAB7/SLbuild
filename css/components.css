@@ -2,7 +2,7 @@
    SISTEMA DE NAVEGACIÓN PRO (SACLAB)
    ========================================= */
 
-/* 1. ICONOS: Regla definitiva para evitar el error de "texto" */
+/* 1. Blindaje de Iconos: Regla única y agresiva */
 .material-symbols-outlined, .sel-icon {
     font-family: 'Material Symbols Outlined' !important;
     font-weight: normal;
@@ -18,43 +18,43 @@
     -webkit-font-smoothing: antialiased;
 }
 
-/* 2. EL CONTENEDOR (La Píldora Central) */
+/* 2. El contenedor (La Píldora) */
 .pill-navigation {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
     background-color: rgba(255, 255, 255, 0.03);
-    padding: 4px 12px;
+    padding: 6px 16px;
     border-radius: 40px;
     border: 1px solid var(--border-color);
     margin: 0 auto;
     max-width: fit-content;
 }
 
-/* 3. GRUPOS (Finanzas, Gestión, etc.) */
+/* 3. Grupos de navegación (Finanzas, Gestión...) */
 .nav-group {
     display: flex;
     align-items: center;
     background-color: transparent;
     border-radius: 30px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden; 
+    overflow: hidden;
     max-width: 44px; /* Cerrado: solo icono */
     white-space: nowrap;
 }
 
-/* ESTADO ACTIVO: Se expande y cambia a fondo claro */
+/* Estado ACTIVO: El grupo se expande y cambia a blanco */
 .nav-group.active {
     max-width: 800px; 
-    background-color: #ffffff; 
+    background-color: #ffffff; /* FONDO CLARO */
 }
 
 .topic-header {
     background: transparent;
     border: none;
     color: var(--text-secondary);
-    height: 40px;
+    height: 44px;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -63,26 +63,26 @@
     font-weight: 700;
 }
 
-/* Texto del tema: oculto si no está activo */
+/* Texto del tema oculto si no está activo */
 .topic-header span:not(.material-symbols-outlined) {
     display: none;
 }
 
 .nav-group.active .topic-header {
-    color: #000000 !important; 
+    color: #000000 !important; /* TEXTO NEGRO SOBRE BLANCO */
 }
 
 .nav-group.active .topic-header span:not(.material-symbols-outlined) {
     display: inline;
 }
 
-/* 4. SUBMENÚ HORIZONTAL */
+/* 4. Submenú Horizontal (Aparece al lado) */
 .sub-pill-container {
     display: none;
-    flex-direction: row;
+    flex-direction: row; /* HORIZONTAL SIEMPRE */
     align-items: center;
-    gap: 6px;
-    padding-left: 10px;
+    gap: 8px;
+    padding-left: 12px;
     margin-left: 5px;
     border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -91,7 +91,7 @@
     display: flex;
 }
 
-/* BOTONES INTERNOS (Sub-items) */
+/* Botones internos (Sub-items) */
 .sub-item {
     background: transparent;
     border: none;
@@ -99,7 +99,7 @@
     border-radius: 20px;
     font-size: 11px;
     font-weight: 700;
-    color: #555; 
+    color: #555; /* GRIS OSCURO */
     cursor: pointer;
     white-space: nowrap;
     transition: 0.2s;
