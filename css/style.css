@@ -51,15 +51,17 @@ body {
    ========================================= */
 .pill-navigation {
     display: flex;
-    gap: 8px;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px; /* Un poco más de aire entre categorías */
     background-color: rgba(255, 255, 255, 0.03);
-    padding: 4px;
+    padding: 6px 16px;
     border-radius: 40px;
     border: 1px solid var(--border-color);
-    flex: 1; /* ESTO ES CLAVE: Empuja para ocupar el centro */
-    justify-content: center; /* Centra los iconos en el espacio disponible */
-    max-width: fit-content; /* Pero no se estira más de lo necesario */
-    margin: 0 auto; /* Centrado perfecto */
+    margin: 0 auto; /* Centrado perfecto en la barra superior */
+    max-width: fit-content; 
+    overflow-x: auto;
+    white-space: nowrap; /* PROHIBIDO saltar de línea */
 }
 
 /* 1. Aseguramos que el grupo no oculte los iconos por error */
@@ -117,11 +119,15 @@ body {
 .nav-group.active .topic-header span:not(.material-symbols-outlined) {
     display: inline;
 }
-/* 6. Contenedor de las subsecciones (Dashboard, Facturación...) */
+/* El Submenú: Aparece al lado del título, no debajo */
 .sub-pill-container {
-    display: flex;
-    gap: 4px;
-    margin-left: 5px;
+    display: none; /* Se activa por JS con .active */
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin-left: 12px;
+    padding-left: 12px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1); /* Separador elegante */
 }
 
 
