@@ -119,7 +119,13 @@
     align-items: center;
     justify-content: flex-end;
 }
-
+/* Asegura que la sección de configuración herede el diseño industrial */
+#sec-configuracion .card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    border-radius: 16px;
+}
 /* Botones de Icono (Config, Notificaciones, Logout) */
 .icon-btn {
     background: transparent;
