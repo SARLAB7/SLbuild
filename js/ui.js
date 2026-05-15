@@ -176,3 +176,43 @@ export function vincularBotonConfiguracion() {
         };
     }
 }
+// js/ui.js (continuación)
+import { updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { notify } from './utils.js';
+
+export function inicializarConfiguracion(user) {
+    const nameInput = document.getElementById('config-name');
+    const nameDisplay = document.getElementById('profile-name-display');
+    const emailDisplay = document.getElementById('profile-email-display');
+    const avatarDisplay = document.getElementById('profile-avatar-display');
+
+    if (user) {
+        // Llenar campos con info de Firebase
+        nameInput.value = user.displayName || "";
+        nameDisplay.innerText = user.displayName || "Usuario SACLAB";
+        emailDisplay.innerText = user.email;
+        
+        // Generar iniciales reales (DC)
+        if (user.displayName) {
+            const names = user.displayName.split(" ");
+            avatarDisplay.innerText = (names[0][0] + (names[1] ? names[1][0] : "")).toUpperCase();
+        }
+    }
+
+    // Guardar cambios
+    const form = document.getElementById('form-update-profile');
+    if (form) {
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            try {
+                await updateProfile(user, { displayName: nameInput.value });
+                notify("Perfil actualizado en SACLAB");
+                nameDisplay.innerText = nameInput.value;
+                // Actualizar también el avatar de la barra superior
+                document.getElementById('avatar-content').innerText = nameInput.value.substring(0,2).toUpperCase();
+            } catch (error) {
+                notify("Error al actualizar perfil", "error");
+            }
+        };
+    }
+}
