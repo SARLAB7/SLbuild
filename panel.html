@@ -145,28 +145,27 @@
         </div>
     </div>
 
-   <script>
+  <script>
       feather.replace()
     </script>
-    <script type="module" src="./js/ui.js"></script>
-<!-- Añade este para inicializar las funciones -->
-<script type="module">
-    import { vigilarSesion } from './js/auth.js';
-    import { activarNavegacionPill, configurarAvatar, vincularBotonConfiguracion, inicializarConfiguracion } from './js/ui.js';
-    activarNavegacionPill();
+    
+    <script type="module">
+        import { vigilarSesion } from './js/auth.js';
+        import { activarNavegacionPill, configurarAvatar, vincularBotonConfiguracion, inicializarConfiguracion } from './js/ui.js';
+        
+        // Inicializamos la navegación inmediatamente
+        activarNavegacionPill();
 
-    vigilarSesion(
-        (user) => {
-        configurarAvatar(user), // Si hay usuario, pon su inicial/icono
-        vincularBotonConfiguracion();
-        inicializarConfiguracion(user);
-        },
-          () => window.location.href = 'index.html'
-    );
-</script>
+        vigilarSesion(
+            (user) => {
+                configurarAvatar(user);
+                vincularBotonConfiguracion();
+                inicializarConfiguracion(user);
+            },
+            () => window.location.href = 'index.html'
+        );
+    </script>
     
     <script type="module" src="./js/firebase-config.js"></script>
-    <script type="module" src="./js/auth.js"></script>
-
 </body>
 </html>
