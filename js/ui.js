@@ -1,9 +1,11 @@
 // js/ui.js
 import { auth } from './firebase-config.js';
-import { signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+// Cambiamos la URL por "firebase/auth"
+import { signOut, updateProfile } from "firebase/auth"; 
 import { notify } from './utils.js';
 import { guardarConfiguracion, obtenerConfiguracion } from './db.js';
 
+// ... el resto de tu código queda idéntico ...
 /* =========================================
    1. NAVEGACIÓN PRINCIPAL (Pill Navigation)
    ========================================= */
