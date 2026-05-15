@@ -1,7 +1,8 @@
 // js/ui.js
 import { auth } from './firebase-config.js';
 import { signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
+import { updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { notify } from './utils.js';
 /* =========================================
    1. NAVEGACIÓN PRINCIPAL (Pill Navigation)
    ========================================= */
@@ -177,8 +178,7 @@ export function vincularBotonConfiguracion() {
     }
 }
 // js/ui.js (continuación)
-import { updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { notify } from './utils.js';
+
 
 export function inicializarConfiguracion(user) {
     const nameInput = document.getElementById('config-name');
