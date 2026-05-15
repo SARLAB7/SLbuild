@@ -338,11 +338,11 @@
    1. LAYOUT PRINCIPAL (SIDEBAR + CONTENIDO)
    ========================================= */
 .config-layout {
-    display: flex !important; /* FORZAMOS Flexbox */
-    flex-direction: row !important; /* FORZAMOS que se alineen uno al LADO del otro */
-    gap: 30px; /* Espacio de separación entre la sidebar y el contenido */
-    align-items: flex-start; /* Los alinea por la parte superior */
-    max-width: 100%; /* Ocupa todo el ancho de la pantalla */
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 30px;
+    align-items: flex-start;
+    max-width: 100%;
     width: 100%;
     margin: 0;
     padding-top: 20px;
@@ -350,9 +350,9 @@
 
 /* LA SIDEBAR (Barra lateral) */
 .config-sidebar {
-    width: 240px; /* Un ancho fijo para la sidebar */
-    flex-shrink: 0; /* Evita que la sidebar se encoja */
-    background: transparent; /* Mantenemos el estilo minimalista sin fondo de tarjeta */
+    width: 240px;
+    flex-shrink: 0;
+    background: transparent;
     padding: 10px 0;
 }
 
@@ -363,7 +363,7 @@
 }
 
 .menu-category-title {
-    font-size: 0.7rem; /* Reducido */
+    font-size: 0.7rem;
     text-transform: uppercase;
     color: var(--text-secondary, #8B949E);
     letter-spacing: 1px;
@@ -384,7 +384,7 @@
     background: transparent;
     border: none;
     color: var(--text-primary, #C9D1D9);
-    font-size: 0.85rem; /* Letra más sobria y profesional */
+    font-size: 0.85rem;
     padding: 10px 12px;
     border-radius: 6px;
     cursor: pointer;
@@ -400,14 +400,7 @@
     border-left: 2px solid #00FF00; /* Línea lateral más fina */
     border-radius: 0 6px 6px 0;
 }
-/* ESTADO ACTIVO (VERDE NEÓN) */
-.config-menu button.active {
-    background: rgba(0, 255, 0, 0.08); /* Fondo con un tinte súper ligero de verde */
-    color: #00FF00; /* Tu Verde Neón */
-    font-weight: 500;
-    border-left: 3px solid #00FF00;
-    border-radius: 0 8px 8px 0;
-}
+
 
 /* =========================================
    2. ÁREA DE CONTENIDO Y TARJETAS
