@@ -110,3 +110,77 @@
     color: #000 !important;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+/* css/components.css */
+
+/* Contenedor de acciones: Fuerza la horizontalidad */
+.top-navbar-right {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* Botones de Icono (Config, Notificaciones, Logout) */
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+/* Botón de Logout específico (Rojo sutil) */
+.logout-btn {
+    color: var(--status-danger) !important;
+}
+
+.logout-btn:hover {
+    background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+/* El Avatar: Evita que empuje a los demás hacia abajo */
+.avatar-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--accent-neon);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+}
+
+/* El Selector de iconos: Debe ser ABSOLUTE para no mover nada */
+.avatar-selector {
+    position: absolute;
+    top: 48px;
+    right: 0;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    z-index: 1000;
+    width: 200px;
+    display: none; /* Controlado por JS */
+}
