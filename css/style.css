@@ -50,3 +50,39 @@ body {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+/* css/style.css */
+
+.top-navbar-right {
+    display: flex !important; /* Forzamos que sea horizontal */
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px; /* Espacio entre los iconos */
+    height: 100%;
+}
+
+/* Aseguramos que los botones de icono no tengan márgenes raros */
+.top-navbar-right .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+.top-navbar-right .icon-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+/* El contenedor del avatar no debe empujar a los demás */
+.avatar-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
