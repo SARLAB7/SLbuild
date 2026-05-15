@@ -109,7 +109,26 @@
         <h1 style="margin-bottom: 24px;">Servicios Profesionales</h1>
         <div class="card dark-card"><p>Catálogo de servicios en construcción...</p></div>
     </section>
+<section id="sec-configuracion" class="content-section" style="display: none;">
+    <div class="section-header">
+        <h1>Configuración de Perfil</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 24px;">Actualiza tu información profesional en SACLAB.</p>
+    </div>
 
+    <div class="card" style="max-width: 500px;">
+        <form id="form-update-profile">
+            <div class="input-group">
+                <label>Nombre de Usuario</label>
+                <input type="text" id="config-name" placeholder="Tu nombre">
+            </div>
+            <div class="input-group">
+                <label>Correo (Solo lectura)</label>
+                <input type="email" id="profile-email-display" disabled style="opacity: 0.6;">
+            </div>
+            <button type="submit" class="btn-primary">Guardar Cambios</button>
+        </form>
+    </div>
+</section>
     </main>
 </div>
 
