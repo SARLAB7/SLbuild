@@ -184,3 +184,80 @@
     width: 200px;
     display: none; /* Controlado por JS */
 }
+/* =========================================
+   INTERFAZ DE ACCESO (INDEX / LOGIN)
+   ========================================= */
+
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    /* Reutilizamos el fondo profundo del sistema */
+    background: radial-gradient(circle at top center, #1a1e29 0%, #050608 100%);
+}
+
+.login-box {
+    background-color: var(--bg-card);
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-box header h1 {
+    color: var(--text-primary);
+    font-size: 28px;
+    letter-spacing: 2px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.login-box header p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+/* Campos de entrada en el Index */
+.login-box .input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.login-box label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.login-box input {
+    width: 100%;
+    background: #050608;
+    border: 1px solid var(--border-color);
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #fff;
+    font-family: inherit;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+.login-box input:focus {
+    border-color: var(--accent-neon);
+}
+
+/* Botón de entrada SACLAB */
+.login-box .btn-primary {
+    width: 100%;
+    margin-top: 10px;
+    padding: 14px;
+    font-size: 16px;
+}
