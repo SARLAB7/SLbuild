@@ -7,31 +7,48 @@
 
 /* REGLA MAESTRA: Mostrar el submenú cuando el grupo está activo */
 .sub-pill-container {
-    display: none; /* Oculto por defecto */
-    gap: 8px;
-    margin-top: 10px;
-    padding: 5px 0;
+    display: none; /* Se activa con el JS */
+    flex-direction: row; /* Fuerza la horizontalidad */
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px;
+    margin-left: 10px;
+    border-left: 1px solid var(--border-color); /* Separador sutil industrial */
+    flex-wrap: nowrap; /* PROHIBIDO que se agrupen en vertical */
+}
+
+/* Cuando el grupo (Finanzas, Gestión, etc) está activo */
+.nav-group.active {
+    display: flex;
+    flex-direction: row; /* Mantiene el título y los sub-botones en una línea */
+    align-items: center;
 }
 
 .nav-group.active .sub-pill-container {
-    display: flex; /* Se muestra solo cuando el padre es .active */
-    flex-wrap: wrap;
-    animation: fadeIn 0.3s ease;
+    display: flex;
+    animation: slideInLeft 0.3s ease forwards;
+}
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 /* REGLA MAESTRA: Forzar que los iconos sean iconos y no texto */
+
 .material-symbols-outlined, .sel-icon {
     font-family: 'Material Symbols Outlined' !important;
     font-weight: normal;
     font-style: normal;
     font-size: 20px;
-    line-height: 1;
     display: inline-block;
-    white-space: nowrap;
-    -webkit-font-smoothing: antialiased; /* Suaviza el borde del icono */
+    line-height: 1;
     text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased; /* Suavizado para evitar píxeles */
 }
-
 /* Excepción: Cuando el avatar muestra iniciales (ABC) */
 #avatar-content:not(.material-symbols-outlined) {
     font-family: var(--font-main) !important;
@@ -41,19 +58,23 @@
 
 /* Ajuste de los sub-items para que no se vean como botones de Windows viejos */
 .sub-item {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
-    padding: 6px 14px;
-    border-radius: 20px;
+    padding: 5px 12px;
+    border-radius: 15px;
     font-size: 11px;
-    transition: 0.2s;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap; /* Evita que el texto interno se rompa */
+    transition: all 0.2s ease;
 }
 
 .sub-item.active {
     background-color: var(--accent-neon) !important;
     color: #000 !important;
     border-color: var(--accent-neon);
+    box-shadow: 0 0 10px var(--accent-soft);
 }
 /* =========================================
    1. BOTONES PROFESIONALES
