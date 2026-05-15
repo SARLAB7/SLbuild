@@ -11,10 +11,10 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    /* Degradado industrial de SACLAB */
-    background-color: var(--bg-dark-gradient-end);
-    background-image: radial-gradient(circle at 50% 0%, var(--bg-dark-gradient-start) 0%, var(--bg-dark-gradient-end) 100%);
-    background-attachment: fixed;
+    /* Degradado forzado con colores hexadecimales directos */
+    background-color: #0c0e12 !important;
+    background-image: radial-gradient(circle at top center, #1e222a 0%, #0c0e12 100%) !important;
+    background-attachment: fixed !important;
 }
 
 /* El contenedor del login debe ocupar toda la pantalla */
