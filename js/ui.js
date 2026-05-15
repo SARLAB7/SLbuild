@@ -73,19 +73,43 @@ export function configurarAvatar(user) {
 
     if (!avatarContent || !avatarContainer) return;
 
-    const actualizarVistaAvatar = (u) => {
-        if (u && u.displayName) {
-            const nombres = u.displayName.trim().split(/\s+/);
-            avatarContent.innerText = nombres.length > 1 
-                ? (nombres[0][0] + nombres[nombres.length - 1][0]).toUpperCase()
-                : nombres[0].substring(0, 2).toUpperCase();
+    // --- FUNCIÓN PARA LIMPIAR Y APLICAR ---
+    const aplicarPreferencia = (tipo, valor) => {
+        // 1. Limpiar todo rastro de fuentes anteriores
+        avatarContent.classList.remove('material-symbols-outlined');
+        avatarContent.style.fontFamily = "var(--font-main)";
+
+        if (tipo === 'icon') {
+            avatarContent.classList.add('material-symbols-outlined');
+            avatarContent.innerText = valor;
         } else {
-            avatarContent.innerText = "U";
+            // Si es iniciales, calculamos según el usuario actual
+            const u = auth.currentUser || user;
+            if (u && u.displayName) {
+                const nombres = u.displayName.trim().split(/\s+/);
+                avatarContent.innerText = nombres.length > 1 
+                    ? (nombres[0][0] + nombres[nombres.length - 1][0]).toUpperCase()
+                    : nombres[0].substring(0, 2).toUpperCase();
+            } else {
+                avatarContent.innerText = "US";
+            }
         }
+        // 2. GUARDAR: Para que no se borre al refrescar
+        localStorage.setItem('saclab_avatar_tipo', tipo);
+        localStorage.setItem('saclab_avatar_valor', valor);
     };
 
-    actualizarVistaAvatar(user);
+    // --- CARGAR PREFERENCIA AL INICIAR ---
+    const tipoGuardado = localStorage.getItem('saclab_avatar_tipo');
+    const valorGuardado = localStorage.getItem('saclab_avatar_valor');
+    
+    if (tipoGuardado) {
+        aplicarPreferencia(tipoGuardado, valorGuardado);
+    } else {
+        aplicarPreferencia('initials', 'abc'); // Por defecto
+    }
 
+    // --- EVENTOS DEL SELECTOR ---
     avatarContainer.onclick = (e) => {
         e.stopPropagation();
         selector.style.display = selector.style.display === 'block' ? 'none' : 'block';
@@ -94,14 +118,8 @@ export function configurarAvatar(user) {
     document.querySelectorAll('.sel-icon').forEach(iconBtn => {
         iconBtn.onclick = (e) => {
             const type = iconBtn.dataset.type;
-            if (type === 'icon') {
-                avatarContent.classList.add('material-symbols-outlined');
-                avatarContent.innerText = iconBtn.innerText;
-            } else {
-                avatarContent.classList.remove('material-symbols-outlined');
-                avatarContent.style.fontFamily = "var(--font-main)";
-                actualizarVistaAvatar(auth.currentUser);
-            }
+            const value = iconBtn.innerText;
+            aplicarPreferencia(type, value);
             selector.style.display = 'none';
         };
     });
