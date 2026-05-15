@@ -14,6 +14,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: var(--bg-dark-gradient-end);
+    background-image: radial-gradient(circle at 50% 0%, var(--bg-dark-gradient-start) 0%, var(--bg-dark-gradient-end) 100%);
 }
 /* El contenedor del login debe ocupar toda la pantalla */
 .login-container {
