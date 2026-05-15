@@ -331,3 +331,46 @@
     color: var(--accent-neon);
     text-shadow: 0 0 8px rgba(186, 255, 41, 0.5);
 }
+
+/* Navegación de Configuración 15/5/26 */
+.config-tabs-nav {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid var(--border-color, #333);
+    margin-bottom: 24px;
+}
+
+.config-tabs-nav button {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary, #888);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.config-tabs-nav button:hover {
+    color: var(--text-primary, #fff);
+}
+
+.config-tabs-nav button.active-tab {
+    color: #fff; /* O el color principal de texto */
+    border-bottom-color: #210DAA; /* Acento visual principal */
+}
+
+/* Contenedor del formulario */
+.config-card-container {
+    max-width: 600px;
+}
+
+.tab-content {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
