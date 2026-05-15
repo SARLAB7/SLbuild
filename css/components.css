@@ -1,40 +1,8 @@
-/* css/components.css */
-
-
 /* =========================================
-   5. CORRECCIONES DE NAVEGACIÓN Y RENDERIZADO
+   SISTEMA DE NAVEGACIÓN PRO (SACLAB)
    ========================================= */
 
-/* REGLA MAESTRA: Mostrar el submenú cuando el grupo está activo */
-.sub-pill-container {
-    display: none; /* Se activa con el JS */
-    flex-direction: row; /* Fuerza la horizontalidad */
-    align-items: center;
-    gap: 10px;
-    padding: 0 10px;
-    margin-left: 10px;
-    border-left: 1px solid var(--border-color); /* Separador sutil industrial */
-    flex-wrap: nowrap; /* PROHIBIDO que se agrupen en vertical */
-}
-
-/* Cuando el grupo (Finanzas, Gestión, etc) está activo */
-.nav-group.active {
-    display: flex;
-    flex-direction: row; /* Mantiene el título y los sub-botones en una línea */
-    align-items: center;
-}
-
-.nav-group.active .sub-pill-container {
-    display: flex;
-    animation: slideInLeft 0.3s ease forwards;
-}
-@keyframes slideInLeft {
-    from { opacity: 0; transform: translateX(-10px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-/* REGLA MAESTRA: Forzar que los iconos sean iconos y no texto */
-
+/* 1. Iconos: Regla única y agresiva para que no fallen */
 .material-symbols-outlined, .sel-icon {
     font-family: 'Material Symbols Outlined' !important;
     font-weight: normal;
@@ -43,469 +11,102 @@
     display: inline-block;
     line-height: 1;
     text-transform: none;
-    letter-spacing: normal;
+    -webkit-font-smoothing: antialiased;
     word-wrap: normal;
     white-space: nowrap;
     direction: ltr;
-    -webkit-font-smoothing: antialiased; /* Suavizado para evitar píxeles */
-}
-/* Excepción: Cuando el avatar muestra iniciales (ABC) */
-#avatar-content:not(.material-symbols-outlined) {
-    font-family: var(--font-main) !important;
-    font-size: 14px;
-    font-weight: 800;
 }
 
-/* Ajuste de los sub-items para que no se vean como botones de Windows viejos */
-.sub-item {
-    background: rgba(255, 255, 255, 0.03);
+/* 2. El contenedor (La Píldora) */
+.pill-navigation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 4px 12px;
+    border-radius: 40px;
     border: 1px solid var(--border-color);
+    margin: 0 auto;
+    max-width: fit-content;
+}
+
+/* 3. Grupos de navegación (Finanzas, Gestión...) */
+.nav-group {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 30px;
+    padding: 0 4px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden; /* Mantiene la estética de píldora */
+    max-width: 44px; /* Cerrado: solo se ve el icono */
+}
+
+/* Estado ACTIVO: El grupo se expande horizontalmente */
+.nav-group.active {
+    max-width: 800px; /* Suficiente para que quepa el submenú */
+    background-color: var(--text-primary); /* Fondo blanco/claro */
+}
+
+/* Header del tema (Icono + Texto) */
+.topic-header {
+    background: transparent;
+    border: none;
     color: var(--text-secondary);
-    padding: 5px 12px;
-    border-radius: 15px;
-    font-size: 11px;
-    font-weight: 600;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 10px;
     cursor: pointer;
-    white-space: nowrap; /* Evita que el texto interno se rompa */
-    transition: all 0.2s ease;
+    font-weight: 700;
+}
+
+/* Texto del tema: oculto si no está activo */
+.topic-header span:not(.material-symbols-outlined) {
+    display: none;
+}
+
+.nav-group.active .topic-header {
+    color: #000 !important; /* Texto negro sobre fondo claro */
+}
+
+.nav-group.active .topic-header span:not(.material-symbols-outlined) {
+    display: inline;
+}
+
+/* 4. Submenú Horizontal (Aparece al lado) */
+.sub-pill-container {
+    display: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    padding-left: 10px;
+    margin-left: 5px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1); /* Línea divisoria negra suave */
+}
+
+.nav-group.active .sub-pill-container {
+    display: flex;
+}
+
+/* Botones internos (Sub-items) */
+.sub-item {
+    background: transparent;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #666; /* Gris oscuro para leer bien sobre el blanco */
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.2s;
 }
 
 .sub-item.active {
     background-color: var(--accent-neon) !important;
     color: #000 !important;
-    border-color: var(--accent-neon);
-    box-shadow: 0 0 10px var(--accent-soft);
-}
-/* =========================================
-   1. BOTONES PROFESIONALES
-   ========================================= */
-.btn-primary {
-    background-color: var(--accent-neon);
-    color: #000000; /* Texto oscuro para contraste */
-    border: none;
-    padding: 8px 16px;
-    border-radius: var(--radius-sm);
-    font-weight: 600;
-    font-size: var(--font-size-sm);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: all 0.2s ease;
-    width: fit-content; /* Botones a la medida */
-}
-
-.btn-primary:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-1px);
-}
-
-.icon-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 18px;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: var(--radius-sm);
-    transition: 0.2s;
-}
-
-.icon-btn:hover {
-    color: var(--text-primary);
-    background-color: rgba(255,255,255,0.05);
-}
-
-/* =========================================
-   2. TARJETAS KPI (Overview en Salesforce)
-   ========================================= */
-.kpi-cards-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columnas fijas */
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
-}
-
-.card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: var(--spacing-md);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-card);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-}
-
-.card.highlight-card {
-    background-color: var(--accent-neon);
-    color: #000000;
-}
-
-.card .label {
-    color: var(--text-secondary);
-    font-size: var(--font-size-xs);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.card.highlight-card .label {
-    color: rgba(0,0,0,0.7);
-}
-
-.card .amount {
-    color: var(--text-primary);
-    font-size: var(--font-size-lg);
-    font-weight: 700;
-}
-
-.card.highlight-card .amount {
-    color: #000000;
-}
-
-/* =========================================
-   3. PESTAÑAS Y ESTADOS (Unpaid Invoices)
-   ========================================= */
-.status-tabs {
-    display: flex;
-    background-color: var(--bg-main);
-    border-radius: var(--radius-lg);
-    padding: 4px;
-    width: fit-content;
-}
-
-.tab-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    padding: 6px 12px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: var(--font-size-xs);
-    border-radius: var(--radius-md);
-    transition: 0.3s;
-}
-
-.tab-btn.active {
-    background-color: var(--bg-card);
-    color: var(--text-primary);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-.tab-btn.status-pilled {
-    background-color: var(--accent-neon);
-    color: #000000;
-}
-
-/* Etiquetas de estado (Badges) */
-.badge {
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.badge.success { background: rgba(16, 185, 129, 0.1); color: var(--status-success); }
-.badge.warning { background: rgba(245, 158, 11, 0.1); color: var(--status-warning); }
-.badge.danger { background: rgba(239, 68, 68, 0.1); color: var(--status-danger); }
-
-/* =========================================
-   4. INTERFAZ DE LOGIN (Acceso SACLAB)
-   ========================================= */
-.login-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    width: 100%;
-    /* El degradado de fondo lo hereda del body en style.css */
-}
-
-.login-box {
-    background-color: var(--bg-card);
-    padding: 40px;
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-card);
-    width: 100%;
-    max-width: 400px;
-    animation: fadeIn 0.5s ease;
-}
-
-.login-box header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.login-box header h1 {
-    color: var(--text-primary);
-    font-size: 26px;
-    letter-spacing: 2px;
-    font-weight: 800;
-    margin-bottom: 8px;
-}
-
-.login-box header p {
-    color: var(--text-secondary);
-    font-size: var(--font-size-sm);
-}
-
-/* Campos de Formulario */
-.input-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: var(--spacing-lg);
-    width: 100%;
-}
-
-.input-group label {
-    color: var(--text-secondary);
-    font-size: var(--font-size-sm);
-    margin-bottom: 8px;
-    font-weight: 600;
-}
-
-.input-group input {
-    background-color: var(--bg-main);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 12px 16px;
-    border-radius: var(--radius-md);
-    font-family: var(--font-main);
-    font-size: var(--font-size-base);
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-/* Efecto Neón al escribir */
-.input-group input:focus {
-    border-color: var(--accent-neon);
-    box-shadow: 0 0 0 3px var(--accent-soft);
-}
-
-.input-group input::placeholder {
-    color: #4a5568;
-}
-
-/* Ajuste del botón para que ocupe todo el ancho en el login */
-.login-box .btn-primary {
-    width: 100%;
-    padding: 14px;
-    font-size: var(--font-size-md);
-    margin-top: 10px;
-}
-
-.login-box footer {
-    margin-top: 24px;
-    text-align: center;
-}
-
-.login-box footer a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: var(--font-size-sm);
-    transition: color 0.2s ease;
-}
-
-.login-box footer a:hover {
-    color: var(--accent-neon);
-}
-/* css/components.css */
-
-#forgot-view header h1 {
-    color: var(--status-warning); /* Color ámbar para distinguir que es una acción de alerta/seguridad */
-}
-
-#forgot-view p {
-    margin-bottom: 20px;
-    line-height: 1.4;
-}
-
-/* Animación simple de cambio */
-#login-view, #forgot-view {
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.98); }
-    to { opacity: 1; transform: scale(1); }
-}
-
-/* Contenedor fijo en la esquina superior derecha */
-.toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* Estilo base del Toast */
-.toast {
-    background-color: var(--bg-card);
-    color: var(--text-primary);
-    padding: 12px 20px;
-    border-radius: var(--radius-md);
-    border-left: 4px solid var(--accent-neon);
-    box-shadow: var(--shadow-card);
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 280px;
-    animation: slideIn 0.3s ease forwards;
-}
-
-/* Variaciones de estado */
-.toast.error { border-left-color: var(--status-danger); }
-.toast.success { border-left-color: var(--accent-neon); }
-.toast.warning { border-left-color: var(--status-warning); }
-
-@keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-
-.toast.fade-out {
-    animation: fadeOut 0.5s ease forwards;
-}
-
-@keyframes fadeOut {
-    to { transform: translateX(20px); opacity: 0; }
-}
-
-/* Contenedor relativo para el menú desplegable */
-.avatar-container {
-    position: relative;
-    display: inline-block;
-}
-
-.avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background-color: var(--bg-main);
-    border: 1.5px solid var(--accent-neon);
-    color: var(--accent-neon);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.avatar:hover {
-    box-shadow: 0 0 10px var(--accent-soft);
-    transform: scale(1.05);
-}
-
-/* El selector de iconos */
-.avatar-selector {
-    position: absolute;
-    top: 45px;
-    right: 0;
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 12px;
-    box-shadow: var(--shadow-card);
-    display: none; /* Se activa con JS */
-    z-index: 100;
-    width: 180px;
-}
-
-.avatar-selector p {
-    font-size: 10px;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-}
-
-.icons-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-}
-
-.sel-icon {
-    font-family: 'Material Symbols Outlined';
-    font-size: 20px;
-    padding: 8px;
-    cursor: pointer;
-    border-radius: var(--radius-sm);
-    text-align: center;
-    transition: 0.2s;
-    background: var(--bg-main);
-}
-
-.sel-icon:hover {
-    background: var(--accent-soft);
-    color: var(--accent-neon);
-}
-.sub-item {
-    background: #f0f0f0; /* Un gris muy suave para los botones internos */
-    border: none;
-    padding: 4px 10px;
-    border-radius: 15px;
-    font-size: 11px;
-    font-weight: 700;
-    color: #333;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.sub-item.active {
-    background-color: var(--accent-neon); /* Tu verde neón */
-    color: #000 !important;
-}
-.icons-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
-    gap: 10px;
-    padding: 10px;
-}
-
-.sel-icon {
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.05); /* Fondo sutil */
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 14px; /* Tamaño pequeño para las iniciales */
-    font-weight: 600;
-    color: var(--text-secondary);
-    border: 1px solid transparent;
-}
-
-.sel-icon:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--accent-neon);
-    color: var(--text-primary);
-}
-
-/* Evita que el avatar principal se deforme */
-.avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%; /* Opcional: Círculo o cuadrado redondeado */
-    background: var(--accent-neon);
-    color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden; /* Crucial para que nada se salga */
-    font-weight: bold;
-    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
