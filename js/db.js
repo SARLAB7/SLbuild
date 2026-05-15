@@ -2,7 +2,6 @@
 import { db } from './firebase-config.js';
 import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { notify } from './utils.js';
-import { guardarConfiguracion, obtenerConfiguracion } from './db.js'; // Importamos las nuevas funciones
 import { updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
 
@@ -34,18 +33,20 @@ export async function guardarFactura(datos) {
 }
 // js/db.js
 
-// ... (tus otros imports y la función guardarFactura) ...
+// ... (tus otros imports y la función guardarFactura) ...//
 
 export async function cargarFacturas() {
     console.log("Cargando facturas desde Firestore...");
     // Aquí luego pondremos la lógica de Grid.js o tablas
     return []; 
+    
 }
 * Guarda o actualiza la configuración del usuario en Firestore
  * @param {string} uid - El ID del usuario autenticado
  * @param {string} seccion - Puede ser 'empresa' o 'pagos'
  * @param {object} datos - Los datos del formulario
  */
+     
 export async function guardarConfiguracion(uid, seccion, datos) {
     try {
         const userRef = doc(db, "usuarios", uid);
