@@ -112,136 +112,138 @@
         <div class="card dark-card"><p>Catálogo de servicios en construcción...</p></div>
     </section>
           <section id="sec-configuracion" class="content-section" style="display: none;" x-data="{ tabActiva: 'empresa' }">
-        <div class="config-layout">
+    <div class="config-layout">
+        
+        <aside class="config-sidebar">
+            <h3 class="menu-category-title">Ajustes Generales</h3>
+            <nav class="config-menu">
+                <button @click="tabActiva = 'perfil'" :class="tabActiva === 'perfil' ? 'active' : ''">
+                    <span class="material-symbols-outlined">person</span> Mi Perfil
+                </button>
+                <button @click="tabActiva = 'empresa'" :class="tabActiva === 'empresa' ? 'active' : ''">
+                    <span class="material-symbols-outlined">business</span> Datos Fiscales
+                </button>
+                <button @click="tabActiva = 'branding'" :class="tabActiva === 'branding' ? 'active' : ''">
+                    <span class="material-symbols-outlined">brush</span> Identidad Visual
+                </button>
+                <button @click="tabActiva = 'pagos'" :class="tabActiva === 'pagos' ? 'active' : ''">
+                    <span class="material-symbols-outlined">payments</span> Cuentas y Pagos
+                </button>
+            </nav>
+        </aside>
+
+        <div class="config-content">
             
-            <aside class="config-sidebar">
-                <h3 class="menu-category-title">Ajustes Generales</h3>
-                <nav class="config-menu">
-                    <button @click="tabActiva = 'perfil'" :class="tabActiva === 'perfil' ? 'active' : ''">
-                        <span class="material-symbols-outlined">person</span> Mi Perfil
-                    </button>
-                    <button @click="tabActiva = 'empresa'" :class="tabActiva === 'empresa' ? 'active' : ''">
-                        <span class="material-symbols-outlined">business</span> Datos Fiscales
-                    </button>
-                    <button @click="tabActiva = 'branding'" :class="tabActiva === 'branding' ? 'active' : ''">
-                        <span class="material-symbols-outlined">brush</span> Identidad Visual
-                    </button>
-                    <button @click="tabActiva = 'pagos'" :class="tabActiva === 'pagos' ? 'active' : ''">
-                        <span class="material-symbols-outlined">payments</span> Cuentas y Pagos
-                    </button>
-                </nav>
-            </aside>
-
-            <div class="config-content">
-                
-                <div x-show="tabActiva === 'perfil'" x-transition class="tab-pane">
-                    <div class="config-card">
-                        <h4>Información de la Cuenta</h4>
-                        <form id="form-update-profile" class="form-grid">
-                            <div class="input-group">
-                                <label>Nombre Completo</label>
-                                <input type="text" id="config-name" placeholder="Tu nombre">
-                            </div>
-                            <div class="input-group">
-                                <label>Correo Electrónico (No editable)</label>
-                                <input type="email" id="profile-email-display" disabled style="opacity: 0.5;">
-                            </div>
-                            <div class="form-actions full-width">
-                                <button type="submit" class="btn-primary">Actualizar Perfil</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div x-show="tabActiva === 'empresa'" x-transition class="tab-pane" style="display: none;">
-                    <div class="config-card">
-                        <h4>Datos Fiscales para Facturación</h4>
-                        <form id="form-update-empresa" class="form-grid">
-                            <div class="input-group full-width">
-                                <label>Razón Social o Nombre Comercial</label>
-                                <input type="text" id="empresa-nombre" placeholder="Ej. SARLAB S.A.S.">
-                            </div>
-                            <div class="input-group">
-                                <label>NIT / RUT</label>
-                                <input type="text" id="empresa-nit" placeholder="Ej. 900XXX.XXX-X">
-                            </div>
-                            <div class="input-group">
-                                <label>Régimen Tributario</label>
-                                <select id="empresa-regimen">
-                                    <option value="responsable">Responsable de IVA</option>
-                                    <option value="no-responsable">No Responsable</option>
-                                </select>
-                            </div>
-                            <div class="input-group">
-                                <label>Dirección Principal</label>
-                                <input type="text" id="empresa-direccion" placeholder="Calle/Cra...">
-                            </div>
-                            <div class="input-group">
-                                <label>Ciudad / Departamento</label>
-                                <input type="text" id="empresa-ciudad" placeholder="Ej. Medellín, Antioquia">
-                            </div>
-                            <div class="form-actions full-width">
-                                <button type="submit" class="btn-primary">Guardar Datos Fiscales</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div x-show="tabActiva === 'branding'" x-transition class="tab-pane" style="display: none;">
-    <div class="config-card">
-        <h4>Identidad Visual de la Empresa</h4>
-        <div class="branding-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            
-            <div class="upload-zone" id="zone-logo" style="border: 2px dashed var(--border-color, #333); padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; color: var(--text-secondary); position: relative;">
-                <input type="file" id="input-logo" accept="image/png, image/jpeg" style="display: none;">
-                <img id="preview-logo" src="" style="max-width: 100%; max-height: 100px; display: none; margin: 0 auto; border-radius: 4px;">
-                <div id="text-logo">
-                    <span class="material-symbols-outlined" style="font-size: 2rem;">upload_file</span>
-                    <p style="margin-top:10px;">Subir Logo (.PNG, .JPG)</p>
+            <div x-show="tabActiva === 'perfil'" x-transition class="tab-pane">
+                <div class="config-card">
+                    <h4>Información de la Cuenta</h4>
+                    <form id="form-update-profile" class="form-grid">
+                        <div class="input-group">
+                            <label>Nombre Completo</label>
+                            <input type="text" id="config-name" placeholder="Tu nombre">
+                        </div>
+                        <div class="input-group">
+                            <label>Correo Electrónico (No editable)</label>
+                            <input type="email" id="profile-email-display" disabled style="opacity: 0.5;">
+                        </div>
+                        <div class="form-actions full-width">
+                            <button type="submit" class="btn-primary">Actualizar Perfil</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
-            <div class="upload-zone" id="zone-firma" style="border: 2px dashed var(--border-color, #333); padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; color: var(--text-secondary); position: relative;">
-                <input type="file" id="input-firma" accept="image/png" style="display: none;">
-                <img id="preview-firma" src="" style="max-width: 100%; max-height: 100px; display: none; margin: 0 auto;">
-                <div id="text-firma">
-                    <span class="material-symbols-outlined" style="font-size: 2rem;">draw</span>
-                    <p style="margin-top:10px;">Subir Firma Digital (.PNG)</p>
+            <div x-show="tabActiva === 'empresa'" x-transition class="tab-pane" style="display: none;">
+                <div class="config-card white-card">
+                    <h4>Datos Fiscales para Facturación</h4>
+                    <form id="form-update-empresa" class="form-grid">
+                        <div class="input-group full-width">
+                            <label>Razón Social o Nombre Comercial</label>
+                            <input type="text" id="empresa-nombre" class="light-input" placeholder="Ej. SARLAB S.A.S.">
+                        </div>
+                        <div class="input-group">
+                            <label>NIT / RUT</label>
+                            <input type="text" id="empresa-nit" class="light-input" placeholder="Ej. 900XXX.XXX-X">
+                        </div>
+                        <div class="input-group">
+                            <label>Régimen Tributario</label>
+                            <select id="empresa-regimen" class="light-input">
+                                <option value="responsable">Responsable de IVA</option>
+                                <option value="no-responsable">No Responsable</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Dirección Principal</label>
+                            <input type="text" id="empresa-direccion" class="light-input" placeholder="Calle/Cra...">
+                        </div>
+                        <div class="input-group">
+                            <label>Ciudad / Departamento</label>
+                            <input type="text" id="empresa-ciudad" class="light-input" placeholder="Ej. Medellín, Antioquia">
+                        </div>
+                        <div class="form-actions full-width">
+                            <button type="submit" class="btn-primary">Guardar Datos Fiscales</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
-        </div>
-    </div>
-</div>
+            <div x-show="tabActiva === 'branding'" x-transition class="tab-pane" style="display: none;">
+                <div class="config-card">
+                    <h4>Identidad Visual de la Empresa</h4>
+                    <div class="branding-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        
+                        <div class="upload-zone" id="zone-logo" style="border: 2px dashed var(--border-color, #333); padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; color: var(--text-secondary); position: relative;">
+                            <input type="file" id="input-logo" accept="image/png, image/jpeg" style="display: none;">
+                            <img id="preview-logo" src="" style="max-width: 100%; max-height: 100px; display: none; margin: 0 auto; border-radius: 4px;">
+                            <div id="text-logo">
+                                <span class="material-symbols-outlined" style="font-size: 2rem;">upload_file</span>
+                                <p style="margin-top:10px;">Subir Logo (.PNG, .JPG)</p>
+                            </div>
+                        </div>
 
-                <div x-show="tabActiva === 'pagos'" x-transition class="tab-pane" style="display: none;">
-                    <div class="config-card">
-                        <h4>Preferencias de Recaudo</h4>
-                        <form id="form-update-pagos" class="form-grid">
-                            <div class="input-group">
-                                <label>Entidad Bancaria</label>
-                                <select id="banco-principal">
-                                    <option value="bancolombia">Bancolombia</option>
-                                    <option value="nequi">Nequi</option>
-                                    <option value="nu">Nu (Nubank)</option>
-                                </select>
+                        <div class="upload-zone" id="zone-firma" style="border: 2px dashed var(--border-color, #333); padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; color: var(--text-secondary); position: relative;">
+                            <input type="file" id="input-firma" accept="image/png" style="display: none;">
+                            <img id="preview-firma" src="" style="max-width: 100%; max-height: 100px; display: none; margin: 0 auto;">
+                            <div id="text-firma">
+                                <span class="material-symbols-outlined" style="font-size: 2rem;">draw</span>
+                                <p style="margin-top:10px;">Subir Firma Digital (.PNG)</p>
                             </div>
-                            <div class="input-group">
-                                <label>Número de Cuenta</label>
-                                <input type="text" id="cuenta-numero" placeholder="Ej. 000-00000-00">
-                            </div>
-                            <div class="input-group full-width">
-                                <label>Instrucciones de Pago</label>
-                                <textarea id="instrucciones-pago" rows="3" placeholder="Ej: Realizar transferencia y enviar comprobante..."></textarea>
-                            </div>
-                            <div class="form-actions full-width">
-                                <button type="submit" class="btn-primary">Guardar Preferencias</button>
-                            </div>
-                        </form>
+                        </div>
+
                     </div>
                 </div>
+            </div>
 
-            </div> </div> </section>
+            <div x-show="tabActiva === 'pagos'" x-transition class="tab-pane" style="display: none;">
+                <div class="config-card">
+                    <h4>Preferencias de Recaudo</h4>
+                    <form id="form-update-pagos" class="form-grid">
+                        <div class="input-group">
+                            <label>Entidad Bancaria</label>
+                            <select id="banco-principal">
+                                <option value="bancolombia">Bancolombia</option>
+                                <option value="nequi">Nequi</option>
+                                <option value="nu">Nu (Nubank)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Número de Cuenta</label>
+                            <input type="text" id="cuenta-numero" placeholder="Ej. 000-00000-00">
+                        </div>
+                        <div class="input-group full-width">
+                            <label>Instrucciones de Pago</label>
+                            <textarea id="instrucciones-pago" rows="3" placeholder="Ej: Realizar transferencia y enviar comprobante..."></textarea>
+                        </div>
+                        <div class="form-actions full-width">
+                            <button type="submit" class="btn-primary">Guardar Preferencias</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div> 
+    </div> 
+</section>
     </main>
 </div>
 
