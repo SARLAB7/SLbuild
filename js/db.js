@@ -22,3 +22,9 @@ export async function guardarFactura(datos) {
         console.error("Error: ", e);
     }
 }
+import { formatCurrency, notify } from './utils.js';
+
+const monto = 150000;
+console.log(formatCurrency(monto)); // Salida: $ 150.000
+
+notify("Factura guardada correctamente"); // Lanza el toast con el estilo de SACLAB
