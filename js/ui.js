@@ -1,8 +1,8 @@
 // js/ui.js
 import { auth } from './firebase-config.js';
-import { signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { notify } from './utils.js';
+
 /* =========================================
    1. NAVEGACIÓN PRINCIPAL (Pill Navigation)
    ========================================= */
@@ -44,7 +44,6 @@ export function activarNavegacionPill() {
         });
     });
 
-    // Lógica de Logout
     const btnLogout = document.getElementById('btn-logout');
     if (btnLogout) {
         btnLogout.onclick = (e) => {
@@ -59,37 +58,13 @@ export function activarNavegacionPill() {
         };
     }
 
-    // Abrir por defecto
     if (navGroups.length > 0 && !document.querySelector('.nav-group.active')) {
         navGroups[0].querySelector('.topic-header').click();
     }
 }
 
 /* =========================================
-   2. NOTIFICACIONES (Toast)
-   ========================================= */
-export function showToast(mensaje, tipo = 'success') {
-    const container = document.getElementById('toast-container');
-    if (!container) return;
-
-    const toast = document.createElement('div');
-    toast.className = `toast ${tipo}`;
-    const icon = tipo === 'error' ? 'report' : (tipo === 'success' ? 'check_circle' : 'info');
-    
-    toast.innerHTML = `
-        <span class="material-symbols-outlined">${icon}</span>
-        <span>${mensaje}</span>
-    `;
-
-    container.appendChild(toast);
-    setTimeout(() => {
-        toast.classList.add('fade-out');
-        setTimeout(() => toast.remove(), 500);
-    }, 4000);
-}
-
-/* =========================================
-   3. GESTIÓN DEL AVATAR (Iniciales e Iconos)
+   2. GESTIÓN DEL AVATAR (Iniciales e Iconos)
    ========================================= */
 export function configurarAvatar(user) {
     const avatarContent = document.getElementById('avatar-content');
@@ -98,119 +73,105 @@ export function configurarAvatar(user) {
 
     if (!avatarContent || !avatarContainer) return;
 
-    // 1. Establecer iniciales reales por defecto al cargar
-    if (user && user.displayName) {
-        const nombres = user.displayName.trim().split(/\s+/);
-        const iniciales = nombres.length > 1 
-            ? (nombres[0][0] + nombres[nombres.length - 1][0]).toUpperCase()
-            : nombres[0].substring(0, 2).toUpperCase();
-        
-        avatarContent.innerText = iniciales;
-    } else {
-        avatarContent.innerText = "U"; // Fallback para usuario anónimo
-    }
-
-    // 2. Toggle del selector (Corregido para evitar conflictos de estilo)
-    avatarContainer.onclick = (e) => {
-        e.stopPropagation();
-        const isVisible = selector.style.display === 'block';
-        selector.style.display = isVisible ? 'none' : 'block';
+    const actualizarVistaAvatar = (u) => {
+        if (u && u.displayName) {
+            const nombres = u.displayName.trim().split(/\s+/);
+            avatarContent.innerText = nombres.length > 1 
+                ? (nombres[0][0] + nombres[nombres.length - 1][0]).toUpperCase()
+                : nombres[0].substring(0, 2).toUpperCase();
+        } else {
+            avatarContent.innerText = "U";
+        }
     };
 
-    // 3. Cambio de iconos e iniciales (Uso de delegación de eventos)
+    actualizarVistaAvatar(user);
+
+    avatarContainer.onclick = (e) => {
+        e.stopPropagation();
+        selector.style.display = selector.style.display === 'block' ? 'none' : 'block';
+    };
+
     document.querySelectorAll('.sel-icon').forEach(iconBtn => {
-       // Dentro de la lógica de cambio de iconos en ui.js
-iconBtn.onclick = (e) => {
-    const type = iconBtn.dataset.type;
-    
-    if (type === 'icon') {
-        avatarContent.classList.add('material-symbols-outlined');
-        avatarContent.innerText = iconBtn.innerText;
-    } else {
-        // Al elegir iniciales, quitamos la fuente de iconos de Google
-        avatarContent.classList.remove('material-symbols-outlined');
-        avatarContent.style.fontFamily = "var(--font-main)";
-        
-        // Aquí pones tus iniciales reales
-        const user = auth.currentUser;
-        if (user && user.displayName) {
-            const names = user.displayName.split(" ");
-            avatarContent.innerText = names.map(n => n[0]).join("").toUpperCase().substring(0, 2);
-        } else {
-            avatarContent.innerText = "US";
-        }
-    }
-    selector.style.display = 'none';
-};
+        iconBtn.onclick = (e) => {
+            const type = iconBtn.dataset.type;
+            if (type === 'icon') {
+                avatarContent.classList.add('material-symbols-outlined');
+                avatarContent.innerText = iconBtn.innerText;
+            } else {
+                avatarContent.classList.remove('material-symbols-outlined');
+                avatarContent.style.fontFamily = "var(--font-main)";
+                actualizarVistaAvatar(auth.currentUser);
+            }
+            selector.style.display = 'none';
+        };
     });
 
-    // 4. Cerrar al hacer clic fuera de cualquier parte del documento
     document.addEventListener('click', () => {
         if (selector) selector.style.display = 'none';
     });
 }
-// configuración /ui.js
 
+/* =========================================
+   3. CONFIGURACIÓN DEL SISTEMA
+   ========================================= */
 export function vincularBotonConfiguracion() {
-    const btnConfig = document.getElementById('btn-open-config');
-    const sections = document.querySelectorAll('.content-section');
-    const navGroups = document.querySelectorAll('.nav-group');
+    const btn = document.getElementById('btn-open-config');
+    if (!btn) return;
 
-    if (btnConfig) {
-        btnConfig.onclick = () => {
-            // 1. Ocultar todas las secciones
-            sections.forEach(s => {
-                s.style.display = 'none';
-                s.classList.remove('active-section');
-            });
+    btn.onclick = () => {
+        document.querySelectorAll('.content-section').forEach(s => {
+            s.style.display = 'none';
+            s.classList.remove('active-section');
+        });
 
-            // 2. Mostrar la de configuración
-            const secConfig = document.getElementById('sec-configuracion');
-            if (secConfig) {
-                secConfig.style.display = 'block';
-                setTimeout(() => secConfig.classList.add('active-section'), 10);
-            }
+        const sec = document.getElementById('sec-configuracion');
+        if (sec) {
+            sec.style.display = 'block';
+            setTimeout(() => sec.classList.add('active-section'), 10);
+        }
 
-            // 3. Desactivar cualquier "pill" de navegación activo para no confundir
-            navGroups.forEach(g => g.classList.remove('active'));
-            document.querySelectorAll('.sub-item').forEach(i => i.classList.remove('active'));
-        };
-    }
+        document.querySelectorAll('.nav-group, .sub-item').forEach(el => el.classList.remove('active'));
+    };
 }
-// js/ui.js (continuación)
-
 
 export function inicializarConfiguracion(user) {
     const nameInput = document.getElementById('config-name');
     const nameDisplay = document.getElementById('profile-name-display');
     const emailDisplay = document.getElementById('profile-email-display');
     const avatarDisplay = document.getElementById('profile-avatar-display');
+    const form = document.getElementById('form-update-profile');
 
     if (user) {
-        // Llenar campos con info de Firebase
         nameInput.value = user.displayName || "";
         nameDisplay.innerText = user.displayName || "Usuario SACLAB";
         emailDisplay.innerText = user.email;
         
-        // Generar iniciales reales (DC)
-        if (user.displayName) {
-            const names = user.displayName.split(" ");
-            avatarDisplay.innerText = (names[0][0] + (names[1] ? names[1][0] : "")).toUpperCase();
-        }
+        const nombres = (user.displayName || "U").trim().split(/\s+/);
+        avatarDisplay.innerText = nombres.length > 1 
+            ? (nombres[0][0] + nombres[nombres.length - 1][0]).toUpperCase()
+            : nombres[0].substring(0, 2).toUpperCase();
     }
 
-    // Guardar cambios
-    const form = document.getElementById('form-update-profile');
     if (form) {
         form.onsubmit = async (e) => {
             e.preventDefault();
+            const nuevoNombre = nameInput.value.trim();
+            if (!nuevoNombre) return notify("El nombre no puede estar vacío", "error");
+
             try {
-                await updateProfile(user, { displayName: nameInput.value });
+                await updateProfile(user, { displayName: nuevoNombre });
                 notify("Perfil actualizado en SACLAB");
-                nameDisplay.innerText = nameInput.value;
-                // Actualizar también el avatar de la barra superior
-                document.getElementById('avatar-content').innerText = nameInput.value.substring(0,2).toUpperCase();
+                
+                // Actualización inmediata de la UI
+                nameDisplay.innerText = nuevoNombre;
+                const nombres = nuevoNombre.split(/\s+/);
+                const iniciales = nombres.length > 1 ? nombres[0][0] + nombres[nombres.length-1][0] : nombres[0][0];
+                
+                document.getElementById('avatar-content').innerText = iniciales.toUpperCase();
+                avatarDisplay.innerText = iniciales.toUpperCase();
+                
             } catch (error) {
+                console.error(error);
                 notify("Error al actualizar perfil", "error");
             }
         };
