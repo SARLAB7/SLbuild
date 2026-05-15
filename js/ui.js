@@ -140,8 +140,8 @@ export function configurarAvatar(user) {
 /* =========================================
    3. CONFIGURACIÓN DEL SISTEMA
    ========================================= */
-// js/ui.js
 
+// Cambiamos el nombre a vincularBotonConfiguracion para que coincida con tu panel.html
 export function vincularBotonConfiguracion() {
     const btn = document.getElementById('btn-open-config');
     if (!btn) return;
@@ -163,8 +163,65 @@ export function vincularBotonConfiguracion() {
         const secConfig = document.getElementById('sec-configuracion');
         if (secConfig) {
             secConfig.style.display = 'block';
-            // Delay mínimo para que la animación de entrada funcione
             setTimeout(() => secConfig.classList.add('active-section'), 10);
         }
     };
+}
+
+// ESTA ES LA FUNCIÓN QUE FALTABA EXPORTAR PARA RENDER
+export function inicializarConfiguracion(user) {
+    const nameInput = document.getElementById('config-name');
+    const nameDisplay = document.getElementById('profile-name-display');
+    const emailDisplay = document.getElementById('profile-email-display');
+    const avatarDisplay = document.getElementById('profile-avatar-display');
+    const form = document.getElementById('form-update-profile');
+
+    if (user) {
+        // Llenar campos con info de Firebase
+        if(nameInput) nameInput.value = user.displayName || "";
+        if(nameDisplay) nameDisplay.innerText = user.displayName || "Usuario SACLAB";
+        if(emailDisplay) emailDisplay.innerText = user.email;
+        
+        // Iniciales para el avatar de la sección configuración
+        if(avatarDisplay && user.displayName) {
+            const nombres = user.displayName.trim().split(/\s+/);
+            avatarDisplay.innerText = nombres.length > 1 
+                ? (nombres[0][0] + nombres[nombres.length - 1][0]).toUpperCase()
+                : nombres[0].substring(0, 2).toUpperCase();
+        }
+    }
+
+    // Lógica para guardar el nuevo nombre
+    if (form) {
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const nuevoNombre = nameInput.value.trim();
+            if (!nuevoNombre) return notify("El nombre no puede estar vacío", "error");
+
+            try {
+                await updateProfile(user, { displayName: nuevoNombre });
+                notify("Perfil actualizado en SACLAB");
+                
+                if(nameDisplay) nameDisplay.innerText = nuevoNombre;
+                
+                // Actualizar avatares en tiempo real (Pillar y Config)
+                const nombresArr = nuevoNombre.split(/\s+/);
+                const iniciales = nombresArr.length > 1 
+                    ? (nombresArr[0][0] + nombresArr[nombresArr.length - 1][0]).toUpperCase()
+                    : nombresArr[0].substring(0, 2).toUpperCase();
+                
+                if(avatarDisplay) avatarDisplay.innerText = iniciales;
+                
+                // Si el modo actual es "iniciales", actualizar la barra superior también
+                if (localStorage.getItem('saclab_avatar_tipo') === 'initials') {
+                    const topAvatar = document.getElementById('avatar-content');
+                    if(topAvatar) topAvatar.innerText = iniciales;
+                }
+                
+            } catch (error) {
+                console.error(error);
+                notify("Error al actualizar perfil", "error");
+            }
+        };
+    }
 }
