@@ -148,3 +148,31 @@ iconBtn.onclick = (e) => {
         if (selector) selector.style.display = 'none';
     });
 }
+// configuración /ui.js
+
+export function vincularBotonConfiguracion() {
+    const btnConfig = document.getElementById('btn-open-config');
+    const sections = document.querySelectorAll('.content-section');
+    const navGroups = document.querySelectorAll('.nav-group');
+
+    if (btnConfig) {
+        btnConfig.onclick = () => {
+            // 1. Ocultar todas las secciones
+            sections.forEach(s => {
+                s.style.display = 'none';
+                s.classList.remove('active-section');
+            });
+
+            // 2. Mostrar la de configuración
+            const secConfig = document.getElementById('sec-configuracion');
+            if (secConfig) {
+                secConfig.style.display = 'block';
+                setTimeout(() => secConfig.classList.add('active-section'), 10);
+            }
+
+            // 3. Desactivar cualquier "pill" de navegación activo para no confundir
+            navGroups.forEach(g => g.classList.remove('active'));
+            document.querySelectorAll('.sub-item').forEach(i => i.classList.remove('active'));
+        };
+    }
+}
