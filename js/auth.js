@@ -1,6 +1,4 @@
 // js/auth.js
-
-// 1. IMPORTS (Solo una vez al principio)
 import { auth } from './firebase-config.js';
 import { 
     signInWithEmailAndPassword, 
@@ -8,7 +6,9 @@ import {
     sendPasswordResetEmail 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-import { activarNavegacionPill, showToast } from './ui.js';
+// Importamos solo lo necesario
+import { activarNavegacionPill } from './ui.js';
+import { notify } from './utils.js'; // <--- USAMOS NUESTRA UTILIDAD DE LIBRERÍA
 import { cargarFacturas } from './db.js';
 
 /* =========================================
@@ -46,14 +46,14 @@ if (loginForm) {
 
         signInWithEmailAndPassword(auth, email, pass)
             .then(() => {
-                showToast("Bienvenido a SACLAB", "success");
+                notify("Bienvenido a SACLAB"); // Uso de librería
                 setTimeout(() => window.location.href = "panel.html", 800);
             })
             .catch((error) => {
                 let mensaje = "Error de acceso";
                 if (error.code === 'auth/wrong-password') mensaje = "Contraseña incorrecta";
                 if (error.code === 'auth/user-not-found') mensaje = "Usuario no registrado";
-                showToast(mensaje, "error");
+                notify(mensaje, "error"); // Uso de librería
             });
     });
 }
@@ -67,37 +67,30 @@ if (forgotForm) {
 
         sendPasswordResetEmail(auth, email)
             .then(() => {
-                showToast("Enlace enviado al correo", "success");
+                notify("Enlace enviado al correo");
                 forgotView.style.display = 'none';
                 loginView.style.display = 'block';
             })
-            .catch((error) => {
-                showToast("No se pudo enviar el correo", "error");
+            .catch(() => {
+                notify("No se pudo enviar el correo", "error");
             });
     });
 }
 
 /* =========================================
-   3. EXPORTACIONES Y OBSERVADOR
+   3. EXPORTACIÓN DEL VIGILANTE
    ========================================= */
-
-// Esta es la función limpia que exportamos para usar en el panel
 export function vigilarSesion(encontrado, noEncontrado) {
     onAuthStateChanged(auth, async (user) => {
         const esPanel = window.location.pathname.includes('panel.html');
-        
         if (user) {
-            // Lógica interna para el panel si se carga auth.js directamente
             if (esPanel) {
                 activarNavegacionPill(); 
                 await cargarFacturas(); 
             }
-            // Ejecutar el callback que pidas desde afuera (ej: configurarAvatar)
             if (encontrado) encontrado(user);
         } else {
-            if (esPanel) {
-                window.location.href = 'index.html';
-            }
+            if (esPanel) window.location.href = 'index.html';
             if (noEncontrado) noEncontrado();
         }
     });
