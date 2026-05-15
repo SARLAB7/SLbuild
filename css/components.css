@@ -334,99 +334,102 @@
 
 / (Actualizado con Layout Profesional) 15/5 26 */
 
-/* Layout General */
+/* =========================================
+   1. LAYOUT PRINCIPAL (SIDEBAR + CONTENIDO)
+   ========================================= */
 .config-layout {
-    display: flex;
-    gap: 30px;
+    display: flex !important; /* Fuerza la estructura de columnas */
+    flex-direction: row;
+    gap: 40px;
     align-items: flex-start;
-    max-width: 1100px; /* Evita que se estire demasiado */
+    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     padding-top: 20px;
 }
 
-/* Menú Lateral Vertical */
+/* LA SIDEBAR (Barra lateral) */
 .config-sidebar {
-    width: 240px;
+    width: 260px;
     flex-shrink: 0;
-    position: sticky;
-    top: 90px; /* Se queda fijo si haces scroll */
+    background: var(--bg-card, #16181D); /* Fondo oscuro sutil para la barra */
+    padding: 25px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color, #2A2D3A);
 }
 
 .menu-category-title {
     font-size: 0.75rem;
     text-transform: uppercase;
-    color: var(--text-secondary, #888); /* Color secundario oscuro */
+    color: var(--text-secondary, #8B949E);
     letter-spacing: 1px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     padding-left: 10px;
 }
 
 .config-menu {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
 }
 
 .config-menu button {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     background: transparent;
     border: none;
-    color: var(--text-primary, #fff); /* Texto principal claro */
-    font-size: 0.9rem;
+    color: var(--text-primary, #C9D1D9);
+    font-size: 0.95rem;
     padding: 12px 15px;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     text-align: left;
-    transition: background 0.2s, color 0.2s;
-    position: relative;
+    transition: all 0.2s ease;
 }
 
 .config-menu button:hover {
-    background: rgba(255, 255, 255, 0.03); /* Un sutil realce en hover */
+    background: rgba(255, 255, 255, 0.05);
 }
 
-/* ESTADO ACTIVO - AQUÍ USAMOS TU VERDE NEÓN */
+/* ESTADO ACTIVO (VERDE NEÓN) */
 .config-menu button.active {
-    color: var(--color-accent, #00ff00); /* Tu Verde Neón para el texto */
+    background: rgba(0, 255, 0, 0.08); /* Fondo con un tinte súper ligero de verde */
+    color: #00FF00; /* Tu Verde Neón */
     font-weight: 500;
+    border-left: 3px solid #00FF00;
+    border-radius: 0 8px 8px 0;
 }
 
-/* Indicador lateral verde neón (como en la referencia) */
-.config-menu button.active::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 15%;
-    height: 70%;
-    width: 3px;
-    background-color: var(--color-accent, #00ff00); /* Tu Verde Neón */
-    border-radius: 4px;
-}
-
-/* Área de Contenido y Tarjetas */
+/* =========================================
+   2. ÁREA DE CONTENIDO Y TARJETAS
+   ========================================= */
 .config-content {
-    flex: 1;
+    flex: 1; /* Toma todo el espacio restante a la derecha */
     min-width: 0;
 }
 
 .config-card {
-    background: var(--bg-card, #1a1a1a); /* Gris oscuro de tarjeta */
-    border: 1px solid var(--border-color, #333); /* Borde sutil */
-    border-radius: 10px;
-    padding: 25px;
+    background: var(--bg-card, #16181D);
+    border: 1px solid var(--border-color, #2A2D3A);
+    border-radius: 12px;
+    padding: 30px;
     margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .config-card h4 {
-    font-size: 1.1rem;
-    color: var(--text-primary, #fff);
-    margin-bottom: 20px;
+    font-size: 1.15rem;
+    color: #FFFFFF;
+    margin-bottom: 25px;
     font-weight: 500;
+    border-bottom: 1px solid #2A2D3A;
+    padding-bottom: 15px;
 }
 
-/* Formularios en Grid para aprovechar espacio horizontal */
+/* =========================================
+   3. ESTILIZACIÓN DE FORMULARIOS (Adiós blanco feo)
+   ========================================= */
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -437,58 +440,59 @@
     grid-column: 1 / -1;
 }
 
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    color: var(--text-secondary, #8B949E);
+    font-weight: 500;
+}
+
+/* Estilo para los inputs, selects y textareas */
+.input-group input,
+.input-group select,
+.input-group textarea {
+    background-color: #0D1117; /* Fondo súper oscuro, casi negro */
+    color: #FFFFFF; /* Texto blanco */
+    border: 1px solid #30363D; /* Borde gris oscuro */
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+/* Efecto al hacer clic en un input (Foco Verde Neón) */
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-color: #00FF00; /* Borde Verde Neón */
+    box-shadow: 0 0 0 3px rgba(0, 255, 0, 0.15); /* Resplandor verde */
+}
+
+/* Botón Guardar */
 .form-actions {
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
-/* Zonas de Carga (Branding) */
-.branding-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.upload-zone {
-    border: 2px dashed var(--border-color, #333);
-    border-radius: 8px;
-    padding: 30px;
-    text-align: center;
-    color: var(--text-secondary, #888);
+.btn-primary {
+    background-color: #00FF00;
+    color: #000000;
+    font-weight: 600;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background 0.2s;
 }
 
-.upload-zone:hover {
-    border-color: var(--color-accent, #00ff00); /* Verde Neón en Hover */
-    color: var(--text-primary, #fff);
-    background: rgba(0, 255, 0, 0.02); /* Sutil tinte verde neón */
-}
-
-.upload-zone span {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-.text-xs {
-    font-size: 0.7rem;
-    color: var(--text-secondary);
-    display: block;
-    margin-top: 5px;
-}
-
-/* Responsive básico */
-@media (max-width: 768px) {
-    .config-layout {
-        flex-direction: column;
-    }
-    .config-sidebar {
-        width: 100%;
-        position: static;
-        margin-bottom: 20px;
-    }
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
+.btn-primary:hover {
+    background-color: #00cc00;
 }
