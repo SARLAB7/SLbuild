@@ -8,74 +8,69 @@ import { notify } from './utils.js';
    ========================================= */
 export function activarNavegacionPill() {
     const navGroups = document.querySelectorAll('.nav-group');
-    const subItems = document.querySelectorAll('.sub-item');
     const sections = document.querySelectorAll('.content-section');
 
-    // Manejo de Grupos (Finanzas, Gestión, etc.)
     navGroups.forEach(group => {
         const header = group.querySelector('.topic-header');
         
         header.addEventListener('click', (e) => {
             e.preventDefault();
-            const estabaAbierto = group.classList.contains('active');
+            
+            // Si ya está activo, no hacemos nada (evita que se oculte al re-clickear)
+            if (group.classList.contains('active')) return;
 
-            // Cerramos todos los demás
+            // 1. Limpiar todos los grupos y sub-ítems
             navGroups.forEach(g => g.classList.remove('active'));
+            document.querySelectorAll('.sub-item').forEach(si => si.classList.remove('active'));
 
-            if (!estabaAbierto) {
-                group.classList.add('active');
-                // Al abrir un grupo, activamos automáticamente su primer sub-item
-                const firstSub = group.querySelector('.sub-item');
-                if (firstSub) firstSub.click();
+            // 2. Activar este grupo
+            group.classList.add('active');
+
+            // 3. Simular clic en el primer sub-item para mostrar la sección
+            const firstSub = group.querySelector('.sub-item');
+            if (firstSub) {
+                firstSub.click();
             }
         });
     });
 
-    // Manejo de Sub-ítems (Dashboard, Facturas, etc.)
-    subItems.forEach(item => {
+    // Lógica de Sub-ítems (Delegada para mayor eficiencia)
+    document.querySelectorAll('.sub-item').forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation(); 
+            e.stopPropagation();
 
-            // Limpiar estados activos de botones
-            subItems.forEach(i => i.classList.remove('active'));
+            // Activar botón visualmente
+            document.querySelectorAll('.sub-item').forEach(i => i.classList.remove('active'));
             item.classList.add('active');
 
-            // Gestión de visibilidad de SECCIONES
+            // Mostrar Sección
             const targetId = item.getAttribute('data-section');
-            
             sections.forEach(s => {
                 s.style.display = 'none';
                 s.classList.remove('active-section');
             });
-            
+
             const targetSec = document.getElementById(targetId);
             if (targetSec) {
                 targetSec.style.display = 'block';
-                // Pequeño delay para la animación de entrada
                 setTimeout(() => targetSec.classList.add('active-section'), 10);
             }
         });
     });
 
-    // Lógica de Logout (Mantenla igual)
+    // Logout y Apertura por defecto (Mantener igual)
     const btnLogout = document.getElementById('btn-logout');
     if (btnLogout) {
-        btnLogout.onclick = (e) => {
-            e.preventDefault();
-            signOut(auth).then(() => window.location.href = 'index.html');
-        };
+        btnLogout.onclick = () => signOut(auth).then(() => window.location.href = 'index.html');
     }
 
-    // Inicialización: Abrir la primera sección por defecto al cargar
-    if (navGroups.length > 0) {
-        const firstGroup = navGroups[0];
-        firstGroup.classList.add('active');
-        const firstSub = firstGroup.querySelector('.sub-item');
-        if (firstSub) firstSub.click();
+    // Asegurar que algo esté abierto al iniciar
+    const activeSub = document.querySelector('.sub-item.active');
+    if (!activeSub && navGroups.length > 0) {
+        navGroups[0].querySelector('.topic-header').click();
     }
 }
-
 /* =========================================
    2. GESTIÓN DEL AVATAR (Iniciales e Iconos)
    ========================================= */
