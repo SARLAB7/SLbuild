@@ -94,3 +94,17 @@ onAuthStateChanged(auth, async (user) => {
         }
     }
 });
+
+import { auth } from './firebase-config.js';
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+// Solo definimos la lógica, no la activamos aquí
+export function vigilarSesion(encontrado, noEncontrado) {
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            encontrado(user);
+        } else {
+            noEncontrado();
+        }
+    });
+}
