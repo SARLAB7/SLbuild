@@ -11,26 +11,39 @@ export function activarNavegacionPill() {
     const subItems = document.querySelectorAll('.sub-item');
     const sections = document.querySelectorAll('.content-section');
 
+    // Manejo de Grupos (Finanzas, Gestión, etc.)
     navGroups.forEach(group => {
-        group.querySelector('.topic-header').addEventListener('click', () => {
+        const header = group.querySelector('.topic-header');
+        
+        header.addEventListener('click', (e) => {
+            e.preventDefault();
             const estabaAbierto = group.classList.contains('active');
+
+            // Cerramos todos los demás
             navGroups.forEach(g => g.classList.remove('active'));
 
             if (!estabaAbierto) {
                 group.classList.add('active');
+                // Al abrir un grupo, activamos automáticamente su primer sub-item
                 const firstSub = group.querySelector('.sub-item');
                 if (firstSub) firstSub.click();
             }
         });
     });
 
+    // Manejo de Sub-ítems (Dashboard, Facturas, etc.)
     subItems.forEach(item => {
         item.addEventListener('click', (e) => {
+            e.preventDefault();
             e.stopPropagation(); 
+
+            // Limpiar estados activos de botones
             subItems.forEach(i => i.classList.remove('active'));
             item.classList.add('active');
 
+            // Gestión de visibilidad de SECCIONES
             const targetId = item.getAttribute('data-section');
+            
             sections.forEach(s => {
                 s.style.display = 'none';
                 s.classList.remove('active-section');
@@ -39,27 +52,27 @@ export function activarNavegacionPill() {
             const targetSec = document.getElementById(targetId);
             if (targetSec) {
                 targetSec.style.display = 'block';
+                // Pequeño delay para la animación de entrada
                 setTimeout(() => targetSec.classList.add('active-section'), 10);
             }
         });
     });
 
+    // Lógica de Logout (Mantenla igual)
     const btnLogout = document.getElementById('btn-logout');
     if (btnLogout) {
         btnLogout.onclick = (e) => {
             e.preventDefault();
-            document.body.style.opacity = '0.5';
-            signOut(auth).then(() => {
-                window.location.href = 'index.html';
-            }).catch((error) => {
-                console.error("Error al cerrar sesión:", error);
-                document.body.style.opacity = '1';
-            });
+            signOut(auth).then(() => window.location.href = 'index.html');
         };
     }
 
-    if (navGroups.length > 0 && !document.querySelector('.nav-group.active')) {
-        navGroups[0].querySelector('.topic-header').click();
+    // Inicialización: Abrir la primera sección por defecto al cargar
+    if (navGroups.length > 0) {
+        const firstGroup = navGroups[0];
+        firstGroup.classList.add('active');
+        const firstSub = firstGroup.querySelector('.sub-item');
+        if (firstSub) firstSub.click();
     }
 }
 
@@ -137,18 +150,21 @@ export function vincularBotonConfiguracion() {
     if (!btn) return;
 
     btn.onclick = () => {
+        // Ocultar TODO lo demás
         document.querySelectorAll('.content-section').forEach(s => {
             s.style.display = 'none';
             s.classList.remove('active-section');
         });
 
+        // Desactivar el Pill Navigation visualmente para que no parezca que hay dos cosas abiertas
+        document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('active'));
+        document.querySelectorAll('.sub-item').forEach(i => i.classList.remove('active'));
+
         const sec = document.getElementById('sec-configuracion');
         if (sec) {
             sec.style.display = 'block';
-            setTimeout(() => sec.classList.add('active-section'), 10);
+            sec.classList.add('active-section');
         }
-
-        document.querySelectorAll('.nav-group, .sub-item').forEach(el => el.classList.remove('active'));
     };
 }
 
