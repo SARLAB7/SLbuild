@@ -29,3 +29,12 @@ export async function guardarFactura(datos) {
         return false;
     }
 }
+// js/db.js
+
+// ... (tus otros imports y la función guardarFactura) ...
+
+export async function cargarFacturas() {
+    console.log("Cargando facturas desde Firestore...");
+    // Aquí luego pondremos la lógica de Grid.js o tablas
+    return []; 
+}
