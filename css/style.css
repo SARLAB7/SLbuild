@@ -61,28 +61,3 @@ body {
     height: 100%;
 }
 
-/* Aseguramos que los botones de icono no tengan márgenes raros */
-.top-navbar-right .icon-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 8px;
-    transition: 0.2s;
-}
-
-.top-navbar-right .icon-btn:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-    color: var(--text-primary);
-}
-
-/* El contenedor del avatar no debe empujar a los demás */
-.avatar-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
