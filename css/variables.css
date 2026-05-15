@@ -1,8 +1,13 @@
 /* css/variables.css */
-/* css/variables.css */
+
 :root {
-
-
+    /* Degradado de fondo oscuro SACLAB */
+    --bg-dark-gradient-start: #1e222a; /* Tono oscuro central */
+    --bg-dark-gradient-end: #0c0e12;   /* Tono casi negro en los bordes */
+    /* El blanco para las tarjetas de contraste */
+    --bg-white: #ffffff;
+   --border-white-card: #e1e4e8; /* Borde sutil opcional para la tarjeta blanca */
+    
     /* Escala Tipográfica Reducida */
     --font-size-xs: 11px;
     --font-size-sm: 12px;
@@ -26,13 +31,16 @@
     --border-color: #242933;     /* Líneas divisorias sutiles */
     
     /* Acentos Corporativos Neón / Lima */
-    --accent-neon: #C5FF32;      /* Tu verde neón corporativo (como el interruptor de Invoices) */
+    --accent-neon: #aaff00;      /* Tu verde neón corporativo (como el interruptor de Invoices) */
     --accent-hover: #A8D92B;     /* Tono oscuro para interacciones (hover) */
     --accent-soft: rgba(197, 255, 50, 0.1); /* Fondo para elementos activos suaves */
     
     /* Tipografía y Textos */
     --text-primary: #FFFFFF;     /* Blanco puro para balances y títulos */
     --text-secondary: #8E97A6;   /* Gris azulado para etiquetas y textos menores */
+    /* Colores de texto para el fondo blanco */
+    --text-on-white-primary: #111111;
+    --text-on-white-secondary: #555555;
     
     /* Estados Financieros (Semáforo Industrial) */
     --status-success: #10B981;   /* Pagado / Ingreso */
