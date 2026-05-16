@@ -1,69 +1,24 @@
-/* css/style.css */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* 
+   =========================================
+   ESTILOS GLOBALES BASE
+   =========================================
+*/
+
+/* Scrollbar corporativo e invisible hasta que pasas el ratón */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
 }
 
-/* Sobrescribir el estilo del Body */
-body {
-    font-family: var(--font-main);
-    color: var(--text-primary);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--bg-main) !important;
-    background-image: none !important; /* Quitamos el degradado radial */
-}
-/* El contenedor del login debe ocupar toda la pantalla */
-.login-container {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-.top-navbar {
-    height: 60px;
-    background-color: var(--bg-card);
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    padding: 0 var(--spacing-lg);
-    justify-content: space-between;
-    z-index: 10;
+::-webkit-scrollbar-track {
+    background: transparent; 
 }
 
-.logo {
-    color: var(--text-primary);
-    font-size: 16px;
-    letter-spacing: 1.5px;
-    font-weight: 800;
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1; /* slate-300 */
+    border-radius: 10px;
 }
 
-.app-body {
-    display: flex;
-    flex: 1;
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; /* slate-400 */
 }
-
-.main-content {
-    flex: 1;
-    padding: var(--spacing-lg);
-    overflow-y: auto;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-/* css/style.css */
-
-.top-navbar-right {
-    display: flex !important; /* Forzamos que sea horizontal */
-    flex-direction: row !important;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 12px; /* Espacio entre los iconos */
-    height: 100%;
-}
-
