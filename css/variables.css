@@ -1,25 +1,8 @@
-:root {
-    /* Fondos profesionales (Gris Pizarra / Azul oscuro muy sutil) */
-    --bg-main: #0B0F19;      /* Fondo general */
-    --bg-card: #111827;      /* Fondo de tarjetas/paneles */
-    --bg-input: #1F2937;     /* Fondo de campos de texto */
-    
-    /* Bordes sutiles y elegantes */
-    --border-color: #374151; 
-    --border-light: #e5e7eb; /* Para las tarjetas blancas */
-    
-    /* Acento principal: Azul Fintech o Verde Esmeralda */
-    --accent-primary: #2563EB; /* Azul confianza */
-    --accent-hover: #1D4ED8;
-    /* Alternativa Verde Serio: #10B981 */
-    
-    /* Tipografía suave para evitar fatiga visual */
-    --text-primary: #F9FAFB;
-    --text-secondary: #9CA3AF;
-    --text-muted: #6B7280;
-    
-    /* Radios de borde más estructurados (Menos "juguete", más "herramienta") */
-    --radius-sm: 4px;
-    --radius-md: 6px;
-    --radius-lg: 8px;
-}
+/* 
+   =========================================
+   VARIABLES GLOBALES
+   =========================================
+   Este archivo está intencionalmente vacío.
+   Los colores, bordes y tipografías ahora son 
+   gestionados por Tailwind CSS en el <head>.
+*/
