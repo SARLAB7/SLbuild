@@ -1,11 +1,9 @@
 // js/ui.js
 import { auth } from './firebase-config.js';
-// Cambiamos la URL por "firebase/auth"
 import { signOut, updateProfile } from "firebase/auth"; 
 import { notify } from './utils.js';
-import { guardarConfiguracion, obtenerConfiguracion } from './db.js';
+import { guardarConfiguracion, obtenerConfiguracion, guardarFactura } from './db.js';
 
-// ... el resto de tu código queda idéntico ...
 /* =========================================
    1. NAVEGACIÓN PRINCIPAL (Pill Navigation)
    ========================================= */
@@ -18,39 +16,28 @@ export function activarNavegacionPill() {
         
         header.addEventListener('click', (e) => {
             e.preventDefault();
-            
-            // Si ya está activo, no hacemos nada (evita que se oculte al re-clickear)
             if (group.classList.contains('active')) return;
 
-            // 1. Limpiar todos los grupos y sub-ítems
             navGroups.forEach(g => g.classList.remove('active'));
             document.querySelectorAll('.sub-item').forEach(si => si.classList.remove('active'));
-
-            // 2. Activar este grupo
             group.classList.add('active');
 
-            // 3. Simular clic en el primer sub-item para mostrar la sección
             const firstSub = group.querySelector('.sub-item');
-            if (firstSub) {
-                firstSub.click();
-            }
+            if (firstSub) firstSub.click();
         });
     });
 
-    // Lógica de Sub-ítems (Delegada para mayor eficiencia)
     document.querySelectorAll('.sub-item').forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
 
-            // Activar botón visualmente
             document.querySelectorAll('.sub-item').forEach(i => i.classList.remove('active'));
             item.classList.add('active');
 
-            // Mostrar Sección
             const targetId = item.getAttribute('data-section');
             sections.forEach(s => {
-                s.style.display = 'none';
+                s.style.display = 'none'; // Aquí display none está bien porque controla el renderizado principal
                 s.classList.remove('active-section');
             });
 
@@ -62,20 +49,19 @@ export function activarNavegacionPill() {
         });
     });
 
-    // Logout y Apertura por defecto (Mantener igual)
     const btnLogout = document.getElementById('btn-logout');
     if (btnLogout) {
         btnLogout.onclick = () => signOut(auth).then(() => window.location.href = 'index.html');
     }
 
-    // Asegurar que algo esté abierto al iniciar
     const activeSub = document.querySelector('.sub-item.active');
     if (!activeSub && navGroups.length > 0) {
         navGroups[0].querySelector('.topic-header').click();
     }
 }
+
 /* =========================================
-   2. GESTIÓN DEL AVATAR (Iniciales e Iconos)
+   2. GESTIÓN DEL AVATAR (Limpieza Tailwind)
    ========================================= */
 export function configurarAvatar(user) {
     const avatarContent = document.getElementById('avatar-content');
@@ -84,9 +70,7 @@ export function configurarAvatar(user) {
 
     if (!avatarContent || !avatarContainer) return;
 
-    // --- FUNCIÓN PARA LIMPIAR Y APLICAR ---
     const aplicarPreferencia = (tipo, valor) => {
-        // 1. Limpiar todo rastro de fuentes anteriores
         avatarContent.classList.remove('material-symbols-outlined');
         avatarContent.style.fontFamily = "var(--font-main)";
 
@@ -94,7 +78,6 @@ export function configurarAvatar(user) {
             avatarContent.classList.add('material-symbols-outlined');
             avatarContent.innerText = valor;
         } else {
-            // Si es iniciales, calculamos según el usuario actual
             const u = auth.currentUser || user;
             if (u && u.displayName) {
                 const nombres = u.displayName.trim().split(/\s+/);
@@ -105,25 +88,20 @@ export function configurarAvatar(user) {
                 avatarContent.innerText = "US";
             }
         }
-        // 2. GUARDAR: Para que no se borre al refrescar
         localStorage.setItem('saclab_avatar_tipo', tipo);
         localStorage.setItem('saclab_avatar_valor', valor);
     };
 
-    // --- CARGAR PREFERENCIA AL INICIAR ---
     const tipoGuardado = localStorage.getItem('saclab_avatar_tipo');
     const valorGuardado = localStorage.getItem('saclab_avatar_valor');
     
-    if (tipoGuardado) {
-        aplicarPreferencia(tipoGuardado, valorGuardado);
-    } else {
-        aplicarPreferencia('initials', 'abc'); // Por defecto
-    }
+    if (tipoGuardado) aplicarPreferencia(tipoGuardado, valorGuardado);
+    else aplicarPreferencia('initials', 'abc');
 
-    // --- EVENTOS DEL SELECTOR ---
+    // MODO MODERNO TAILWIND: Usamos classList.toggle('hidden') en vez de style.display
     avatarContainer.onclick = (e) => {
         e.stopPropagation();
-        selector.style.display = selector.style.display === 'block' ? 'none' : 'block';
+        selector.classList.toggle('hidden');
     };
 
     document.querySelectorAll('.sel-icon').forEach(iconBtn => {
@@ -131,17 +109,17 @@ export function configurarAvatar(user) {
             const type = iconBtn.dataset.type;
             const value = iconBtn.innerText;
             aplicarPreferencia(type, value);
-            selector.style.display = 'none';
+            selector.classList.add('hidden'); // Ocultar añadiendo 'hidden'
         };
     });
 
     document.addEventListener('click', () => {
-        if (selector) selector.style.display = 'none';
+        if (selector) selector.classList.add('hidden');
     });
 }
 
 /* =========================================
-   3. CONFIGURACIÓN DEL SISTEMA
+   3. CONFIGURACIÓN DEL SISTEMA Y MODALES
    ========================================= */
 export function vincularBotonConfiguracion() {
     const btn = document.getElementById('btn-open-config');
@@ -150,16 +128,12 @@ export function vincularBotonConfiguracion() {
     btn.onclick = (e) => {
         e.preventDefault();
         
-        // 1. Ocultar todas las secciones
         document.querySelectorAll('.content-section').forEach(s => {
             s.style.display = 'none';
             s.classList.remove('active-section');
         });
-
-        // 2. Quitar estados activos de la nav principal
         document.querySelectorAll('.nav-group, .sub-item').forEach(el => el.classList.remove('active'));
 
-        // 3. Mostrar configuración
         const secConfig = document.getElementById('sec-configuracion');
         if (secConfig) {
             secConfig.style.display = 'block';
@@ -167,16 +141,17 @@ export function vincularBotonConfiguracion() {
         }
     };
 }
+
 export async function inicializarConfiguracion(user) {
     if (!user) return;
 
+    // --- CARGA DE DATOS DE USUARIO ---
     const nameInput = document.getElementById('config-name');
     const emailDisplay = document.getElementById('profile-email-display');
     
     if (nameInput) nameInput.value = user.displayName || "";
     if (emailDisplay) emailDisplay.value = user.email || "";
 
-    // 1. CARGAR DATOS DE LA BASE DE DATOS (Incluyendo imágenes)
     const configData = await obtenerConfiguracion(user.uid);
     if (configData) {
         if (configData.empresa) {
@@ -194,21 +169,20 @@ export async function inicializarConfiguracion(user) {
             if(document.getElementById('instrucciones-pago')) document.getElementById('instrucciones-pago').value = pag.instrucciones || '';
         }
         if (configData.branding) {
-            // Mostrar imágenes si ya estaban guardadas
             if (configData.branding.logo) {
                 document.getElementById('preview-logo').src = configData.branding.logo;
-                document.getElementById('preview-logo').style.display = 'block';
-                document.getElementById('text-logo').style.display = 'none';
+                document.getElementById('preview-logo').classList.remove('hidden');
+                document.getElementById('text-logo').classList.add('hidden');
             }
             if (configData.branding.firma) {
                 document.getElementById('preview-firma').src = configData.branding.firma;
-                document.getElementById('preview-firma').style.display = 'block';
-                document.getElementById('text-firma').style.display = 'none';
+                document.getElementById('preview-firma').classList.remove('hidden');
+                document.getElementById('text-firma').classList.add('hidden');
             }
         }
     }
 
-    // 2. FORMULARIOS DE TEXTO
+    // --- EVENTOS DE SUBMIT ---
     const formPerfil = document.getElementById('form-update-profile');
     if (formPerfil) {
         formPerfil.onsubmit = async (e) => {
@@ -250,7 +224,30 @@ export async function inicializarConfiguracion(user) {
         };
     }
 
-    // 3. GESTIÓN DE CARGA DE IMÁGENES (Logo y Firma)
+    // --- LÓGICA DEL NUEVO MODAL SHOELACE ---
+    const formFactura = document.getElementById('form-nueva-factura');
+    const modalFactura = document.getElementById('modal-factura');
+    
+    if (formFactura && modalFactura) {
+        formFactura.onsubmit = async (e) => {
+            e.preventDefault();
+            
+            const datos = {
+                cliente: document.getElementById('factura-cliente').value,
+                monto: document.getElementById('factura-monto').value,
+                estado: document.getElementById('factura-estado').value
+            };
+
+            const exito = await guardarFactura(datos);
+            if (exito) {
+                modalFactura.hide(); // Magia de Shoelace: cierra con animación
+                formFactura.reset(); // Limpia los campos
+                // Aquí podrías llamar a cargarFacturas() nuevamente para actualizar la UI
+            }
+        };
+    }
+
+    // --- GESTIÓN DE CARGA DE IMÁGENES (Limpieza Tailwind) ---
     const procesarImagen = (zoneId, inputId, previewId, textId, dbField) => {
         const zone = document.getElementById(zoneId);
         const input = document.getElementById(inputId);
@@ -259,22 +256,18 @@ export async function inicializarConfiguracion(user) {
 
         if (!zone || !input) return;
 
-        zone.onclick = () => input.click(); // Al hacer clic en el cuadro, abre el selector de archivos
+        zone.onclick = () => input.click(); 
 
         input.onchange = async (e) => {
             const file = e.target.files[0];
             if (file) {
-                // Convertir la imagen a Base64 para guardarla como texto
                 const reader = new FileReader();
                 reader.onloadend = async () => {
                     const base64String = reader.result;
-                    
-                    // Mostrar la vista previa
                     preview.src = base64String;
-                    preview.style.display = 'block';
-                    text.style.display = 'none';
+                    preview.classList.remove('hidden'); // Método Tailwind
+                    text.classList.add('hidden');
 
-                    // Guardar automáticamente en Firestore
                     await guardarConfiguracion(user.uid, 'branding', { [dbField]: base64String });
                 };
                 reader.readAsDataURL(file);
