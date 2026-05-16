@@ -37,25 +37,27 @@ export function validateForm(formData) {
 /* =========================================
    5. NOTIFICACIONES (Wrapper para Toastify)
    ========================================= */
-// Esto centraliza el estilo de SACLAB para que no lo repitas en cada archivo
 export function notify(message, type = "success") {
-    const bgColor = type === "success" ? "#210DAA" : "#ef4444"; // Azul Neón o Rojo
+    // Actualizado al nuevo Azul Corporativo de tu sistema
+    const bgColor = type === "success" ? "#2563eb" : "#ef4444"; 
     const textColor = "#ffffff";
 
     if (typeof Toastify !== "undefined") {
         Toastify({
             text: message,
-            duration: 3000,
+            duration: 2000,      // <-- Reducido de 3000ms a 2000ms (2 segundos)
+            close: true,         // <-- ¡AQUÍ ESTÁ LA MAGIA! Agrega el botón de la "X" para cerrar
             gravity: "top",
             position: "right",
-            stopOnFocus: true,
+            stopOnFocus: true,   // Evita que se cierre si el usuario tiene el ratón encima
             style: {
                 background: bgColor,
                 color: textColor,
                 borderRadius: "8px",
-                fontWeight: "600",
+                fontWeight: "500",
                 fontSize: "14px",
-                boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.3)"
+                boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.3)",
+                padding: "12px 20px" // Un poco más de padding para que la "X" respire
             }
         }).showToast();
     } else {
