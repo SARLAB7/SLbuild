@@ -5,18 +5,16 @@
     box-sizing: border-box;
 }
 
+/* Sobrescribir el estilo del Body */
 body {
     font-family: var(--font-main);
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    /* Degradado forzado con colores hexadecimales directos */
-    background-color: #0c0e12 !important;
-    background-image: radial-gradient(circle at top center, #1e222a 0%, #0c0e12 100%) !important;
-    background-attachment: fixed !important;
+    background-color: var(--bg-main) !important;
+    background-image: none !important; /* Quitamos el degradado radial */
 }
-
 /* El contenedor del login debe ocupar toda la pantalla */
 .login-container {
     flex: 1;
