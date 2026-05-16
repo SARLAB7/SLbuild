@@ -274,42 +274,39 @@
             </section>
         </main>
     </div>
-
-    <!-- =========================================
-         MODAL DE FACTURA 
+<!-- =========================================
+         MODAL DE FACTURA PREMIUM (SHOELACE)
          ========================================= -->
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm" id="modal-factura" style="display: none;">
-        <div class="bg-white dark:bg-slate-800 w-full max-w-md p-6 rounded-xl shadow-2xl relative transition-colors duration-300">
-            <div class="flex items-center justify-between mb-6 border-b border-slate-100 dark:border-slate-700 pb-4">
-                <h2 class="text-xl font-bold text-slate-800 dark:text-white">Registrar Nueva Factura</h2>
-                <button id="btn-cerrar-modal" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">
-                    <i data-feather="x"></i>
-                </button>
+    <sl-dialog label="Registrar Nueva Factura" id="modal-factura" class="dialog-overview">
+        <form id="form-nueva-factura" class="flex flex-col gap-5">
+            <sl-input id="factura-cliente" label="Nombre del Cliente" placeholder="Ej. Empresa S.A.S" required clearable></sl-input>
+            <sl-input id="factura-monto" type="number" label="Monto Total ($)" placeholder="0.00" required></sl-input>
+            <sl-select id="factura-estado" label="Estado" value="Pendiente">
+                <sl-option value="Pagada">Pagada</sl-option>
+                <sl-option value="Pendiente">Pendiente</sl-option>
+                <sl-option value="Borrador">Borrador</sl-option>
+            </sl-select>
+            <div class="flex justify-end mt-4">
+                <!-- Se cierra automáticamente con el evento del form en JS -->
+                <sl-button variant="primary" type="submit">Guardar en Sistema</sl-button>
             </div>
-            
-            <form id="form-nueva-factura" class="flex flex-col gap-5">
-                <sl-input id="factura-cliente" label="Nombre del Cliente" placeholder="Ej. Empresa S.A.S" required clearable></sl-input>
-                <sl-input id="factura-monto" type="number" label="Monto Total ($)" placeholder="0.00" required></sl-input>
-                <sl-select id="factura-estado" label="Estado" value="Pendiente">
-                    <sl-option value="Pagada">Pagada</sl-option>
-                    <sl-option value="Pendiente">Pendiente</sl-option>
-                    <sl-option value="Borrador">Borrador</sl-option>
-                </sl-select>
-                <div class="flex justify-end mt-4">
-                    <sl-button variant="primary" type="submit">Guardar en Sistema</sl-button>
-                </div>
-            </form>
-        </div>
-    </div>
+        </form>
+    </sl-dialog>
+
 
     <script>
       feather.replace();
     </script>
-    
-    <script type="module">
+   <script type="module">
         import { vigilarSesion } from './js/auth.js';
         import { activarNavegacionPill, configurarAvatar, vincularBotonConfiguracion, inicializarConfiguracion } from './js/ui.js';
+        // 1. IMPORTAMOS AUTOANIMATE
+        import autoAnimate from 'https://cdn.jsdelivr.net/npm/@formkit/auto-animate@0.8.1/index.mjs';
         
+        // 2. LE DECIMOS QUE VIGILE LA LISTA DE FACTURAS
+        const listaFacturas = document.getElementById('lista-facturas');
+        if(listaFacturas) autoAnimate(listaFacturas);
+
         activarNavegacionPill();
 
         vigilarSesion(
