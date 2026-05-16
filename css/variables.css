@@ -1,58 +1,25 @@
-/* css/variables.css */
-
 :root {
-    /* Degradado de fondo oscuro SACLAB */
-    --bg-dark-gradient-start: #1e222a; /* Tono oscuro central */
-    --bg-dark-gradient-end: #0c0e12;   /* Tono casi negro en los bordes */
-    /* El blanco para las tarjetas de contraste */
-    --bg-white: #ffffff;
-   --border-white-card: #e1e4e8; /* Borde sutil opcional para la tarjeta blanca */
+    /* Fondos profesionales (Gris Pizarra / Azul oscuro muy sutil) */
+    --bg-main: #0B0F19;      /* Fondo general */
+    --bg-card: #111827;      /* Fondo de tarjetas/paneles */
+    --bg-input: #1F2937;     /* Fondo de campos de texto */
     
-    /* Escala Tipográfica Reducida */
-    --font-size-xs: 11px;
-    --font-size-sm: 12px;
-    --font-size-base: 13px; /* Antes era 14px o 16px */
-    --font-size-md: 15px;
-    --font-size-lg: 18px;
-    --font-size-xl: 22px;   /* Para títulos grandes */
-
-    /* Espaciados Compactos */
-    --spacing-xs: 4px;
-    --spacing-sm: 8px;
-    --spacing-md: 12px;
-    --spacing-lg: 20px;
+    /* Bordes sutiles y elegantes */
+    --border-color: #374151; 
+    --border-light: #e5e7eb; /* Para las tarjetas blancas */
     
-    --radius-md: 8px;
-    --radius-lg: 12px;
-
-    /* Paleta Principal - Dark Mode Profesional Industrial */
-    --bg-main: #0B0E14;          /* Fondo base muy oscuro (como la imagen) */
-    --bg-card: #151921;          /* Fondo para módulos, tarjetas y sidebar */
-    --border-color: #242933;     /* Líneas divisorias sutiles */
+    /* Acento principal: Azul Fintech o Verde Esmeralda */
+    --accent-primary: #2563EB; /* Azul confianza */
+    --accent-hover: #1D4ED8;
+    /* Alternativa Verde Serio: #10B981 */
     
-    /* Acentos Corporativos Neón / Lima */
-    --accent-neon: #aaff00;      /* Tu verde neón corporativo (como el interruptor de Invoices) */
-    --accent-hover: #A8D92B;     /* Tono oscuro para interacciones (hover) */
-    --accent-soft: rgba(197, 255, 50, 0.1); /* Fondo para elementos activos suaves */
+    /* Tipografía suave para evitar fatiga visual */
+    --text-primary: #F9FAFB;
+    --text-secondary: #9CA3AF;
+    --text-muted: #6B7280;
     
-    /* Tipografía y Textos */
-    --text-primary: #FFFFFF;     /* Blanco puro para balances y títulos */
-    --text-secondary: #8E97A6;   /* Gris azulado para etiquetas y textos menores */
-    /* Colores de texto para el fondo blanco */
-    --text-on-white-primary: #111111;
-    --text-on-white-secondary: #555555;
-    
-    /* Estados Financieros (Semáforo Industrial) */
-    --status-success: #10B981;   /* Pagado / Ingreso */
-    --status-warning: #F59E0B;   /* Pendiente / Borrador */
-    --status-danger: #EF4444;    /* Vencido / Gasto */
-    
-    /* Estructural y Proporciones */
-    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
-    
-    /* Sombreado Industrial */
-    --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    /* Radios de borde más estructurados (Menos "juguete", más "herramienta") */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
 }
