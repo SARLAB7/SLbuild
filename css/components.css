@@ -1,8 +1,10 @@
 /* =========================================
-   SISTEMA DE NAVEGACIÓN PRO (SACLAB)
+   SISTEMA DE COMPONENTES PROFESIONAL (SACLAB)
    ========================================= */
 
-/* 1. Blindaje de Iconos: Regla única y agresiva */
+/* -----------------------------------------
+   1. BLINDAJE DE ICONOS
+   ----------------------------------------- */
 .material-symbols-outlined, .sel-icon {
     font-family: 'Material Symbols Outlined' !important;
     font-weight: normal;
@@ -18,115 +20,109 @@
     -webkit-font-smoothing: antialiased;
 }
 
-/* 2. El contenedor (La Píldora) */
+/* -----------------------------------------
+   2. NAVEGACIÓN PRINCIPAL (TOOLBAR ENTERPRISE)
+   ----------------------------------------- */
 .pill-navigation {
+    background-color: rgba(31, 41, 55, 0.5); /* Fondo gris azulado semi-transparente */
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md); /* Borde de 6px estructurado */
+    padding: 4px 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 12px;
-    background-color: rgba(255, 255, 255, 0.03);
-    padding: 6px 16px;
-    border-radius: 40px;
-    border: 1px solid var(--border-color);
+    gap: 8px;
     margin: 0 auto;
     max-width: fit-content;
 }
 
-/* 3. Grupos de navegación (Finanzas, Gestión...) */
 .nav-group {
     display: flex;
     align-items: center;
     background-color: transparent;
-    border-radius: 30px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
     overflow: hidden;
     max-width: 44px; /* Cerrado: solo icono */
     white-space: nowrap;
 }
 
-/* Estado ACTIVO: El grupo se expande y cambia a blanco */
 .nav-group.active {
     max-width: 800px; 
-    background-color: #ffffff; /* FONDO CLARO */
+    background-color: transparent; 
 }
 
 .topic-header {
     background: transparent;
     border: none;
     color: var(--text-secondary);
-    height: 44px;
+    height: 42px;
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 0 12px;
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 600;
 }
 
-/* Texto del tema oculto si no está activo */
 .topic-header span:not(.material-symbols-outlined) {
     display: none;
 }
 
 .nav-group.active .topic-header {
-    color: #000000 !important; /* TEXTO NEGRO SOBRE BLANCO */
+    color: var(--text-primary) !important;
+    border-bottom: 2px solid var(--accent-primary); /* Subrayado profesional */
 }
 
 .nav-group.active .topic-header span:not(.material-symbols-outlined) {
     display: inline;
 }
 
-/* 4. Submenú Horizontal (Aparece al lado) */
 .sub-pill-container {
     display: none;
-    flex-direction: row; /* HORIZONTAL SIEMPRE */
+    flex-direction: row; 
     align-items: center;
     gap: 8px;
     padding-left: 12px;
     margin-left: 5px;
-    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-left: 1px solid var(--border-color);
 }
 
 .nav-group.active .sub-pill-container {
     display: flex;
 }
 
-/* Botones internos (Sub-items) */
 .sub-item {
     background: transparent;
     border: none;
     padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 700;
-    color: #555; /* GRIS OSCURO */
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
     cursor: pointer;
     white-space: nowrap;
     transition: 0.2s;
 }
 
 .sub-item.active {
-    background-color: var(--accent-neon) !important;
-    color: #000 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background-color: rgba(37, 99, 235, 0.1) !important; /* Asumiendo azul corporativo */
+    color: var(--accent-primary) !important;
+    box-shadow: none;
 }
-/* css/components.css */
 
-/* Contenedor de acciones: Fuerza la horizontalidad */
+/* -----------------------------------------
+   3. ACCIONES SUPERIORES Y AVATAR
+   ----------------------------------------- */
 .top-navbar-right {
     display: flex !important;
     flex-direction: row !important;
     align-items: center;
     justify-content: flex-end;
+    gap: 12px;
 }
-/* Asegura que la sección de configuración herede el diseño industrial */
-#sec-configuracion .card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: 30px;
-    border-radius: 16px;
-}
-/* Botones de Icono (Config, Notificaciones, Logout) */
+
 .icon-btn {
     background: transparent;
     border: none;
@@ -135,7 +131,7 @@
     align-items: center;
     justify-content: center;
     padding: 8px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -145,16 +141,14 @@
     color: var(--text-primary);
 }
 
-/* Botón de Logout específico (Rojo sutil) */
 .logout-btn {
-    color: var(--status-danger) !important;
+    color: #ef4444 !important; /* Rojo sobrio */
 }
 
 .logout-btn:hover {
     background-color: rgba(239, 68, 68, 0.1) !important;
 }
 
-/* El Avatar: Evita que empuje a los demás hacia abajo */
 .avatar-container {
     position: relative;
     display: flex;
@@ -165,18 +159,22 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background-color: var(--accent-neon);
-    color: #000;
+    background-color: var(--accent-primary); /* Color corporativo en vez de neón */
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 13px;
     cursor: pointer;
-    border: 1.5px solid transparent;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
 }
 
-/* El Selector de iconos: Debe ser ABSOLUTE para no mover nada */
+.avatar:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
 .avatar-selector {
     position: absolute;
     top: 48px;
@@ -188,33 +186,18 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     z-index: 1000;
     width: 200px;
-    display: none; /* Controlado por JS */
-}
-/* =========================================
-   INTERFAZ DE ACCESO (INDEX / LOGIN)
-   ========================================= */
-
-/* =========================================
-   INTERFAZ DE ACCESO (SACLAB PREMIUM)
-   ========================================= */
-
-.login-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    width: 100%;
-    /* Fondo con profundidad */
-    background: radial-gradient(circle at 50% 0%, #1a1e29 0%, #050608 100%);
+    display: none;
 }
 
+/* -----------------------------------------
+   4. INTERFAZ DE LOGIN (CORPORATIVO)
+   ----------------------------------------- */
 .login-box {
-    background: rgba(18, 20, 26, 0.8);
-    backdrop-filter: blur(10px); /* Efecto cristalizado */
+    background: var(--bg-card);
     padding: 48px;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     width: 100%;
     max-width: 420px;
     text-align: center;
@@ -222,119 +205,47 @@
     overflow: hidden;
 }
 
-/* Línea neón superior decorativa */
+/* Línea superior corporativa (en lugar del neón) */
 .login-box::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--accent-neon), transparent);
+    height: 4px;
+    background: var(--accent-primary);
 }
 
 .login-box header h1 {
-    color: #fff;
-    font-size: 36px;
-    letter-spacing: 4px;
-    font-weight: 900;
-    margin-bottom: 4px;
-    text-shadow: 0 0 20px rgba(186, 255, 41, 0.3);
+    color: var(--text-primary);
+    font-size: 32px;
+    letter-spacing: 2px;
+    font-weight: 800;
+    margin-bottom: 8px;
 }
 
 .login-box header p {
     color: var(--text-secondary);
     font-size: 13px;
     font-weight: 500;
-    margin-bottom: 40px;
-    letter-spacing: 0.5px;
+    margin-bottom: 32px;
 }
 
-/* Campos de entrada con Hover y Focus */
 .login-box .input-group {
     text-align: left;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
-.login-box label {
-    color: var(--text-secondary);
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-    display: block;
+/* -----------------------------------------
+   5. LAYOUT DE CONFIGURACIÓN Y SIDEBAR
+   ----------------------------------------- */
+#sec-configuracion .card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    border-radius: var(--radius-lg);
 }
 
-.login-box input {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 14px 18px;
-    border-radius: 12px;
-    color: #fff;
-    font-size: 15px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.login-box input:hover {
-    border-color: rgba(186, 255, 41, 0.4);
-    background: rgba(0, 0, 0, 0.4);
-}
-
-.login-box input:focus {
-    outline: none;
-    border-color: var(--accent-neon);
-    box-shadow: 0 0 0 4px rgba(186, 255, 41, 0.1);
-    background: rgba(0, 0, 0, 0.5);
-}
-
-/* Botón con Hover Neón */
-.login-box .btn-primary {
-    width: 100%;
-    background-color: var(--accent-neon);
-    color: #000;
-    padding: 16px;
-    border-radius: 12px;
-    font-weight: 800;
-    font-size: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(186, 255, 41, 0.2);
-}
-
-.login-box .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(186, 255, 41, 0.4);
-    filter: brightness(1.1);
-}
-
-.login-box .btn-primary:active {
-    transform: translateY(0);
-}
-
-.login-box footer a {
-    display: inline-block;
-    margin-top: 25px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-.login-box footer a:hover {
-    color: var(--accent-neon);
-    text-shadow: 0 0 8px rgba(186, 255, 41, 0.5);
-}
-
-/* =========================================
-   1. LAYOUT PRINCIPAL (SIDEBAR + CONTENIDO)
-   ========================================= */
 .config-layout {
     display: flex !important;
     flex-direction: row !important;
@@ -346,7 +257,6 @@
     padding-top: 20px;
 }
 
-/* LA SIDEBAR (Barra lateral) */
 .config-sidebar {
     width: 240px;
     flex-shrink: 0;
@@ -354,25 +264,25 @@
     padding: 10px 0;
 }
 
-/* ÁREA DE CONTENIDO (A la derecha de la sidebar) */
 .config-content {
-    flex: 1; /* Esto hace que el contenido ocupe todo el espacio restante a la derecha */
-    min-width: 0; /* Previene problemas de desbordamiento de Flexbox */
+    flex: 1;
+    min-width: 0;
 }
 
 .menu-category-title {
     font-size: 0.7rem;
     text-transform: uppercase;
-    color: var(--text-secondary, #8B949E);
+    color: var(--text-muted);
     letter-spacing: 1px;
     margin-bottom: 15px;
     padding-left: 10px;
+    font-weight: 600;
 }
 
 .config-menu {
     display: flex;
     flex-direction: column;
-    gap: 4px; /* Botones más juntos */
+    gap: 4px;
 }
 
 .config-menu button {
@@ -381,48 +291,49 @@
     gap: 10px;
     background: transparent;
     border: none;
-    color: var(--text-primary, #C9D1D9);
-    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
     padding: 10px 12px;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     text-align: left;
     transition: all 0.2s ease;
 }
 
-/* ESTADO ACTIVO (VERDE NEÓN) */
-.config-menu button.active {
-    background: rgba(0, 255, 0, 0.05); /* Tinte súper sutil */
-    color: #00FF00; /* Verde Neón */
-    font-weight: 500;
-    border-left: 2px solid #00FF00; /* Línea lateral más fina */
-    border-radius: 0 6px 6px 0;
+.config-menu button:hover {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
 }
 
+.config-menu button.active {
+    background: rgba(37, 99, 235, 0.1); /* Fondo sutil con el color de acento */
+    color: var(--accent-primary);
+    font-weight: 500;
+    border-left: 3px solid var(--accent-primary); /* Línea corporativa */
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
 
-/* =========================================
-   2. ÁREA DE CONTENIDO Y TARJETAS
-   ========================================= */
-
-.config-card {
-    background: var(--bg-card, #16181D);
-    border: 1px solid var(--border-color, #2A2D3A);
-    border-radius: 10px;
-    padding: 20px 25px; /* Tarjetas menos abultadas */
+/* -----------------------------------------
+   6. FORMULARIOS, TARJETAS Y DATA-ENTRY
+   ----------------------------------------- */
+.config-card, .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 24px;
     margin-bottom: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .config-card h4 {
-    font-size: 1rem; /* Título reducido */
-    color: #FFFFFF;
+    font-size: 1.1rem;
+    color: var(--text-primary);
     margin-bottom: 20px;
-    font-weight: 500;
-    border-bottom: 1px solid #2A2D3A;
-    padding-bottom: 10px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 12px;
 }
-/* =========================================
-   3. ESTILIZACIÓN DE FORMULARIOS (Adiós blanco feo)
-   ========================================= */
+
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -440,37 +351,34 @@
 }
 
 .input-group label {
-    font-size: 0.75rem; /* Etiquetas más pequeñas */
-    color: var(--text-secondary, #8B949E);
-    text-transform: uppercase; /* Da un toque más técnico */
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
     letter-spacing: 0.5px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
-/* Estilo para los inputs, selects y textareas */
 .input-group input,
 .input-group select,
 .input-group textarea {
-    background-color: #0D1117; 
-    color: #FFFFFF; 
-    border: 1px solid #30363D; 
-    padding: 10px 14px; /* Menos padding para que no se vean gigantes */
-    border-radius: 6px;
+    background-color: var(--bg-input); 
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm); 
+    padding: 10px 12px; 
+    font-size: 0.875rem;
+    color: var(--text-primary);
     font-family: inherit;
-    font-size: 0.85rem; /* Texto ingresado más pequeño */
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
-/* Efecto al hacer clic en un input (Foco Verde Neón) */
 .input-group input:focus,
 .input-group select:focus,
 .input-group textarea:focus {
     outline: none;
-    border-color: #00FF00; /* Borde Verde Neón */
-    box-shadow: 0 0 0 3px rgba(0, 255, 0, 0.15); /* Resplandor verde */
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 1px var(--accent-primary);
 }
 
-/* Botón Guardar */
 .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -478,64 +386,54 @@
 }
 
 .btn-primary {
-    background-color: #00FF00;
-    color: #000000;
-    font-weight: 600;
-    font-size: 0.85rem; /* Botón escalado con el resto del UI */
+    background-color: var(--accent-primary);
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 0.875rem;
     padding: 10px 20px;
     border: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     transition: background 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
 .btn-primary:hover {
-    background-color: #00cc00;
-}
-/* =========================================
-   TARJETAS DE CONTENIDO (CONTRASTE INDUSTRIAL)
-   ========================================= */
-
-.content-card {
-    /* ... estilos de tarjeta existentes ... */
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    margin-bottom: 24px;
+    background-color: var(--accent-hover);
 }
 
-/* CLASE DE TARJETA BLANCA DE ALTO CONTRASTE */
+/* -----------------------------------------
+   7. TARJETAS BLANCAS (DOCUMENTOS / ALTO CONTRASTE)
+   ----------------------------------------- */
 .white-card {
-    background-color: var(--bg-white) !important;
-    color: var(--text-on-white-primary) !important;
-    border: none; /* No suele necesitar borde en blanco */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Una sombra suave para dar profundidad */
+    background-color: #ffffff !important;
+    border: 1px solid var(--border-light) !important;
+    border-radius: var(--radius-md);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-/* Forzar textos oscuros dentro de la tarjeta blanca */
-.white-card h1,
-.white-card h2,
-.white-card h3,
-.white-card h4,
-.white-card p,
-.white-card label {
-    color: var(--text-on-white-primary) !important;
+.white-card h1, .white-card h2, .white-card h3, 
+.white-card h4, .white-card p, .white-card label {
+    color: #111827 !important;
 }
 
 .white-card .material-symbols-outlined {
-    color: var(--text-on-white-secondary) !important;
+    color: #6B7280 !important;
 }
-/* Inputs claros para usar en .white-card */
+
 .light-input {
-    background-color: #f5f6f7 !important; /* Gris muy claro */
-    border: 1px solid #d8dee4 !important;
-    color: var(--text-on-white-primary) !important;
+    background-color: #F9FAFB !important;
+    border: 1px solid #D1D5DB !important;
+    color: #111827 !important;
+    border-radius: var(--radius-sm);
 }
 
 .light-input::placeholder {
-    color: #888888;
+    color: #9CA3AF !important;
 }
 
 .light-input:focus {
-    border-color: var(--accent-neon);
-    box-shadow: 0 0 0 3px rgba(170, 255, 0, 0.2);
+    border-color: var(--accent-primary) !important;
+    box-shadow: 0 0 0 1px var(--accent-primary) !important;
+    background-color: #ffffff !important;
 }
