@@ -41,280 +41,274 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="dashboard-layout">
-  <header class="top-navbar">
-    <div class="logo">SACLAB</div>
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col overflow-hidden">
     
-    <nav class="pill-navigation">
-        <div class="nav-group" data-topic="finanzas">
-            <button class="topic-header">
-                <span class="material-symbols-outlined">account_balance</span> 
-                <span>Finanzas</span>
-            </button>
-            <div class="sub-pill-container">
-                <button class="sub-item" data-section="sec-inicio">Dashboard</button>
-                <button class="sub-item" data-section="sec-facturas">Facturación</button>
-                <button class="sub-item" data-section="sec-gastos">Egresos</button>
-            </div>
-        </div>
-
-        <div class="nav-group" data-topic="gestion">
-            <button class="topic-header">
-                <span class="material-symbols-outlined">business_center</span> 
-                <span>Gestión</span>
-            </button>
-            <div class="sub-pill-container">
-                <button class="sub-item" data-section="sec-clientes">Clientes</button>
-                <button class="sub-item" data-section="sec-productos">Servicios</button>
-            </div>
-        </div>
-
-        <div class="nav-group" data-topic="legal">
-            <button class="topic-header">
-                <span class="material-symbols-outlined">receipt_long</span> 
-                <span>Contabilidad</span>
-            </button>
-            <div class="sub-pill-container">
-                <button class="sub-item" data-section="sec-asientos">Libro Diario</button>
-                <button class="sub-item" data-section="sec-impuestos">DIAN</button>
-            </div>
-        </div>
-    </nav>
-
-    <div class="top-navbar-right">
-        <button class="icon-btn" id="btn-open-config" title="Configuración">
-    <span class="material-symbols-outlined">settings</span>
-         </button>
-        <button class="icon-btn" title="Notificaciones">
-            <span class="material-symbols-outlined">notifications</span>
-        </button>
+    <!-- =========================================
+         BARRA SUPERIOR (HEADER)
+         ========================================= -->
+    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 z-50 shadow-sm shrink-0">
+        <div class="logo font-extrabold text-xl tracking-tight text-enterprise-600">SACLAB</div>
         
-        <div class="avatar-container">
-            <div class="avatar" id="user-avatar">
-    <span id="avatar-content"></span> </div>
-            <div class="avatar-selector" id="avatar-selector">
-                <p>Selecciona un icono</p>
-                <div class="icons-grid">
-    <span class="sel-icon" data-type="icon">person</span>
-    <span class="sel-icon" data-type="icon">account_balance</span>
-    <span class="sel-icon" data-type="icon">monitoring</span>
-    <span class="sel-icon" data-type="icon">shield</span>
-    <span class="sel-icon" data-type="icon">rocket</span>
-    <span class="sel-icon" data-type="initials" title="Usar mis iniciales">Abc</span>
-</div>
+        <!-- Navegación "Pill" (Mantiene tus clases de CSS originales para el JS) -->
+        <nav class="pill-navigation">
+            <div class="nav-group" data-topic="finanzas">
+                <button class="topic-header">
+                    <span class="material-symbols-outlined">account_balance</span> 
+                    <span>Finanzas</span>
+                </button>
+                <div class="sub-pill-container">
+                    <button class="sub-item" data-section="sec-inicio">Dashboard</button>
+                    <button class="sub-item" data-section="sec-facturas">Facturación</button>
+                    <button class="sub-item" data-section="sec-gastos">Egresos</button>
+                </div>
             </div>
-        </div>
 
-        <button class="icon-btn logout-btn" id="btn-logout" title="Cerrar Sesión">
-            <span class="material-symbols-outlined">logout</span>
-        </button>
-    </div>
-</header>
-
-<div class="app-body">
-      <main class="main-content">
-    
-    <section id="sec-inicio" class="content-section">
-        <h1 style="margin-bottom: 24px;">Dashboard General</h1>
-        </section>
-
-    <section id="sec-facturas" class="content-section" style="display: none;">
-    <h1 style="margin-bottom: 24px;">Gestión de Facturas</h1>
-    <div id="lista-facturas">
-        </div>
-</section>
-
-    <section id="sec-gastos" class="content-section" style="display: none;">
-        <h1 style="margin-bottom: 24px;">Registro de Egresos</h1>
-        <div class="card dark-card"><p>Módulo de gastos en construcción...</p></div>
-    </section>
-
-    <section id="sec-clientes" class="content-section" style="display: none;">
-        <h1 style="margin-bottom: 24px;">Directorio de Clientes</h1>
-        <div class="card dark-card"><p>Módulo de clientes en construcción...</p></div>
-    </section>
-
-    <section id="sec-productos" class="content-section" style="display: none;">
-        <h1 style="margin-bottom: 24px;">Servicios Profesionales</h1>
-        <div class="card dark-card"><p>Catálogo de servicios en construcción...</p></div>
-    </section>
-          <section id="sec-configuracion" class="content-section" style="display: none;" x-data="{ tabActiva: 'empresa' }">
-    <div class="config-layout">
-        
-        <aside class="config-sidebar">
-            <h3 class="menu-category-title">Ajustes Generales</h3>
-            <nav class="config-menu">
-                <button @click="tabActiva = 'perfil'" :class="tabActiva === 'perfil' ? 'active' : ''">
-                    <span class="material-symbols-outlined">person</span> Mi Perfil
+            <div class="nav-group" data-topic="gestion">
+                <button class="topic-header">
+                    <span class="material-symbols-outlined">business_center</span> 
+                    <span>Gestión</span>
                 </button>
-                <button @click="tabActiva = 'empresa'" :class="tabActiva === 'empresa' ? 'active' : ''">
-                    <span class="material-symbols-outlined">business</span> Datos Fiscales
-                </button>
-                <button @click="tabActiva = 'branding'" :class="tabActiva === 'branding' ? 'active' : ''">
-                    <span class="material-symbols-outlined">brush</span> Identidad Visual
-                </button>
-                <button @click="tabActiva = 'pagos'" :class="tabActiva === 'pagos' ? 'active' : ''">
-                    <span class="material-symbols-outlined">payments</span> Cuentas y Pagos
-                </button>
-            </nav>
-        </aside>
+                <div class="sub-pill-container">
+                    <button class="sub-item" data-section="sec-clientes">Clientes</button>
+                    <button class="sub-item" data-section="sec-productos">Servicios</button>
+                </div>
+            </div>
 
-        <div class="config-content">
+            <div class="nav-group" data-topic="legal">
+                <button class="topic-header">
+                    <span class="material-symbols-outlined">receipt_long</span> 
+                    <span>Contabilidad</span>
+                </button>
+                <div class="sub-pill-container">
+                    <button class="sub-item" data-section="sec-asientos">Libro Diario</button>
+                    <button class="sub-item" data-section="sec-impuestos">DIAN</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="top-navbar-right flex items-center gap-3">
+            <button class="text-slate-500 hover:text-enterprise-600 hover:bg-slate-100 p-2 rounded-lg transition" id="btn-open-config" title="Configuración">
+                <span class="material-symbols-outlined">settings</span>
+            </button>
+            <button class="text-slate-500 hover:text-enterprise-600 hover:bg-slate-100 p-2 rounded-lg transition" title="Notificaciones">
+                <span class="material-symbols-outlined">notifications</span>
+            </button>
             
-            <div x-show="tabActiva === 'perfil'" x-transition class="tab-pane">
-                <div class="config-card white-card">
-                    <h4>Información de la Cuenta</h4>
-                    <form id="form-update-profile" class="form-grid">
-                        <div class="input-group">
-                            <label>Nombre Completo</label>
-                            <input type="text" id="config-name" class="light-input" placeholder="Tu nombre">
-                        </div>
-                        <div class="input-group">
-                            <label>Correo Electrónico (No editable)</label>
-                            <input type="email" id="profile-email-display" class="light-input" disabled style="opacity: 0.7; background-color: #e9ecef !important;">
-                        </div>
-                        <div class="form-actions full-width">
-                            <button type="submit" class="btn-primary">Actualizar Perfil</button>
-                        </div>
-                    </form>
+            <div class="avatar-container relative">
+                <div class="avatar w-9 h-9 rounded-full bg-enterprise-600 text-white flex items-center justify-center font-bold text-sm cursor-pointer border-2 border-transparent hover:border-enterprise-200 transition-colors" id="user-avatar">
+                    <span id="avatar-content"></span> 
                 </div>
-            </div>
-
-            <div x-show="tabActiva === 'empresa'" x-transition class="tab-pane" style="display: none;">
-                <div class="config-card white-card">
-                    <h4>Datos Fiscales para Facturación</h4>
-                    <form id="form-update-empresa" class="form-grid">
-                        <div class="input-group full-width">
-                            <label>Razón Social o Nombre Comercial</label>
-                            <input type="text" id="empresa-nombre" class="light-input" placeholder="Ej. SARLAB S.A.S.">
-                        </div>
-                        <div class="input-group">
-                            <label>NIT / RUT</label>
-                            <input type="text" id="empresa-nit" class="light-input" placeholder="Ej. 900XXX.XXX-X">
-                        </div>
-                        <div class="input-group">
-                            <label>Régimen Tributario</label>
-                            <select id="empresa-regimen" class="light-input">
-                                <option value="responsable">Responsable de IVA</option>
-                                <option value="no-responsable">No Responsable</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label>Dirección Principal</label>
-                            <input type="text" id="empresa-direccion" class="light-input" placeholder="Calle/Cra...">
-                        </div>
-                        <div class="input-group">
-                            <label>Ciudad / Departamento</label>
-                            <input type="text" id="empresa-ciudad" class="light-input" placeholder="Ej. Medellín, Antioquia">
-                        </div>
-                        <div class="form-actions full-width">
-                            <button type="submit" class="btn-primary">Guardar Datos Fiscales</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div x-show="tabActiva === 'branding'" x-transition class="tab-pane" style="display: none;">
-                <div class="config-card white-card">
-                    <h4>Identidad Visual de la Empresa</h4>
-                    <div class="branding-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                        
-                        <div class="upload-zone" id="zone-logo" style="border: 2px dashed #d8dee4; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; color: #555; position: relative; background: #f8f9fa;">
-                            <input type="file" id="input-logo" accept="image/png, image/jpeg" style="display: none;">
-                            <img id="preview-logo" src="" style="max-width: 100%; max-height: 100px; display: none; margin: 0 auto; border-radius: 4px;">
-                            <div id="text-logo">
-                                <span class="material-symbols-outlined" style="font-size: 2rem;">upload_file</span>
-                                <p style="margin-top:10px;">Subir Logo (.PNG, .JPG)</p>
-                            </div>
-                        </div>
-
-                        <div class="upload-zone" id="zone-firma" style="border: 2px dashed #d8dee4; padding: 30px; text-align: center; border-radius: 8px; cursor: pointer; color: #555; position: relative; background: #f8f9fa;">
-                            <input type="file" id="input-firma" accept="image/png" style="display: none;">
-                            <img id="preview-firma" src="" style="max-width: 100%; max-height: 100px; display: none; margin: 0 auto;">
-                            <div id="text-firma">
-                                <span class="material-symbols-outlined" style="font-size: 2rem;">draw</span>
-                                <p style="margin-top:10px;">Subir Firma Digital (.PNG)</p>
-                            </div>
-                        </div>
-
+                <!-- El Selector de Iconos se mantiene con su ID original para tu JS -->
+                <div class="avatar-selector hidden absolute top-12 right-0 bg-white border border-slate-200 rounded-lg p-4 shadow-xl z-50 w-48" id="avatar-selector">
+                    <p class="text-xs text-slate-500 font-bold uppercase mb-3">Selecciona un icono</p>
+                    <div class="icons-grid flex flex-wrap gap-2">
+                        <span class="sel-icon text-slate-600 hover:text-enterprise-600 cursor-pointer" data-type="icon">person</span>
+                        <span class="sel-icon text-slate-600 hover:text-enterprise-600 cursor-pointer" data-type="icon">account_balance</span>
+                        <span class="sel-icon text-slate-600 hover:text-enterprise-600 cursor-pointer" data-type="icon">monitoring</span>
+                        <span class="sel-icon text-slate-600 hover:text-enterprise-600 cursor-pointer" data-type="icon">shield</span>
+                        <span class="sel-icon text-slate-600 hover:text-enterprise-600 cursor-pointer" data-type="icon">rocket</span>
+                        <span class="sel-icon text-slate-600 hover:text-enterprise-600 cursor-pointer font-sans font-bold text-sm" data-type="initials" title="Usar mis iniciales">Abc</span>
                     </div>
                 </div>
             </div>
 
-            <div x-show="tabActiva === 'pagos'" x-transition class="tab-pane" style="display: none;">
-                <div class="config-card white-card">
-                    <h4>Preferencias de Recaudo</h4>
-                    <form id="form-update-pagos" class="form-grid">
-                        <div class="input-group">
-                            <label>Entidad Bancaria</label>
-                            <select id="banco-principal" class="light-input">
-                                <option value="bancolombia">Bancolombia</option>
-                                <option value="nequi">Nequi</option>
-                                <option value="nu">Nu (Nubank)</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label>Número de Cuenta</label>
-                            <input type="text" id="cuenta-numero" class="light-input" placeholder="Ej. 000-00000-00">
-                        </div>
-                        <div class="input-group full-width">
-                            <label>Instrucciones de Pago</label>
-                            <textarea id="instrucciones-pago" class="light-input" rows="3" placeholder="Ej: Realizar transferencia y enviar comprobante..."></textarea>
-                        </div>
-                        <div class="form-actions full-width">
-                            <button type="submit" class="btn-primary">Guardar Preferencias</button>
-                        </div>
-                    </form>
+            <button class="text-red-500 hover:bg-red-50 p-2 rounded-lg transition" id="btn-logout" title="Cerrar Sesión">
+                <span class="material-symbols-outlined">logout</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- =========================================
+         CUERPO PRINCIPAL (VISTAS)
+         ========================================= -->
+    <div class="app-body flex flex-1 overflow-hidden">
+        <main class="main-content flex-1 overflow-y-auto p-8 bg-slate-50">
+            
+            <section id="sec-inicio" class="content-section">
+                <h1 class="text-2xl font-bold text-slate-800 mb-6">Dashboard General</h1>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><p class="text-slate-500">Métricas principales...</p></div>
+            </section>
+
+            <section id="sec-facturas" class="content-section" style="display: none;">
+                <h1 class="text-2xl font-bold text-slate-800 mb-6">Gestión de Facturas</h1>
+                <div id="lista-facturas" class="grid gap-4">
+                    <!-- Lista inyectada por JS -->
                 </div>
-            </div>
+            </section>
 
-        </div> 
-    </div> 
-</section>
-    </main>
-</div>
+            <section id="sec-gastos" class="content-section" style="display: none;">
+                <h1 class="text-2xl font-bold text-slate-800 mb-6">Registro de Egresos</h1>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><p class="text-slate-500">Módulo de gastos en construcción...</p></div>
+            </section>
 
-    <div class="modal-overlay" id="modal-factura" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Registrar Nueva Factura</h2>
-                <button id="btn-cerrar-modal" class="icon-btn"><i data-feather="x"></i></button>
+            <section id="sec-clientes" class="content-section" style="display: none;">
+                <h1 class="text-2xl font-bold text-slate-800 mb-6">Directorio de Clientes</h1>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><p class="text-slate-500">Módulo de clientes en construcción...</p></div>
+            </section>
+
+            <section id="sec-productos" class="content-section" style="display: none;">
+                <h1 class="text-2xl font-bold text-slate-800 mb-6">Servicios Profesionales</h1>
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><p class="text-slate-500">Catálogo de servicios en construcción...</p></div>
+            </section>
+
+            <!-- =========================================
+                 MÓDULO DE CONFIGURACIÓN (CON ALPINE.JS)
+                 ========================================= -->
+            <section id="sec-configuracion" class="content-section" style="display: none;" x-data="{ tabActiva: 'empresa' }">
+                <div class="flex flex-col md:flex-row gap-8">
+                    
+                    <!-- Sidebar de Configuración Tailwind -->
+                    <aside class="w-full md:w-64 flex-shrink-0 flex flex-col gap-2">
+                        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 px-3">Ajustes Generales</h3>
+                        <nav class="flex flex-col gap-1">
+                            <!-- Botones con lógica de clases dinámicas de Tailwind mediante Alpine -->
+                            <button @click="tabActiva = 'perfil'" :class="tabActiva === 'perfil' ? 'bg-enterprise-50 text-enterprise-600 border-l-4 border-enterprise-600' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-l-4 border-transparent'" class="flex items-center gap-3 px-4 py-2.5 rounded-r-lg text-sm font-medium transition-all text-left">
+                                <span class="material-symbols-outlined text-lg">person</span> Mi Perfil
+                            </button>
+                            <button @click="tabActiva = 'empresa'" :class="tabActiva === 'empresa' ? 'bg-enterprise-50 text-enterprise-600 border-l-4 border-enterprise-600' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-l-4 border-transparent'" class="flex items-center gap-3 px-4 py-2.5 rounded-r-lg text-sm font-medium transition-all text-left">
+                                <span class="material-symbols-outlined text-lg">business</span> Datos Fiscales
+                            </button>
+                            <button @click="tabActiva = 'branding'" :class="tabActiva === 'branding' ? 'bg-enterprise-50 text-enterprise-600 border-l-4 border-enterprise-600' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-l-4 border-transparent'" class="flex items-center gap-3 px-4 py-2.5 rounded-r-lg text-sm font-medium transition-all text-left">
+                                <span class="material-symbols-outlined text-lg">brush</span> Identidad Visual
+                            </button>
+                            <button @click="tabActiva = 'pagos'" :class="tabActiva === 'pagos' ? 'bg-enterprise-50 text-enterprise-600 border-l-4 border-enterprise-600' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 border-l-4 border-transparent'" class="flex items-center gap-3 px-4 py-2.5 rounded-r-lg text-sm font-medium transition-all text-left">
+                                <span class="material-symbols-outlined text-lg">payments</span> Cuentas y Pagos
+                            </button>
+                        </nav>
+                    </aside>
+
+                    <!-- Paneles de Contenido -->
+                    <div class="flex-1 min-w-0">
+                        
+                        <!-- MI PERFIL -->
+                        <div x-show="tabActiva === 'perfil'" x-transition class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                            <h4 class="text-lg font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4">Información de la Cuenta</h4>
+                            <form id="form-update-profile" class="flex flex-col gap-6">
+                                <sl-input id="config-name" label="Nombre Completo" placeholder="Tu nombre" clearable></sl-input>
+                                <sl-input id="profile-email-display" type="email" label="Correo Electrónico (No editable)" disabled></sl-input>
+                                <div class="flex justify-end mt-2">
+                                    <sl-button variant="primary" type="submit">Actualizar Perfil</sl-button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- DATOS FISCALES -->
+                        <div x-show="tabActiva === 'empresa'" x-transition class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm" style="display: none;">
+                            <h4 class="text-lg font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4">Datos Fiscales para Facturación</h4>
+                            <form id="form-update-empresa" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="col-span-1 md:col-span-2">
+                                    <sl-input id="empresa-nombre" label="Razón Social o Nombre Comercial" placeholder="Ej. SARLAB S.A.S." clearable></sl-input>
+                                </div>
+                                <div><sl-input id="empresa-nit" label="NIT / RUT" placeholder="Ej. 900XXX.XXX-X" clearable></sl-input></div>
+                                <div>
+                                    <sl-select id="empresa-regimen" label="Régimen Tributario" value="responsable">
+                                        <sl-option value="responsable">Responsable de IVA</sl-option>
+                                        <sl-option value="no-responsable">No Responsable</sl-option>
+                                    </sl-select>
+                                </div>
+                                <div><sl-input id="empresa-direccion" label="Dirección Principal" placeholder="Calle/Cra..."></sl-input></div>
+                                <div><sl-input id="empresa-ciudad" label="Ciudad / Departamento" placeholder="Ej. Medellín, Antioquia"></sl-input></div>
+                                <div class="col-span-1 md:col-span-2 flex justify-end mt-2">
+                                    <sl-button variant="primary" type="submit">Guardar Datos Fiscales</sl-button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- IDENTIDAD VISUAL -->
+                        <div x-show="tabActiva === 'branding'" x-transition class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm" style="display: none;">
+                            <h4 class="text-lg font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4">Identidad Visual de la Empresa</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Logo Zone -->
+                                <div class="border-2 border-dashed border-slate-300 bg-slate-50 rounded-xl p-8 flex flex-col items-center justify-center text-slate-500 hover:border-enterprise-500 hover:bg-enterprise-50 hover:text-enterprise-600 cursor-pointer transition-colors relative" id="zone-logo">
+                                    <input type="file" id="input-logo" accept="image/png, image/jpeg" class="hidden">
+                                    <img id="preview-logo" src="" class="hidden max-h-24 mx-auto rounded">
+                                    <div id="text-logo" class="text-center">
+                                        <span class="material-symbols-outlined text-4xl mb-2">upload_file</span>
+                                        <p class="font-medium text-sm">Subir Logo (.PNG, .JPG)</p>
+                                    </div>
+                                </div>
+                                <!-- Firma Zone -->
+                                <div class="border-2 border-dashed border-slate-300 bg-slate-50 rounded-xl p-8 flex flex-col items-center justify-center text-slate-500 hover:border-enterprise-500 hover:bg-enterprise-50 hover:text-enterprise-600 cursor-pointer transition-colors relative" id="zone-firma">
+                                    <input type="file" id="input-firma" accept="image/png" class="hidden">
+                                    <img id="preview-firma" src="" class="hidden max-h-24 mx-auto">
+                                    <div id="text-firma" class="text-center">
+                                        <span class="material-symbols-outlined text-4xl mb-2">draw</span>
+                                        <p class="font-medium text-sm">Subir Firma Digital (.PNG)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CUENTAS Y PAGOS -->
+                        <div x-show="tabActiva === 'pagos'" x-transition class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm" style="display: none;">
+                            <h4 class="text-lg font-bold text-slate-800 mb-6 border-b border-slate-100 pb-4">Preferencias de Recaudo</h4>
+                            <form id="form-update-pagos" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <sl-select id="banco-principal" label="Entidad Bancaria" value="bancolombia">
+                                        <sl-option value="bancolombia">Bancolombia</sl-option>
+                                        <sl-option value="nequi">Nequi</sl-option>
+                                        <sl-option value="nu">Nu (Nubank)</sl-option>
+                                    </sl-select>
+                                </div>
+                                <div>
+                                    <sl-input id="cuenta-numero" label="Número de Cuenta" placeholder="Ej. 000-00000-00" clearable></sl-input>
+                                </div>
+                                <div class="col-span-1 md:col-span-2">
+                                    <sl-textarea id="instrucciones-pago" label="Instrucciones de Pago" rows="3" placeholder="Ej: Realizar transferencia y enviar comprobante..." resize="auto"></sl-textarea>
+                                </div>
+                                <div class="col-span-1 md:col-span-2 flex justify-end mt-2">
+                                    <sl-button variant="primary" type="submit">Guardar Preferencias</sl-button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div> 
+                </div> 
+            </section>
+        </main>
+    </div>
+
+    <!-- =========================================
+         MODAL DE FACTURA (ESTILIZADO CON TAILWIND)
+         ========================================= -->
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm" id="modal-factura" style="display: none;">
+        <div class="bg-white w-full max-w-md p-6 rounded-xl shadow-2xl relative">
+            <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
+                <h2 class="text-xl font-bold text-slate-800">Registrar Nueva Factura</h2>
+                <button id="btn-cerrar-modal" class="text-slate-400 hover:text-slate-700 transition-colors">
+                    <i data-feather="x"></i>
+                </button>
             </div>
             
-            <form id="form-nueva-factura">
-                <div class="input-group">
-                    <label>Nombre del Cliente</label>
-                    <input type="text" id="factura-cliente" placeholder="Ej. Empresa S.A.S" required>
-                </div>
+            <form id="form-nueva-factura" class="flex flex-col gap-5">
+                <sl-input id="factura-cliente" label="Nombre del Cliente" placeholder="Ej. Empresa S.A.S" required clearable></sl-input>
                 
-                <div class="input-group">
-                    <label>Monto Total ($)</label>
-                    <input type="number" id="factura-monto" placeholder="0.00" required>
-                </div>
+                <sl-input id="factura-monto" type="number" label="Monto Total ($)" placeholder="0.00" required></sl-input>
                 
-                <div class="input-group">
-                    <label>Estado</label>
-                    <select id="factura-estado">
-                        <option value="Pagada">Pagada</option>
-                        <option value="Pendiente">Pendiente</option>
-                        <option value="Borrador">Borrador</option>
-                    </select>
-                </div>
+                <sl-select id="factura-estado" label="Estado" value="Pendiente">
+                    <sl-option value="Pagada">Pagada</sl-option>
+                    <sl-option value="Pendiente">Pendiente</sl-option>
+                    <sl-option value="Borrador">Borrador</sl-option>
+                </sl-select>
                 
-                <button type="submit" class="btn-primary">Guardar en Sistema</button>
+                <div class="flex justify-end mt-4">
+                    <sl-button variant="primary" type="submit">Guardar en Sistema</sl-button>
+                </div>
             </form>
         </div>
     </div>
 
-  <script>
-      feather.replace()
+    <!-- =========================================
+         SCRIPTS Y LÓGICA CORE
+         ========================================= -->
+    <script>
+      feather.replace();
     </script>
     
     <script type="module">
         import { vigilarSesion } from './js/auth.js';
         import { activarNavegacionPill, configurarAvatar, vincularBotonConfiguracion, inicializarConfiguracion } from './js/ui.js';
         
-        // Inicializamos la navegación inmediatamente
         activarNavegacionPill();
 
         vigilarSesion(
