@@ -280,3 +280,65 @@ export function inicializarFacturacion() {
         });
     });
 }
+
+// js/ui.js (añadir al final)
+
+export function inicializarDashboard() {
+    // Comprobamos que el contenedor exista y que ApexCharts esté cargado
+    if (!document.getElementById('chart-flujo') || typeof ApexCharts === 'undefined') return;
+
+    // 1. Gráfico de Flujo (Área Suave)
+    const opcionesFlujo = {
+        series: [{
+            name: 'Ingresos',
+            data: [3100000, 4000000, 2800000, 5100000, 4200000, 6000000]
+        }],
+        chart: {
+            type: 'area',
+            height: 300,
+            toolbar: { show: false }, // Oculta menú feo de opciones
+            fontFamily: 'inherit',
+            background: 'transparent' // Respeta el modo oscuro
+        },
+        colors: ['#2563eb'], // Enterprise Blue
+        fill: {
+            type: 'gradient',
+            gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.05, stops: [0, 100] }
+        },
+        dataLabels: { enabled: false },
+        stroke: { curve: 'smooth', width: 3 },
+        xaxis: {
+            categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+            axisBorder: { show: false },
+            axisTicks: { show: false },
+            labels: { style: { colors: '#64748b' } }
+        },
+        yaxis: {
+            labels: { 
+                style: { colors: '#64748b' },
+                formatter: (value) => "$" + (value / 1000000).toFixed(1) + "M"
+            }
+        },
+        grid: { borderColor: 'rgba(148, 163, 184, 0.1)', strokeDashArray: 4 }
+    };
+
+    const chartFlujo = new ApexCharts(document.querySelector("#chart-flujo"), opcionesFlujo);
+    chartFlujo.render();
+
+    // 2. Gráfico de Estados (Dona)
+    const opcionesEstados = {
+        series: [65, 25, 10], // Pagadas, Pendientes, Borrador
+        labels: ['Pagadas', 'Pendientes', 'Borrador'],
+        chart: { type: 'donut', height: 280, fontFamily: 'inherit', background: 'transparent' },
+        colors: ['#10b981', '#f59e0b', '#cbd5e1'], // Verde, Naranja, Gris
+        plotOptions: {
+            pie: { donut: { size: '75%' } } // Dona más delgada y elegante
+        },
+        dataLabels: { enabled: false },
+        stroke: { show: false },
+        legend: { position: 'bottom', labels: { colors: '#64748b' } }
+    };
+
+    const chartEstados = new ApexCharts(document.querySelector("#chart-estados"), opcionesEstados);
+    chartEstados.render();
+}
