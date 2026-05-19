@@ -3,7 +3,14 @@
    ESTILOS GLOBALES BASE
    =========================================
 */
-
+/* Oculta la barra de scroll pero permite deslizar con el dedo (Estilo App Nativa) */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none; /* IE y Edge */
+    scrollbar-width: none; /* Firefox */
+}
 /* Scrollbar corporativo e invisible hasta que pasas el ratón */
 ::-webkit-scrollbar {
     width: 8px;
