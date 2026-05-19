@@ -20,8 +20,7 @@
 
 /* 2. NAVEGACIÓN PRINCIPAL (Píldora Animada) */
 .pill-navigation {
-    background-color: #ffffff; 
-    border: 1px solid #e2e8f0; /* Borde sutil slate-200 */
+    /* Eliminamos el background y border fijos de aquí para que Tailwind los controle */
     border-radius: 8px; 
     padding: 4px 8px;
     display: flex;
