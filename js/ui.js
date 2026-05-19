@@ -11,17 +11,26 @@ import { suscribirFacturas } from './db.js';
 export function activarNavegacionPill() {
     const navGroups = document.querySelectorAll('.nav-group');
 
-    // Solo se encarga de expandir la píldora principal (Finanzas, Gestión, etc)
     navGroups.forEach(group => {
         const header = group.querySelector('.topic-header');
         
         header.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (group.classList.contains('active')) return;
-
-            navGroups.forEach(g => g.classList.remove('active'));
-            group.classList.add('active');
+            e.stopPropagation(); // Evita que se cierre al hacer clic
+            
+            // Si el grupo ya está activo, lo quitamos (cerrar)
+            if (group.classList.contains('active')) {
+                group.classList.remove('active');
+            } else {
+                // Cerramos todos los demás y abrimos este
+                navGroups.forEach(g => g.classList.remove('active'));
+                group.classList.add('active');
+            }
         });
+    });
+
+    // Cerrar si haces clic fuera del menú
+    document.addEventListener('click', () => {
+        navGroups.forEach(g => g.classList.remove('active'));
     });
 
     const btnLogout = document.getElementById('btn-logout');
