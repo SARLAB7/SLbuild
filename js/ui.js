@@ -9,8 +9,8 @@ import { guardarConfiguracion, obtenerConfiguracion, guardarFactura } from './db
    ========================================= */
 export function activarNavegacionPill() {
     const navGroups = document.querySelectorAll('.nav-group');
-    const sections = document.querySelectorAll('.content-section');
 
+    // Solo se encarga de expandir la píldora principal (Finanzas, Gestión, etc)
     navGroups.forEach(group => {
         const header = group.querySelector('.topic-header');
         
@@ -19,44 +19,13 @@ export function activarNavegacionPill() {
             if (group.classList.contains('active')) return;
 
             navGroups.forEach(g => g.classList.remove('active'));
-            document.querySelectorAll('.sub-item').forEach(si => si.classList.remove('active'));
             group.classList.add('active');
-
-            const firstSub = group.querySelector('.sub-item');
-            if (firstSub) firstSub.click();
-        });
-    });
-
-    document.querySelectorAll('.sub-item').forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-
-            document.querySelectorAll('.sub-item').forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-
-            const targetId = item.getAttribute('data-section');
-            sections.forEach(s => {
-                s.style.display = 'none'; // Aquí display none está bien porque controla el renderizado principal
-                s.classList.remove('active-section');
-            });
-
-            const targetSec = document.getElementById(targetId);
-            if (targetSec) {
-                targetSec.style.display = 'block';
-                setTimeout(() => targetSec.classList.add('active-section'), 10);
-            }
         });
     });
 
     const btnLogout = document.getElementById('btn-logout');
     if (btnLogout) {
         btnLogout.onclick = () => signOut(auth).then(() => window.location.href = 'index.html');
-    }
-
-    const activeSub = document.querySelector('.sub-item.active');
-    if (!activeSub && navGroups.length > 0) {
-        navGroups[0].querySelector('.topic-header').click();
     }
 }
 
@@ -121,26 +90,6 @@ export function configurarAvatar(user) {
 /* =========================================
    3. CONFIGURACIÓN DEL SISTEMA Y MODALES
    ========================================= */
-export function vincularBotonConfiguracion() {
-    const btn = document.getElementById('btn-open-config');
-    if (!btn) return;
-
-    btn.onclick = (e) => {
-        e.preventDefault();
-        
-        document.querySelectorAll('.content-section').forEach(s => {
-            s.style.display = 'none';
-            s.classList.remove('active-section');
-        });
-        document.querySelectorAll('.nav-group, .sub-item').forEach(el => el.classList.remove('active'));
-
-        const secConfig = document.getElementById('sec-configuracion');
-        if (secConfig) {
-            secConfig.style.display = 'block';
-            setTimeout(() => secConfig.classList.add('active-section'), 10);
-        }
-    };
-}
 
 export async function inicializarConfiguracion(user) {
     if (!user) return;
