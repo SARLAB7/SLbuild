@@ -140,8 +140,7 @@
     </header>
 
     <div class="app-body flex flex-1 overflow-hidden bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
-        <main class="main-content flex-1 overflow-y-auto p-8">
-            
+     <main class="main-content flex-1 overflow-y-auto p-4 md:p-8">            
             <!-- SECCIONES CON ANIMACIÓN DE ENTRADA -->
             <section id="sec-inicio" x-show="vistaActiva === 'sec-inicio'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
                 <h1 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Dashboard General</h1>
@@ -181,23 +180,26 @@
 
             <!-- CONFIGURACIÓN -->
             <section id="sec-configuracion" x-show="vistaActiva === 'sec-configuracion'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;" x-data="{ tabActiva: 'empresa' }">
-                <div class="flex flex-col md:flex-row gap-8">
+        <div class="flex flex-col md:flex-row gap-6 md:gap-8">
+            
+            <aside class="w-full md:w-64 flex-shrink-0">
+                        <h3 class="hidden md:block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-3">Ajustes Generales</h3>
+                        <nav class="flex flex-row md:flex-col gap-2 overflow-x-auto no-scrollbar pb-2 md:pb-0">
+                            <button @click="tabActiva = 'perfil'" :class="tabActiva === 'perfil' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600 dark:text-enterprise-400 border-b-2 md:border-b-0 md:border-l-4 border-enterprise-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border-b-2 md:border-b-0 md:border-l-4 border-transparent'" class="flex items-center gap-2 md:gap-3 px-4 py-2 text-sm font-medium transition-all whitespace-nowrap rounded-t-lg md:rounded-t-none md:rounded-r-lg">
+                        <span class="material-symbols-outlined text-lg">person</span> Mi Perfil
+                    </button>
                     
-                    <aside class="w-full md:w-64 flex-shrink-0 flex flex-col gap-2">
-                        <h3 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-3">Ajustes Generales</h3>
-                        <nav class="flex flex-col gap-1">
-                            <button @click="tabActiva = 'perfil'" :class="tabActiva === 'perfil' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600 dark:text-enterprise-400 border-l-4 border-enterprise-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 border-l-4 border-transparent'" class="flex items-center gap-3 px-4 py-2.5 rounded-r-lg text-sm font-medium transition-all text-left">
-                                <span class="material-symbols-outlined text-lg">person</span> Mi Perfil
-                            </button>
-                            <button @click="tabActiva = 'empresa'" :class="tabActiva === 'empresa' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600 dark:text-enterprise-400 border-l-4 border-enterprise-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 border-l-4 border-transparent'" class="flex items-center gap-3 px-4 py-2.5 rounded-r-lg text-sm font-medium transition-all text-left">
-                                <span class="material-symbols-outlined text-lg">business</span> Datos Fiscales
-                            </button>
-                            <button @click="tabActiva = 'branding'" :class="tabActiva === 'branding' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600 dark:text-enterprise-400 border-l-4 border-enterprise-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 border-l-4 border-transparent'" class="flex items-center gap-3 px-4 py-2.5 rounded-r-lg text-sm font-medium transition-all text-left">
-                                <span class="material-symbols-outlined text-lg">brush</span> Identidad Visual
-                            </button>
-                            <button @click="tabActiva = 'pagos'" :class="tabActiva === 'pagos' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600 dark:text-enterprise-400 border-l-4 border-enterprise-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 border-l-4 border-transparent'" class="flex items-center gap-3 px-4 py-2.5 rounded-r-lg text-sm font-medium transition-all text-left">
-                                <span class="material-symbols-outlined text-lg">payments</span> Cuentas y Pagos
-                            </button>
+                    <button @click="tabActiva = 'empresa'" :class="tabActiva === 'empresa' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600 dark:text-enterprise-400 border-b-2 md:border-b-0 md:border-l-4 border-enterprise-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border-b-2 md:border-b-0 md:border-l-4 border-transparent'" class="flex items-center gap-2 md:gap-3 px-4 py-2 text-sm font-medium transition-all whitespace-nowrap rounded-t-lg md:rounded-t-none md:rounded-r-lg">
+                        <span class="material-symbols-outlined text-lg">business</span> Datos Fiscales
+                    </button>
+                    
+                    <button @click="tabActiva = 'branding'" :class="tabActiva === 'branding' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600 dark:text-enterprise-400 border-b-2 md:border-b-0 md:border-l-4 border-enterprise-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border-b-2 md:border-b-0 md:border-l-4 border-transparent'" class="flex items-center gap-2 md:gap-3 px-4 py-2 text-sm font-medium transition-all whitespace-nowrap rounded-t-lg md:rounded-t-none md:rounded-r-lg">
+                        <span class="material-symbols-outlined text-lg">brush</span> Identidad Visual
+                    </button>
+                    
+                    <button @click="tabActiva = 'pagos'" :class="tabActiva === 'pagos' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600 dark:text-enterprise-400 border-b-2 md:border-b-0 md:border-l-4 border-enterprise-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 border-b-2 md:border-b-0 md:border-l-4 border-transparent'" class="flex items-center gap-2 md:gap-3 px-4 py-2 text-sm font-medium transition-all whitespace-nowrap rounded-t-lg md:rounded-t-none md:rounded-r-lg">
+                        <span class="material-symbols-outlined text-lg">payments</span> Cuentas y Pagos
+                    </button>
                         </nav>
                     </aside>
 
