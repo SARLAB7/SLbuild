@@ -1,8 +1,9 @@
+// js/db.js
 import { db } from './firebase-config.js';
-// Cambiamos la URL larguísima por la importación directa de NPM
 import { 
     collection, addDoc, serverTimestamp, 
-    doc, setDoc, getDoc 
+    doc, setDoc, getDoc,
+    onSnapshot, query, orderBy // <-- Nuevas importaciones
 } from "firebase/firestore"; 
 import { notify } from './utils.js';
 
@@ -54,4 +55,22 @@ export async function obtenerConfiguracion(uid) {
         console.error("Error al obtener configuración:", error);
         return null;
     }
+}
+// Nueva función para escuchar facturas en tiempo real
+export function suscribirFacturas(callback) {
+    const facturasRef = collection(db, "facturas");
+    // Ordenamos de la más reciente a la más antigua
+    const q = query(facturasRef, orderBy("fechaCreacion", "desc"));
+    
+    // onSnapshot escucha cambios en la BD en tiempo real
+    return onSnapshot(q, (snapshot) => {
+        const facturas = [];
+        snapshot.forEach((doc) => {
+            facturas.push({ id: doc.id, ...doc.data() });
+        });
+        callback(facturas);
+    }, (error) => {
+        console.error("Error al cargar facturas:", error);
+        notify("Error al cargar la lista de facturas", "error");
+    });
 }
