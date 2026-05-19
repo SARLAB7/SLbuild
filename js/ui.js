@@ -15,30 +15,26 @@ export function activarNavegacionPill() {
         const header = group.querySelector('.topic-header');
         
         header.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evita que se cierre al hacer clic
+            e.stopPropagation();
             
-            // Si el grupo ya está activo, lo quitamos (cerrar)
-            if (group.classList.contains('active')) {
-                group.classList.remove('active');
-            } else {
-                // Cerramos todos los demás y abrimos este
-                navGroups.forEach(g => g.classList.remove('active'));
+            // Lógica de Toggle: si ya tiene active, se quita; si no, se pone.
+            const esActivo = group.classList.contains('active');
+            
+            // Primero cerramos todos los grupos
+            navGroups.forEach(g => g.classList.remove('active'));
+            
+            // Si no era activo, lo activamos
+            if (!esActivo) {
                 group.classList.add('active');
             }
         });
     });
 
-    // Cerrar si haces clic fuera del menú
+    // Cerrar al hacer clic en cualquier parte de la pantalla
     document.addEventListener('click', () => {
         navGroups.forEach(g => g.classList.remove('active'));
     });
-
-    const btnLogout = document.getElementById('btn-logout');
-    if (btnLogout) {
-        btnLogout.onclick = () => signOut(auth).then(() => window.location.href = 'index.html');
-    }
 }
-
 /* =========================================
    2. GESTIÓN DEL AVATAR (Limpieza Tailwind)
    ========================================= */
