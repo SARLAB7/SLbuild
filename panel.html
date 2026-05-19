@@ -18,7 +18,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class', /* Habilita el modo oscuro manual */
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -38,24 +38,31 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- 5. Estilos Locales -->
+    <!-- 5. Estilos Locales y Ajustes Premium Shoelace -->
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            /* ESTÉTICA APPLE/ANDROID: Redondea inputs y botones de Shoelace */
+            --sl-input-border-radius-medium: 0.75rem; 
+            --sl-input-border-radius-large: 1rem;
+            --sl-button-border-radius-medium: 0.75rem;
+            --sl-focus-ring-width: 2px;
+            --sl-focus-ring-alpha: 0.15;
+            --sl-font-sans: inherit;
+        }
+    </style>
 </head>
 
-<!-- AQUÍ ESTÁ EL NUEVO BODY CON LA MEMORIA DE MODO OSCURO -->
 <body 
-    x-data="{ isDark: localStorage.getItem('theme') === 'dark' }" 
+    x-data="{ isDark: localStorage.getItem('theme') === 'dark', vistaActiva: 'sec-inicio' }" 
     x-init="$watch('isDark', val => localStorage.setItem('theme', val ? 'dark' : 'light'))"
     :class="isDark ? 'dark sl-theme-dark' : ''"
     class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-200 min-h-screen flex flex-col overflow-hidden transition-colors duration-300">
     
-    <!-- =========================================
-         BARRA SUPERIOR (HEADER)
-         ========================================= -->
-    <!-- Agregamos dark:bg-slate-800 y dark:border-slate-700 -->
-    <header class="h-16 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between px-6 z-50 shadow-sm shrink-0 transition-colors duration-300">
+    <!-- HEADER GLASSMORPHISM (Efecto translúcido Apple) -->
+    <header class="h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50 flex items-center justify-between px-6 z-50 sticky top-0 shadow-sm shrink-0 transition-colors duration-300">
         <div class="logo font-extrabold text-xl tracking-tight text-enterprise-600 dark:text-enterprise-400">SACLAB</div>
         
         <nav class="pill-navigation">
@@ -65,9 +72,10 @@
                     <span>Finanzas</span>
                 </button>
                 <div class="sub-pill-container">
-                    <button class="sub-item" data-section="sec-inicio">Dashboard</button>
-                    <button class="sub-item" data-section="sec-facturas">Facturación</button>
-                    <button class="sub-item" data-section="sec-gastos">Egresos</button>
+                    <!-- AHORA ALPINE CONTROLA EL CLICK Y LA CLASE ACTIVE -->
+                    <button class="sub-item" @click="vistaActiva = 'sec-inicio'" :class="vistaActiva === 'sec-inicio' ? 'active' : ''">Dashboard</button>
+                    <button class="sub-item" @click="vistaActiva = 'sec-facturas'" :class="vistaActiva === 'sec-facturas' ? 'active' : ''">Facturación</button>
+                    <button class="sub-item" @click="vistaActiva = 'sec-gastos'" :class="vistaActiva === 'sec-gastos' ? 'active' : ''">Egresos</button>
                 </div>
             </div>
 
@@ -77,8 +85,8 @@
                     <span>Gestión</span>
                 </button>
                 <div class="sub-pill-container">
-                    <button class="sub-item" data-section="sec-clientes">Clientes</button>
-                    <button class="sub-item" data-section="sec-productos">Servicios</button>
+                    <button class="sub-item" @click="vistaActiva = 'sec-clientes'" :class="vistaActiva === 'sec-clientes' ? 'active' : ''">Clientes</button>
+                    <button class="sub-item" @click="vistaActiva = 'sec-productos'" :class="vistaActiva === 'sec-productos' ? 'active' : ''">Servicios</button>
                 </div>
             </div>
 
@@ -88,20 +96,22 @@
                     <span>Contabilidad</span>
                 </button>
                 <div class="sub-pill-container">
-                    <button class="sub-item" data-section="sec-asientos">Libro Diario</button>
-                    <button class="sub-item" data-section="sec-impuestos">DIAN</button>
+                    <button class="sub-item" @click="vistaActiva = 'sec-asientos'" :class="vistaActiva === 'sec-asientos' ? 'active' : ''">Libro Diario</button>
+                    <button class="sub-item" @click="vistaActiva = 'sec-impuestos'" :class="vistaActiva === 'sec-impuestos' ? 'active' : ''">DIAN</button>
                 </div>
             </div>
         </nav>
 
         <div class="top-navbar-right flex items-center gap-3">
-            <!-- Botón Dark/Light Mode -->
             <button @click="isDark = !isDark" class="text-slate-500 hover:text-enterprise-600 dark:text-slate-400 dark:hover:text-enterprise-400 hover:bg-slate-100 dark:hover:bg-slate-700 p-2 rounded-lg transition" title="Cambiar Tema">
                 <span class="material-symbols-outlined" x-text="isDark ? 'light_mode' : 'dark_mode'"></span>
             </button>
-            <button class="text-slate-500 hover:text-enterprise-600 dark:text-slate-400 dark:hover:text-enterprise-400 hover:bg-slate-100 dark:hover:bg-slate-700 p-2 rounded-lg transition" id="btn-open-config" title="Configuración">
+            
+            <!-- EL BOTÓN CONFIG TAMBIÉN USA ALPINE -->
+            <button @click="vistaActiva = 'sec-configuracion'" :class="vistaActiva === 'sec-configuracion' ? 'bg-slate-100 dark:bg-slate-700 text-enterprise-600 dark:text-enterprise-400' : ''" class="text-slate-500 hover:text-enterprise-600 dark:text-slate-400 dark:hover:text-enterprise-400 hover:bg-slate-100 dark:hover:bg-slate-700 p-2 rounded-lg transition" id="btn-open-config" title="Configuración">
                 <span class="material-symbols-outlined">settings</span>
             </button>
+            
             <button class="text-slate-500 hover:text-enterprise-600 dark:text-slate-400 dark:hover:text-enterprise-400 hover:bg-slate-100 dark:hover:bg-slate-700 p-2 rounded-lg transition" title="Notificaciones">
                 <span class="material-symbols-outlined">notifications</span>
             </button>
@@ -110,7 +120,6 @@
                 <div class="avatar w-9 h-9 rounded-full bg-enterprise-600 text-white flex items-center justify-center font-bold text-sm cursor-pointer border-2 border-transparent hover:border-enterprise-200 transition-colors" id="user-avatar">
                     <span id="avatar-content"></span> 
                 </div>
-                <!-- Dropdown Avatar oscuro -->
                 <div class="avatar-selector hidden absolute top-12 right-0 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4 shadow-xl z-50 w-48" id="avatar-selector">
                     <p class="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase mb-3">Selecciona un icono</p>
                     <div class="icons-grid flex flex-wrap gap-2">
@@ -130,48 +139,44 @@
         </div>
     </header>
 
-    <!-- =========================================
-         CUERPO PRINCIPAL (VISTAS)
-         ========================================= -->
-    <!-- Fondo oscuro en el contenedor principal -->
     <div class="app-body flex flex-1 overflow-hidden bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
         <main class="main-content flex-1 overflow-y-auto p-8">
             
-            <section id="sec-inicio" class="content-section">
+            <!-- SECCIONES CON ANIMACIÓN DE ENTRADA -->
+            <section id="sec-inicio" x-show="vistaActiva === 'sec-inicio'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
                 <h1 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Dashboard General</h1>
-                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm"><p class="text-slate-500 dark:text-slate-400">Métricas principales...</p></div>
+                <!-- TARJETAS PREMIUM (Efecto Android/Apple) -->
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-[0_2px_20px_rgb(0,0,0,0.03)] dark:shadow-[0_2px_20px_rgb(0,0,0,0.2)] hover:shadow-lg transition-shadow duration-300"><p class="text-slate-500 dark:text-slate-400">Métricas principales...</p></div>
             </section>
 
-            <section id="sec-facturas" class="content-section" style="display: none;">
+            <!-- AQUI ESTABA EL ERROR DE SINTAXIS, YA CORREGIDO -->
+            <section id="sec-facturas" x-show="vistaActiva === 'sec-facturas'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
                 <h1 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Gestión de Facturas</h1>
                 <div id="lista-facturas" class="grid gap-4"></div>
             </section>
 
-            <section id="sec-gastos" class="content-section" style="display: none;">
+            <section id="sec-gastos" x-show="vistaActiva === 'sec-gastos'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
                 <h1 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Registro de Egresos</h1>
-                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm"><p class="text-slate-500 dark:text-slate-400">Módulo de gastos en construcción...</p></div>
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-[0_2px_20px_rgb(0,0,0,0.03)] dark:shadow-[0_2px_20px_rgb(0,0,0,0.2)] hover:shadow-lg transition-shadow duration-300"><p class="text-slate-500 dark:text-slate-400">Módulo de gastos en construcción...</p></div>
             </section>
 
-            <section id="sec-clientes" class="content-section" style="display: none;">
+            <section id="sec-clientes" x-show="vistaActiva === 'sec-clientes'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
                 <h1 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Directorio de Clientes</h1>
-                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm"><p class="text-slate-500 dark:text-slate-400">Módulo de clientes en construcción...</p></div>
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-[0_2px_20px_rgb(0,0,0,0.03)] dark:shadow-[0_2px_20px_rgb(0,0,0,0.2)] hover:shadow-lg transition-shadow duration-300"><p class="text-slate-500 dark:text-slate-400">Módulo de clientes en construcción...</p></div>
             </section>
 
-            <section id="sec-productos" class="content-section" style="display: none;">
+            <section id="sec-productos" x-show="vistaActiva === 'sec-productos'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
                 <h1 class="text-2xl font-bold text-slate-800 dark:text-white mb-6">Servicios Profesionales</h1>
-                <div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm"><p class="text-slate-500 dark:text-slate-400">Catálogo de servicios en construcción...</p></div>
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-[0_2px_20px_rgb(0,0,0,0.03)] dark:shadow-[0_2px_20px_rgb(0,0,0,0.2)] hover:shadow-lg transition-shadow duration-300"><p class="text-slate-500 dark:text-slate-400">Catálogo de servicios en construcción...</p></div>
             </section>
 
-            <!-- =========================================
-                 MÓDULO DE CONFIGURACIÓN (CON ALPINE.JS)
-                 ========================================= -->
-            <section id="sec-configuracion" class="content-section" style="display: none;" x-data="{ tabActiva: 'empresa' }">
+            <!-- CONFIGURACIÓN -->
+            <section id="sec-configuracion" x-show="vistaActiva === 'sec-configuracion'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;" x-data="{ tabActiva: 'empresa' }">
                 <div class="flex flex-col md:flex-row gap-8">
                     
                     <aside class="w-full md:w-64 flex-shrink-0 flex flex-col gap-2">
                         <h3 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-3">Ajustes Generales</h3>
                         <nav class="flex flex-col gap-1">
-                            <!-- Botones Sidebar actualizados para Dark Mode -->
                             <button @click="tabActiva = 'perfil'" :class="tabActiva === 'perfil' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600 dark:text-enterprise-400 border-l-4 border-enterprise-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200 border-l-4 border-transparent'" class="flex items-center gap-3 px-4 py-2.5 rounded-r-lg text-sm font-medium transition-all text-left">
                                 <span class="material-symbols-outlined text-lg">person</span> Mi Perfil
                             </button>
@@ -188,9 +193,8 @@
                     </aside>
 
                     <div class="flex-1 min-w-0">
-                        
                         <!-- MI PERFIL -->
-                        <div x-show="tabActiva === 'perfil'" x-transition class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition-colors duration-300">
+                        <div x-show="tabActiva === 'perfil'" x-transition class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-[0_2px_20px_rgb(0,0,0,0.03)] dark:shadow-[0_2px_20px_rgb(0,0,0,0.2)] hover:shadow-lg transition-all duration-300" style="display: none;">
                             <h4 class="text-lg font-bold text-slate-800 dark:text-white mb-6 border-b border-slate-100 dark:border-slate-700 pb-4">Información de la Cuenta</h4>
                             <form id="form-update-profile" class="flex flex-col gap-6">
                                 <sl-input id="config-name" label="Nombre Completo" placeholder="Tu nombre" clearable></sl-input>
@@ -202,7 +206,7 @@
                         </div>
 
                         <!-- DATOS FISCALES -->
-                        <div x-show="tabActiva === 'empresa'" x-transition class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition-colors duration-300" style="display: none;">
+                        <div x-show="tabActiva === 'empresa'" x-transition class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-[0_2px_20px_rgb(0,0,0,0.03)] dark:shadow-[0_2px_20px_rgb(0,0,0,0.2)] hover:shadow-lg transition-all duration-300" style="display: none;">
                             <h4 class="text-lg font-bold text-slate-800 dark:text-white mb-6 border-b border-slate-100 dark:border-slate-700 pb-4">Datos Fiscales para Facturación</h4>
                             <form id="form-update-empresa" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="col-span-1 md:col-span-2">
@@ -224,10 +228,10 @@
                         </div>
 
                         <!-- IDENTIDAD VISUAL -->
-                        <div x-show="tabActiva === 'branding'" x-transition class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition-colors duration-300" style="display: none;">
+                        <div x-show="tabActiva === 'branding'" x-transition class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-[0_2px_20px_rgb(0,0,0,0.03)] dark:shadow-[0_2px_20px_rgb(0,0,0,0.2)] hover:shadow-lg transition-all duration-300" style="display: none;">
                             <h4 class="text-lg font-bold text-slate-800 dark:text-white mb-6 border-b border-slate-100 dark:border-slate-700 pb-4">Identidad Visual de la Empresa</h4>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="border-2 border-dashed border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 rounded-xl p-8 flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 hover:border-enterprise-500 dark:hover:border-enterprise-400 hover:bg-enterprise-50 dark:hover:bg-enterprise-900/20 cursor-pointer transition-colors relative" id="zone-logo">
+                                <div class="border-2 border-dashed border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-8 flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 hover:border-enterprise-500 dark:hover:border-enterprise-400 hover:bg-enterprise-50 dark:hover:bg-enterprise-900/20 cursor-pointer transition-colors relative" id="zone-logo">
                                     <input type="file" id="input-logo" accept="image/png, image/jpeg" class="hidden">
                                     <img id="preview-logo" src="" class="hidden max-h-24 mx-auto rounded">
                                     <div id="text-logo" class="text-center">
@@ -235,7 +239,7 @@
                                         <p class="font-medium text-sm">Subir Logo (.PNG, .JPG)</p>
                                     </div>
                                 </div>
-                                <div class="border-2 border-dashed border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 rounded-xl p-8 flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 hover:border-enterprise-500 dark:hover:border-enterprise-400 hover:bg-enterprise-50 dark:hover:bg-enterprise-900/20 cursor-pointer transition-colors relative" id="zone-firma">
+                                <div class="border-2 border-dashed border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-8 flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 hover:border-enterprise-500 dark:hover:border-enterprise-400 hover:bg-enterprise-50 dark:hover:bg-enterprise-900/20 cursor-pointer transition-colors relative" id="zone-firma">
                                     <input type="file" id="input-firma" accept="image/png" class="hidden">
                                     <img id="preview-firma" src="" class="hidden max-h-24 mx-auto">
                                     <div id="text-firma" class="text-center">
@@ -247,7 +251,7 @@
                         </div>
 
                         <!-- CUENTAS Y PAGOS -->
-                        <div x-show="tabActiva === 'pagos'" x-transition class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm transition-colors duration-300" style="display: none;">
+                        <div x-show="tabActiva === 'pagos'" x-transition class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-[0_2px_20px_rgb(0,0,0,0.03)] dark:shadow-[0_2px_20px_rgb(0,0,0,0.2)] hover:shadow-lg transition-all duration-300" style="display: none;">
                             <h4 class="text-lg font-bold text-slate-800 dark:text-white mb-6 border-b border-slate-100 dark:border-slate-700 pb-4">Preferencias de Recaudo</h4>
                             <form id="form-update-pagos" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
@@ -268,15 +272,13 @@
                                 </div>
                             </form>
                         </div>
-
                     </div> 
                 </div> 
             </section>
         </main>
     </div>
-<!-- =========================================
-         MODAL DE FACTURA PREMIUM (SHOELACE)
-         ========================================= -->
+
+    <!-- MODAL DE FACTURA PREMIUM -->
     <sl-dialog label="Registrar Nueva Factura" id="modal-factura" class="dialog-overview">
         <form id="form-nueva-factura" class="flex flex-col gap-5">
             <sl-input id="factura-cliente" label="Nombre del Cliente" placeholder="Ej. Empresa S.A.S" required clearable></sl-input>
@@ -287,23 +289,19 @@
                 <sl-option value="Borrador">Borrador</sl-option>
             </sl-select>
             <div class="flex justify-end mt-4">
-                <!-- Se cierra automáticamente con el evento del form en JS -->
                 <sl-button variant="primary" type="submit">Guardar en Sistema</sl-button>
             </div>
         </form>
     </sl-dialog>
-
 
     <script>
       feather.replace();
     </script>
    <script type="module">
         import { vigilarSesion } from './js/auth.js';
-        import { activarNavegacionPill, configurarAvatar, vincularBotonConfiguracion, inicializarConfiguracion } from './js/ui.js';
-        // 1. IMPORTAMOS AUTOANIMATE
+        import { activarNavegacionPill, configurarAvatar, inicializarConfiguracion } from './js/ui.js';
         import autoAnimate from 'https://cdn.jsdelivr.net/npm/@formkit/auto-animate@0.8.1/index.mjs';
         
-        // 2. LE DECIMOS QUE VIGILE LA LISTA DE FACTURAS
         const listaFacturas = document.getElementById('lista-facturas');
         if(listaFacturas) autoAnimate(listaFacturas);
 
@@ -312,7 +310,7 @@
         vigilarSesion(
             (user) => {
                 configurarAvatar(user);
-                vincularBotonConfiguracion();
+                // vincularBotonConfiguracion ya no es necesario, lo maneja Alpine en el HTML
                 inicializarConfiguracion(user);
             },
             () => window.location.href = 'index.html'
