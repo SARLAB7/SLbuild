@@ -249,8 +249,7 @@ export function inicializarFacturacion() {
         facturas.forEach(factura => {
             const card = document.createElement('div');
             // Estilos de tarjeta premium Apple/Android
-            card.className = "bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-[0_2px_10px_rgb(0,0,0,0.02)] flex justify-between items-center hover:shadow-md transition-shadow cursor-pointer";
-            
+          card.className = "bg-white dark:bg-slate-800 p-4 md:p-5 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-[0_2px_10px_rgb(0,0,0,0.02)] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 md:gap-4 hover:shadow-md transition-shadow cursor-pointer";            
             // Colores por estado
             let badgeClass = "bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300"; // Borrador
             if (factura.estado === 'Pagada') badgeClass = "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400";
@@ -260,19 +259,22 @@ export function inicializarFacturacion() {
             const montoFormateado = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(factura.monto);
 
             card.innerHTML = `
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 rounded-full bg-enterprise-50 dark:bg-enterprise-900/20 text-enterprise-600 flex items-center justify-center">
-                        <span class="material-symbols-outlined text-xl">person</span>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800 dark:text-slate-100">${factura.cliente}</h4>
-                        <span class="text-xs font-semibold px-2 py-1 rounded-md ${badgeClass}">${factura.estado}</span>
-                    </div>
-                </div>
-                <div class="text-right">
-                    <p class="font-extrabold text-lg text-slate-800 dark:text-slate-100">${montoFormateado}</p>
-                </div>
-            `;
+    <div class="flex items-center gap-3 w-full sm:w-auto">
+        <div class="w-10 h-10 rounded-full bg-enterprise-50 dark:bg-enterprise-900/20 text-enterprise-600 flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-xl">person</span>
+        </div>
+        <div class="flex-1 min-w-0">
+            <!-- truncate evita que nombres muy largos rompan el diseño -->
+            <h4 class="font-bold text-slate-800 dark:text-slate-100 truncate">${factura.cliente}</h4>
+            <span class="text-[10px] md:text-xs font-semibold px-2 py-1 rounded-md ${badgeClass} inline-block mt-0.5">${factura.estado}</span>
+        </div>
+    </div>
+    <!-- En celular el texto se alinea a la izquierda con padding, en PC a la derecha -->
+    <div class="text-left sm:text-right w-full sm:w-auto pl-13 sm:pl-0 mt-2 sm:mt-0">
+        <p class="font-extrabold text-lg text-slate-800 dark:text-slate-100">${montoFormateado}</p>
+    </div>
+`;
+           
             listaFacturas.appendChild(card);
         });
     });
