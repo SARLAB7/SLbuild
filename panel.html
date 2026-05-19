@@ -336,10 +336,10 @@
     <script>
       feather.replace();
     </script>
-   <script type="module">
+  <script type="module">
     import { vigilarSesion } from './js/auth.js';
-    // 1. Añadimos inicializarFacturacion a la importación
-    import { activarNavegacionPill, configurarAvatar, inicializarConfiguracion, inicializarFacturacion } from './js/ui.js';
+    // AQUÍ: Agregamos inicializarDashboard a la importación
+    import { activarNavegacionPill, configurarAvatar, inicializarConfiguracion, inicializarFacturacion, inicializarDashboard } from './js/ui.js';
     import autoAnimate from 'https://cdn.jsdelivr.net/npm/@formkit/auto-animate@0.8.1/index.mjs';
     
     const listaFacturas = document.getElementById('lista-facturas');
@@ -351,8 +351,9 @@
         (user) => {
             configurarAvatar(user);
             inicializarConfiguracion(user);
-            // 2. Ejecutamos la función
             inicializarFacturacion();
+            // Ahora sí funcionará sin error de consola
+            inicializarDashboard();
         },
         () => window.location.href = 'index.html'
     );
