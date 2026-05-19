@@ -270,8 +270,9 @@ export function inicializarFacturacion() {
         </div>
     </div>
     <!-- En celular el texto se alinea a la izquierda con padding, en PC a la derecha -->
-    <div class="text-left sm:text-right w-full sm:w-auto pl-13 sm:pl-0 mt-2 sm:mt-0">
-        <p class="font-extrabold text-lg text-slate-800 dark:text-slate-100">${montoFormateado}</p>
+<!-- Cambia pl-13 por pl-12 -->
+<div class="text-left sm:text-right w-full sm:w-auto pl-12 sm:pl-0 mt-2 sm:mt-0">
+<p class="font-extrabold text-lg text-slate-800 dark:text-slate-100">${montoFormateado}</p>
     </div>
 `;
            
