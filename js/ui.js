@@ -9,32 +9,21 @@ import { suscribirFacturas } from './db.js';
    1. NAVEGACIÓN PRINCIPAL (Pill Navigation)
    ========================================= */
 export function activarNavegacionPill() {
-    const navGroups = document.querySelectorAll('.nav-group');
-
-    navGroups.forEach(group => {
-        const header = group.querySelector('.topic-header');
-        
-        header.addEventListener('click', (e) => {
-            e.stopPropagation();
-            
-            // Lógica de Toggle: si ya tiene active, se quita; si no, se pone.
-            const esActivo = group.classList.contains('active');
-            
-            // Primero cerramos todos los grupos
-            navGroups.forEach(g => g.classList.remove('active'));
-            
-            // Si no era activo, lo activamos
-            if (!esActivo) {
-                group.classList.add('active');
-            }
+    // FUNCIÓN VACÍA: Alpine.js ahora controla los menús desplegables 
+    // directamente en el HTML mediante x-data="{ open: false }".
+    // Esto evita bloqueos y conflictos de CSS.
+    
+    // Solo mantenemos la lógica de cerrar sesión si existe el botón
+    const btnLogout = document.getElementById('btn-logout');
+    if (btnLogout) {
+        import('./firebase-config.js').then(({ auth }) => {
+            import('firebase/auth').then(({ signOut }) => {
+                btnLogout.onclick = () => signOut(auth).then(() => window.location.href = 'index.html');
+            });
         });
-    });
-
-    // Cerrar al hacer clic en cualquier parte de la pantalla
-    document.addEventListener('click', () => {
-        navGroups.forEach(g => g.classList.remove('active'));
-    });
+    }
 }
+
 /* =========================================
    2. GESTIÓN DEL AVATAR (Limpieza Tailwind)
    ========================================= */
