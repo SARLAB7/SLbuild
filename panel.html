@@ -40,16 +40,11 @@
             --sl-button-border-radius-medium: 0.75rem;
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        /* Clase para dar el efecto de profundidad constante */
-        .card-depth {
-            background: white;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        }
-        .dark .card-depth {
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Tarjetas limpias y de alto contraste (Reemplazo del Neomorfismo) */
+        .card-clean {
+            @apply bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm rounded-2xl p-6 transition-colors duration-300;
         }
     </style>
 </head>
@@ -59,70 +54,155 @@
       :class="isDark ? 'dark sl-theme-dark' : ''"
       class="bg-slate-50 dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-100 min-h-screen flex flex-col overflow-hidden transition-colors duration-300">
     
-    <header class="h-16 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-4 md:px-6 z-50 sticky top-0 transition-colors duration-300">        
+    <header class="h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-4 md:px-6 z-50 sticky top-0">        
         <div class="flex items-center gap-3">
-            <button @click="menuMovil = !menuMovil" class="md:hidden text-slate-600 dark:text-slate-300 p-2">
+            <button @click="menuMovil = !menuMovil" class="md:hidden text-slate-600 dark:text-slate-300 p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
                 <span class="material-symbols-outlined">menu</span>
             </button>
             <div class="logo font-extrabold text-xl tracking-tight text-enterprise-600 dark:text-enterprise-400">SACLAB</div>
         </div>
         
-        <nav class="hidden md:flex pill-navigation bg-white/50 dark:bg-slate-800/50 backdrop-blur-md border border-white dark:border-slate-700 rounded-lg px-2 py-1 gap-2">
-            <div class="nav-group" data-topic="finanzas"><button class="topic-header"><span class="material-symbols-outlined">account_balance</span> <span>Finanzas</span></button></div>
-            <div class="nav-group" data-topic="gestion"><button class="topic-header"><span class="material-symbols-outlined">business_center</span> <span>Gestión</span></button></div>
-            <div class="nav-group" data-topic="legal"><button class="topic-header"><span class="material-symbols-outlined">receipt_long</span> <span>Contabilidad</span></button></div>
+        <nav class="hidden md:flex bg-slate-100/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 gap-1">
+            
+            <div class="relative" x-data="{ open: false }" @click.away="open = false">
+                <button @click="open = !open" class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md hover:bg-white dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">account_balance</span> Finanzas
+                </button>
+                <div x-show="open" x-transition class="absolute top-full left-0 mt-2 w-40 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-lg p-1 z-50 flex flex-col" style="display: none;">
+                    <button @click="vistaActiva = 'sec-inicio'; open = false" class="text-left px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg">Dashboard</button>
+                    <button @click="vistaActiva = 'sec-facturas'; open = false" class="text-left px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg">Facturación</button>
+                    <button @click="vistaActiva = 'sec-gastos'; open = false" class="text-left px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg">Egresos</button>
+                </div>
+            </div>
+
+            <div class="relative" x-data="{ open: false }" @click.away="open = false">
+                <button @click="open = !open" class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md hover:bg-white dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">business_center</span> Gestión
+                </button>
+                <div x-show="open" x-transition class="absolute top-full left-0 mt-2 w-40 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-lg p-1 z-50 flex flex-col" style="display: none;">
+                    <button @click="vistaActiva = 'sec-clientes'; open = false" class="text-left px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg">Clientes</button>
+                    <button @click="vistaActiva = 'sec-productos'; open = false" class="text-left px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg">Servicios</button>
+                </div>
+            </div>
+
+            <div class="relative" x-data="{ open: false }" @click.away="open = false">
+                <button @click="open = !open" class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md hover:bg-white dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">receipt_long</span> Contabilidad
+                </button>
+                <div x-show="open" x-transition class="absolute top-full right-0 mt-2 w-40 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-lg p-1 z-50 flex flex-col" style="display: none;">
+                    <button @click="vistaActiva = 'sec-asientos'; open = false" class="text-left px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg">Libro Diario</button>
+                    <button @click="vistaActiva = 'sec-impuestos'; open = false" class="text-left px-3 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg">DIAN</button>
+                </div>
+            </div>
         </nav>
 
-        <div class="flex items-center gap-3">
-            <button @click="isDark = !isDark" class="p-2 text-slate-500 hover:text-enterprise-600"><span class="material-symbols-outlined" x-text="isDark ? 'light_mode' : 'dark_mode'"></span></button>
-            <button @click="vistaActiva = 'sec-configuracion'" class="p-2 text-slate-500"><span class="material-symbols-outlined">settings</span></button>
-            <button class="text-red-500 p-2" id="btn-logout"><span class="material-symbols-outlined">logout</span></button>
+        <div class="flex items-center gap-1 md:gap-2">
+            <button @click="isDark = !isDark" class="p-2 text-slate-500 hover:text-enterprise-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"><span class="material-symbols-outlined" x-text="isDark ? 'light_mode' : 'dark_mode'"></span></button>
+            <button @click="vistaActiva = 'sec-configuracion'" class="p-2 text-slate-500 hover:text-enterprise-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"><span class="material-symbols-outlined">settings</span></button>
+            <button class="text-red-500 p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors" id="btn-logout"><span class="material-symbols-outlined">logout</span></button>
         </div>
     </header>
 
-    <div x-show="menuMovil" @click.away="menuMovil = false" x-transition class="fixed top-16 left-0 w-64 h-[calc(100vh-64px)] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-700 z-50 p-4 shadow-2xl md:hidden">
-        <div class="flex flex-col gap-4">
-            <button @click="vistaActiva = 'sec-inicio'; menuMovil = false" class="text-left font-bold">Dashboard</button>
-            <button @click="vistaActiva = 'sec-facturas'; menuMovil = false" class="text-left font-bold">Facturación</button>
+    <div x-show="menuMovil" @click.away="menuMovil = false" x-transition class="fixed top-16 left-0 w-64 h-[calc(100vh-64px)] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-50 p-4 shadow-2xl md:hidden">
+        <div class="flex flex-col gap-2">
+            <p class="text-xs font-bold text-slate-400 uppercase mb-2 px-2">Menú Principal</p>
+            <button @click="vistaActiva = 'sec-inicio'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg font-medium"><span class="material-symbols-outlined">dashboard</span> Dashboard</button>
+            <button @click="vistaActiva = 'sec-facturas'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg font-medium"><span class="material-symbols-outlined">receipt</span> Facturación</button>
+            <button @click="vistaActiva = 'sec-gastos'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg font-medium"><span class="material-symbols-outlined">payments</span> Egresos</button>
+            <button @click="vistaActiva = 'sec-clientes'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg font-medium"><span class="material-symbols-outlined">groups</span> Clientes</button>
+            <button @click="vistaActiva = 'sec-configuracion'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg font-medium"><span class="material-symbols-outlined">settings</span> Configuración</button>
         </div>
     </div>
 
     <div class="app-body flex flex-1 overflow-hidden">
         <main class="main-content flex-1 overflow-y-auto p-4 md:p-8">            
             
-            <section id="sec-inicio" x-show="vistaActiva === 'sec-inicio'" class="card-depth p-6 rounded-2xl">
+            <section id="sec-inicio" x-show="vistaActiva === 'sec-inicio'" class="card-clean">
                 <h1 class="text-2xl font-bold mb-6">Dashboard General</h1>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <div class="bg-white dark:bg-[#1e293b] p-5 rounded-2xl border border-white dark:border-slate-700 shadow-sm">
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Ingresos del Mes</p>
+                    <div class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-xl border border-slate-100 dark:border-slate-700/50">
+                        <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Ingresos del Mes</p>
                         <h3 class="text-2xl font-extrabold text-enterprise-600 dark:text-enterprise-400">$4.5M</h3>
                     </div>
                 </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="col-span-1 lg:col-span-2 bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-100 dark:border-slate-700/50"><div id="chart-flujo"></div></div>
+                    <div class="col-span-1 bg-slate-50 dark:bg-slate-800/50 p-6 rounded-xl border border-slate-100 dark:border-slate-700/50"><div id="chart-estados"></div></div>
+                </div>
             </section>
 
-            <section id="sec-facturas" x-show="vistaActiva === 'sec-facturas'" style="display: none;" class="card-depth p-6 rounded-2xl">
+            <section id="sec-facturas" x-show="vistaActiva === 'sec-facturas'" style="display: none;" class="card-clean">
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-2xl font-bold">Gestión de Facturas</h1>
-                    <sl-button variant="primary" onclick="document.getElementById('modal-factura').show()">Nueva</sl-button>
+                    <sl-button variant="primary" onclick="document.getElementById('modal-factura').show()"><span class="material-symbols-outlined mr-2" style="font-size:18px;">add</span>Nueva</sl-button>
                 </div>
                 <div id="lista-facturas" class="grid gap-4"></div>
+            </section>
+
+            <section id="sec-gastos" x-show="vistaActiva === 'sec-gastos'" style="display: none;" class="card-clean"><h1 class="text-2xl font-bold mb-6">Egresos</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+            <section id="sec-clientes" x-show="vistaActiva === 'sec-clientes'" style="display: none;" class="card-clean"><h1 class="text-2xl font-bold mb-6">Clientes</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+            <section id="sec-productos" x-show="vistaActiva === 'sec-productos'" style="display: none;" class="card-clean"><h1 class="text-2xl font-bold mb-6">Servicios</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+            <section id="sec-asientos" x-show="vistaActiva === 'sec-asientos'" style="display: none;" class="card-clean"><h1 class="text-2xl font-bold mb-6">Libro Diario</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+            <section id="sec-impuestos" x-show="vistaActiva === 'sec-impuestos'" style="display: none;" class="card-clean"><h1 class="text-2xl font-bold mb-6">DIAN</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+
+            <section id="sec-configuracion" x-show="vistaActiva === 'sec-configuracion'" style="display: none;" class="card-clean" x-data="{ tabActiva: 'perfil' }">
+                <h1 class="text-2xl font-bold mb-6">Ajustes del Sistema</h1>
+                <div class="flex flex-col md:flex-row gap-6">
+                    <nav class="flex flex-row md:flex-col gap-2 overflow-x-auto w-full md:w-48 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 pb-2 md:pb-0 md:pr-4">
+                        <button @click="tabActiva = 'perfil'" :class="tabActiva === 'perfil' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600' : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800'" class="px-4 py-2 text-sm font-medium rounded-lg text-left whitespace-nowrap">Mi Perfil</button>
+                        <button @click="tabActiva = 'empresa'" :class="tabActiva === 'empresa' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600' : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800'" class="px-4 py-2 text-sm font-medium rounded-lg text-left whitespace-nowrap">Datos Fiscales</button>
+                    </nav>
+                    <div class="flex-1">
+                        <div x-show="tabActiva === 'perfil'">
+                            <h4 class="text-lg font-bold mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">Información de la Cuenta</h4>
+                            <form id="form-update-profile" class="flex flex-col gap-4 max-w-md">
+                                <sl-input id="config-name" label="Nombre Completo"></sl-input>
+                                <sl-input id="profile-email-display" type="email" label="Correo Electrónico" disabled></sl-input>
+                                <sl-button variant="primary" type="submit" class="mt-2">Actualizar</sl-button>
+                            </form>
+                        </div>
+                        <div x-show="tabActiva === 'empresa'" style="display:none;">
+                            <h4 class="text-lg font-bold mb-4 border-b border-slate-100 dark:border-slate-800 pb-2">Datos de Facturación</h4>
+                            <form id="form-update-empresa" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="col-span-1 md:col-span-2"><sl-input id="empresa-nombre" label="Razón Social"></sl-input></div>
+                                <div><sl-input id="empresa-nit" label="NIT / RUT"></sl-input></div>
+                                <div><sl-select id="empresa-regimen" label="Régimen"><sl-option value="responsable">Responsable de IVA</sl-option><sl-option value="no-responsable">No Responsable</sl-option></sl-select></div>
+                                <div class="col-span-1 md:col-span-2 flex justify-end mt-2"><sl-button variant="primary" type="submit">Guardar</sl-button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </section>
         </main>
     </div>
 
     <sl-dialog label="Registrar Nueva Factura" id="modal-factura">
-        <form id="form-nueva-factura">
-            <sl-input id="factura-cliente" label="Cliente"></sl-input>
-            <sl-button variant="primary" type="submit">Guardar</sl-button>
+        <form id="form-nueva-factura" class="flex flex-col gap-4">
+            <sl-input id="factura-cliente" label="Nombre del Cliente" required></sl-input>
+            <sl-input id="factura-monto" type="number" label="Monto Total ($)" required></sl-input>
+            <sl-select id="factura-estado" label="Estado" value="Pendiente">
+                <sl-option value="Pagada">Pagada</sl-option>
+                <sl-option value="Pendiente">Pendiente</sl-option>
+                <sl-option value="Borrador">Borrador</sl-option>
+            </sl-select>
+            <div class="flex justify-end mt-2"><sl-button variant="primary" type="submit">Guardar en Sistema</sl-button></div>
         </form>
     </sl-dialog>
 
     <script type="module">
         import { vigilarSesion } from './js/auth.js';
         import { activarNavegacionPill, configurarAvatar, inicializarConfiguracion, inicializarFacturacion, inicializarDashboard } from './js/ui.js';
-        activarNavegacionPill();
+        
+        // El JS del menú ya no es necesario, lo vaciamos abajo, pero inicializamos lo demás
+        activarNavegacionPill(); 
+        
         vigilarSesion(
-            (user) => { configurarAvatar(user); inicializarConfiguracion(user); inicializarFacturacion(); inicializarDashboard(); },
+            (user) => { 
+                configurarAvatar(user); 
+                inicializarConfiguracion(user); 
+                inicializarFacturacion(); 
+                inicializarDashboard(); 
+            },
             () => window.location.href = 'index.html'
         );
     </script>
