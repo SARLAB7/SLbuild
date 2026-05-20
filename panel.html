@@ -117,4 +117,144 @@
         </div>
     </header>
 
-    <div x-show="menu
+    <div x-show="menuMovil" @click.away="menuMovil = false" x-transition class="fixed top-16 left-0 w-64 h-[calc(100vh-64px)] bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-white/5 z-50 p-4 shadow-2xl md:hidden">
+        <div class="flex flex-col gap-2">
+            <p class="text-xs font-bold text-slate-400 uppercase mb-2 px-2">Navegación</p>
+            <button @click="vistaActiva = 'sec-inicio'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg font-medium"><span class="material-symbols-outlined">dashboard</span> Dashboard</button>
+            <button @click="vistaActiva = 'sec-facturas'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg font-medium"><span class="material-symbols-outlined">receipt</span> Facturación</button>
+            <button @click="vistaActiva = 'sec-gastos'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg font-medium"><span class="material-symbols-outlined">payments</span> Egresos</button>
+            <button @click="vistaActiva = 'sec-configuracion'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg font-medium text-enterprise-600 dark:text-enterprise-400 mt-4 border-t border-slate-100 dark:border-slate-800 pt-4"><span class="material-symbols-outlined">settings</span> Ajustes</button>
+        </div>
+    </div>
+
+    <div class="app-body flex flex-1 overflow-hidden">
+        <main class="main-content flex-1 overflow-y-auto p-4 md:p-8">            
+            
+            <section id="sec-inicio" x-show="vistaActiva === 'sec-inicio'" class="card-clean">
+                <h1 class="text-2xl font-bold mb-6">Dashboard General</h1>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-slate-50 dark:bg-slate-800/30 p-5 rounded-xl border border-slate-100 dark:border-white/5">
+                        <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Ingresos del Mes</p>
+                        <h3 class="text-2xl font-extrabold text-enterprise-600 dark:text-enterprise-400">$4.5M</h3>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="col-span-1 lg:col-span-2 bg-slate-50 dark:bg-slate-800/30 p-6 rounded-xl border border-slate-100 dark:border-white/5"><div id="chart-flujo"></div></div>
+                    <div class="col-span-1 bg-slate-50 dark:bg-slate-800/30 p-6 rounded-xl border border-slate-100 dark:border-white/5"><div id="chart-estados"></div></div>
+                </div>
+            </section>
+
+            <section id="sec-facturas" x-show="vistaActiva === 'sec-facturas'" style="display: none;" class="card-clean">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-bold">Gestión de Facturas</h1>
+                    <sl-button variant="primary" onclick="document.getElementById('modal-factura').show()"><span class="material-symbols-outlined mr-2" style="font-size:18px;">add</span>Nueva</sl-button>
+                </div>
+                <div id="lista-facturas" class="grid gap-4"></div>
+            </section>
+
+            <section id="sec-gastos" x-show="vistaActiva === 'sec-gastos'" style="display: none;" class="card-clean"><h1 class="text-2xl font-bold mb-6">Egresos</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+            <section id="sec-clientes" x-show="vistaActiva === 'sec-clientes'" style="display: none;" class="card-clean"><h1 class="text-2xl font-bold mb-6">Clientes</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+            <section id="sec-productos" x-show="vistaActiva === 'sec-productos'" style="display: none;" class="card-clean"><h1 class="text-2xl font-bold mb-6">Servicios</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+            <section id="sec-asientos" x-show="vistaActiva === 'sec-asientos'" style="display: none;" class="card-clean"><h1 class="text-2xl font-bold mb-6">Libro Diario</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+            <section id="sec-impuestos" x-show="vistaActiva === 'sec-impuestos'" style="display: none;" class="card-clean"><h1 class="text-2xl font-bold mb-6">DIAN</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+
+            <section id="sec-configuracion" x-show="vistaActiva === 'sec-configuracion'" style="display: none;" class="card-clean" x-data="{ tabActiva: 'perfil' }">
+                <h1 class="text-2xl font-bold mb-6 border-b border-slate-100 dark:border-white/10 pb-4">Ajustes del Sistema</h1>
+                
+                <div class="flex flex-col md:flex-row gap-6 md:gap-8 mt-4">
+                    <nav class="flex flex-row md:flex-col gap-2 overflow-x-auto w-full md:w-56 border-b md:border-b-0 md:border-r border-slate-200 dark:border-white/10 pb-4 md:pb-0 md:pr-4">
+                        <button @click="tabActiva = 'perfil'" :class="tabActiva === 'perfil' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600 font-bold' : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800'" class="px-4 py-2 text-sm rounded-lg text-left whitespace-nowrap flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">person</span> Mi Perfil</button>
+                        <button @click="tabActiva = 'empresa'" :class="tabActiva === 'empresa' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600 font-bold' : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800'" class="px-4 py-2 text-sm rounded-lg text-left whitespace-nowrap flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">business</span> Datos Fiscales</button>
+                        <button @click="tabActiva = 'branding'" :class="tabActiva === 'branding' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600 font-bold' : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800'" class="px-4 py-2 text-sm rounded-lg text-left whitespace-nowrap flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">brush</span> Identidad Visual</button>
+                        <button @click="tabActiva = 'pagos'" :class="tabActiva === 'pagos' ? 'bg-enterprise-50 dark:bg-enterprise-900/30 text-enterprise-600 font-bold' : 'text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800'" class="px-4 py-2 text-sm rounded-lg text-left whitespace-nowrap flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">payments</span> Cuentas y Pagos</button>
+                    </nav>
+
+                    <div class="flex-1 min-w-0">
+                        <div x-show="tabActiva === 'perfil'">
+                            <h4 class="text-lg font-bold mb-6">Información de la Cuenta</h4>
+                            <form id="form-update-profile" class="flex flex-col gap-5 max-w-md">
+                                <sl-input id="config-name" label="Nombre Completo"></sl-input>
+                                <sl-input id="profile-email-display" type="email" label="Correo Electrónico" disabled></sl-input>
+                                <div class="flex justify-end"><sl-button variant="primary" type="submit">Actualizar</sl-button></div>
+                            </form>
+                        </div>
+
+                        <div x-show="tabActiva === 'empresa'" style="display:none;">
+                            <h4 class="text-lg font-bold mb-6">Datos Fiscales para Facturación</h4>
+                            <form id="form-update-empresa" class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl">
+                                <div class="col-span-1 md:col-span-2"><sl-input id="empresa-nombre" label="Razón Social"></sl-input></div>
+                                <div><sl-input id="empresa-nit" label="NIT / RUT"></sl-input></div>
+                                <div><sl-select id="empresa-regimen" label="Régimen" value="responsable"><sl-option value="responsable">Responsable de IVA</sl-option><sl-option value="no-responsable">No Responsable</sl-option></sl-select></div>
+                                <div><sl-input id="empresa-direccion" label="Dirección Principal"></sl-input></div>
+                                <div><sl-input id="empresa-ciudad" label="Ciudad"></sl-input></div>
+                                <div class="col-span-1 md:col-span-2 flex justify-end"><sl-button variant="primary" type="submit">Guardar</sl-button></div>
+                            </form>
+                        </div>
+
+                        <div x-show="tabActiva === 'branding'" style="display:none;">
+                            <h4 class="text-lg font-bold mb-6">Identidad Visual de la Empresa</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
+                                <div class="border-2 border-dashed border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/30 rounded-xl p-8 flex flex-col items-center justify-center text-slate-500 hover:border-enterprise-500 cursor-pointer transition-colors relative" id="zone-logo">
+                                    <input type="file" id="input-logo" accept="image/png, image/jpeg" class="hidden">
+                                    <img id="preview-logo" src="" class="hidden max-h-24 mx-auto rounded">
+                                    <div id="text-logo" class="text-center">
+                                        <span class="material-symbols-outlined text-4xl mb-2">upload_file</span>
+                                        <p class="font-medium text-sm">Subir Logo (.PNG, .JPG)</p>
+                                    </div>
+                                </div>
+                                <div class="border-2 border-dashed border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-800/30 rounded-xl p-8 flex flex-col items-center justify-center text-slate-500 hover:border-enterprise-500 cursor-pointer transition-colors relative" id="zone-firma">
+                                    <input type="file" id="input-firma" accept="image/png" class="hidden">
+                                    <img id="preview-firma" src="" class="hidden max-h-24 mx-auto">
+                                    <div id="text-firma" class="text-center">
+                                        <span class="material-symbols-outlined text-4xl mb-2">draw</span>
+                                        <p class="font-medium text-sm">Subir Firma (.PNG)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div x-show="tabActiva === 'pagos'" style="display:none;">
+                            <h4 class="text-lg font-bold mb-6">Preferencias de Recaudo</h4>
+                            <form id="form-update-pagos" class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl">
+                                <div><sl-select id="banco-principal" label="Entidad Bancaria" value="bancolombia"><sl-option value="bancolombia">Bancolombia</sl-option><sl-option value="nequi">Nequi</sl-option><sl-option value="nu">Nu (Nubank)</sl-option></sl-select></div>
+                                <div><sl-input id="cuenta-numero" label="Número de Cuenta"></sl-input></div>
+                                <div class="col-span-1 md:col-span-2"><sl-textarea id="instrucciones-pago" label="Instrucciones de Pago" rows="3"></sl-textarea></div>
+                                <div class="col-span-1 md:col-span-2 flex justify-end"><sl-button variant="primary" type="submit">Guardar Preferencias</sl-button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <sl-dialog label="Registrar Nueva Factura" id="modal-factura">
+        <form id="form-nueva-factura" class="flex flex-col gap-4">
+            <sl-input id="factura-cliente" label="Nombre del Cliente" required></sl-input>
+            <sl-input id="factura-monto" type="number" label="Monto Total ($)" required></sl-input>
+            <sl-select id="factura-estado" label="Estado" value="Pendiente">
+                <sl-option value="Pagada">Pagada</sl-option>
+                <sl-option value="Pendiente">Pendiente</sl-option>
+                <sl-option value="Borrador">Borrador</sl-option>
+            </sl-select>
+            <div class="flex justify-end mt-2"><sl-button variant="primary" type="submit">Guardar en Sistema</sl-button></div>
+        </form>
+    </sl-dialog>
+
+    <script type="module">
+        import { vigilarSesion } from './js/auth.js';
+        import { activarNavegacionPill, configurarAvatar, inicializarConfiguracion, inicializarFacturacion, inicializarDashboard } from './js/ui.js';
+        
+        activarNavegacionPill(); 
+        vigilarSesion(
+            (user) => { 
+                configurarAvatar(user); 
+                inicializarConfiguracion(user); 
+                inicializarFacturacion(); 
+                inicializarDashboard(); 
+            },
+            () => window.location.href = 'index.html'
+        );
+    </script>
+</body>
+</html>
