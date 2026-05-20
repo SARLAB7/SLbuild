@@ -1,11 +1,12 @@
 /* =========================================
    COMPONENTES PERSONALIZADOS (SACLAB)
-   ========================================= */
+   ========================================= 
+*/
 
-/* 1. BLINDAJE DE ICONOS */
+/* 1. BLINDAJE DE ICONOS (Estilo premium y ligero) */
 .material-symbols-outlined, .sel-icon {
     font-family: 'Material Symbols Outlined' !important;
-    font-weight: normal;
+    font-weight: 300; /* Más delgado para un acabado más técnico y limpio */
     font-style: normal;
     font-size: 20px !important;
     display: inline-block !important;
@@ -18,93 +19,7 @@
     -webkit-font-smoothing: antialiased;
 }
 
-/* 2. NAVEGACIÓN PRINCIPAL (Píldora Animada) */
-.pill-navigation {
-    /* Eliminamos el background y border fijos de aquí para que Tailwind los controle */
-    border-radius: 8px; 
-    padding: 4px 8px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-}
-
-.nav-group {
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    overflow: hidden;
-    max-width: 44px; /* Cerrado: solo muestra el icono */
-    white-space: nowrap;
-}
-
-/* Expansión mágica */
-.nav-group.active {
-    max-width: 800px; 
-}
-
-.topic-header {
-    background: transparent;
-    border: none;
-    color: #64748b; /* slate-500 */
-    height: 40px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 0 12px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.topic-header span:not(.material-symbols-outlined) {
-    display: none;
-}
-
-.nav-group.active .topic-header {
-    color: #1e293b !important; /* Texto oscuro activo */
-    border-bottom: 2px solid #2563eb; /* Línea azul Enterprise */
-}
-
-.nav-group.active .topic-header span:not(.material-symbols-outlined) {
-    display: inline;
-}
-
-.sub-pill-container {
-    display: none;
-    flex-direction: row; 
-    align-items: center;
-    gap: 4px;
-    padding-left: 12px;
-    margin-left: 5px;
-    border-left: 1px solid #e2e8f0;
-}
-
-.nav-group.active .sub-pill-container {
-    display: flex;
-}
-
-.sub-item {
-    background: transparent;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 500;
-    color: #64748b;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: 0.2s;
-}
-
-.sub-item:hover {
-    color: #0f172a;
-    background-color: #f8fafc;
-}
-
-.sub-item.active {
-    background-color: #eff6ff !important; /* Fondo azul claro */
-    color: #2563eb !important; /* Texto azul Enterprise */
-    font-weight: 600;
-}
+/* NOTA: Se ha eliminado toda la lógica vieja de .pill-navigation y .nav-group.
+  Al usar Alpine.js en el HTML (x-data="{ open: false }"), el menú ya no 
+  colapsa ni genera bugs visuales en modo responsive.
+*/
