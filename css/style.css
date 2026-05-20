@@ -1,8 +1,8 @@
-/* 
-   =========================================
-   ESTILOS GLOBALES BASE
+/* =========================================
+   ESTILOS GLOBALES BASE Y LAYOUT
    =========================================
 */
+
 /* Oculta la barra de scroll pero permite deslizar con el dedo (Estilo App Nativa) */
 .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -11,25 +11,34 @@
     -ms-overflow-style: none; /* IE y Edge */
     scrollbar-width: none; /* Firefox */
 }
-/* Scrollbar corporativo e invisible hasta que pasas el ratón */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
 
+/* Scrollbar corporativo, más delgado e invisible hasta que pasas el ratón */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
 ::-webkit-scrollbar-track {
     background: transparent; 
 }
-
 ::-webkit-scrollbar-thumb {
     background: #cbd5e1; /* slate-300 */
     border-radius: 10px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
     background: #94a3b8; /* slate-400 */
 }
-/* Aseguramos que el cuerpo de la app ocupe el alto disponible */
+
+/* Scrollbar adaptado al modo oscuro */
+.dark ::-webkit-scrollbar-thumb {
+    background: #334155; /* slate-700 */
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #475569; /* slate-600 */
+}
+
+/* =========================================
+   ESTRUCTURA PRINCIPAL
+   ========================================= */
 .app-body {
     display: flex;
     flex-direction: row;
@@ -37,38 +46,50 @@
     overflow: hidden;
 }
 
-/* El main es el único que debe tener scroll vertical real */
 .main-content {
     flex: 1;
-    overflow-y: auto; /* ESTO ES LO QUE TE PERMITIRÁ BAJAR LA PÁGINA */
+    overflow-y: auto; 
     -webkit-overflow-scrolling: touch; /* Suavidad en iPhone */
     padding-bottom: 2rem;
 }
-/* Corrección de modo oscuro */
-.dark body {
-    background-color: #0f172a; /* Slate-900 mucho más profundo */
-}
 
-/* Tarjetas con efecto Neumórfico suave */
-.card-neumorphic {
+/* =========================================
+   TARJETAS Y EFECTO CRISTAL (Alto Contraste)
+   ========================================= */
+
+/* Tarjetas limpias y profesionales (Reemplaza .card-neumorphic) */
+.card-clean {
     background: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-.dark .card-neumorphic {
-    background: #1e293b; /* Slate-800 */
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+/* En modo oscuro, se oscurece la tarjeta y se profundiza la sombra para "flotar" sobre el fondo */
+.dark .card-clean {
+    background: #0f172a; /* Slate 900 */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+.card-clean:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    border-color: #cbd5e1;
+}
+
+.dark .card-clean:hover {
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 /* Efecto de cristal para el Header */
 .glass-header {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 }
 
 .dark .glass-header {
-    background: rgba(15, 23, 42, 0.7); /* Slate-900 con transparencia */
+    background: rgba(2, 6, 23, 0.8); /* Slate 950 con transparencia */
 }
