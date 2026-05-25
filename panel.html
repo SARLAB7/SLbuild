@@ -45,49 +45,6 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-   <style>
-        :root {
-            --sl-input-border-radius-medium: 0.75rem; 
-            --sl-button-border-radius-medium: 0.75rem;
-        }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* MAGIA GLASSMORPHISM: EFECTO ESPEJO OPACO */
-        .card-glass {
-            /* Fondo oscuro translúcido para dejar pasar los destellos */
-            background: rgba(15, 15, 20, 0.55);
-            backdrop-filter: blur(24px) saturate(150%);
-            -webkit-backdrop-filter: blur(24px) saturate(150%);
-            
-            /* EL TRUCO DEL ESPEJO: Borde superior e izquierdo ligeramente más claros simulando luz */
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
-            
-            border-radius: 1.5rem;
-            
-            /* Sombra profunda exterior y un filo de luz interior (inset) */
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            padding: 1.5rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Interacción: Brillo sutil hacia los tonos morados/enterprise de la marca */
-        .card-glass:hover {
-            transform: translateY(-2px);
-            background: rgba(20, 20, 28, 0.65);
-            border-color: rgba(139, 92, 246, 0.3); /* enterprise-500 con opacidad */
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-        }
-
-        /* Ajustes para modo claro en caso de que el usuario cambie el switch */
-        html:not(.dark) .card-glass {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 1);
-        }
-    </style>
 </head>
 
 <body x-data="{ isDark: true, vistaActiva: 'sec-inicio', menuMovil: false }" 
