@@ -9,11 +9,11 @@
     --sl-button-border-radius-medium: 0.75rem;
     --sl-shadow-x-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
-    /* Enfoque Light: Sincronización con Tailwind Slate */
-    --sl-color-primary-50: #eff6ff;
-    --sl-color-primary-500: #3b82f6;
-    --sl-color-primary-600: #2563eb;
-    --sl-color-primary-700: #1d4ed8;
+    /* Enfoque Light: Sincronización con Tailwind (PALETA MORADA ENTERPRISE) */
+    --sl-color-primary-50: #f5f3ff;
+    --sl-color-primary-500: #8b5cf6;
+    --sl-color-primary-600: #7c3aed;
+    --sl-color-primary-700: #6d28d9;
     
     --sl-input-background-color: #ffffff;
     --sl-input-border-color: #e2e8f0;
@@ -24,11 +24,11 @@
 
 /* Inyección Automática de Estilos Shoelace cuando Tailwind activa .dark */
 .dark, [class*="sl-theme-dark"] {
-    --sl-input-background-color: #1e293b; /* slate-800 */
+    --sl-input-background-color: rgba(15, 15, 20, 0.6); /* Translúcido oscuro */
     --sl-input-border-color: rgba(255, 255, 255, 0.08);
     --sl-input-border-color-hover: rgba(255, 255, 255, 0.15);
     --sl-input-color: #f8fafc;
     --sl-input-label-color: #94a3b8;
-    --sl-panel-background-color: #111827; /* Fondo del Modal en Dark */
+    --sl-panel-background-color: #0a0a0f; /* Fondo oscuro profundo */
     --sl-panel-border-color: rgba(255, 255, 255, 0.08);
 }
