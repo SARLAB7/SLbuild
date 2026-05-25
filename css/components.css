@@ -19,32 +19,42 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* 2. TARJETAS DE ALTA FIDELIDAD (SaaS Minimalist Concept) */
-.card-clean {
-    background: #ffffff;
-    border: 1px solid rgba(226, 232, 240, 0.7); /* Borde suavizado con opacidad */
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
-    border-radius: 1.25rem; /* Esquinas ligeramente más orgánicas */
-    padding: 2rem; /* Más aire interno para mejorar lectura contable */
+/* ========================================================================= */
+/* TARJETAS GLASSMORPHISM (FROSTED GLASS PREMIUM)                            */
+/* ========================================================================= */
+
+.card-glass {
+    /* Fondo semi-transparente blanco */
+    background: rgba(255, 255, 255, 0.4);
+    /* Desenfoque fuerte y saturación para dar vida al color detrás */
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    /* Borde blanco muy fino que simula el borde del cristal tallado */
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 1.5rem;
+    /* Sombra profunda pero muy transparente */
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    padding: 1.5rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Modo Oscuro: Negro absoluto de fondo con tarjeta flotante técnica */
-.dark .card-clean {
-    background: #090d16; /* Slate profundo de alto contraste */
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+/* Modo Oscuro: Cristal Ahumado (Smoked Glass) */
+.dark .card-glass {
+    background: rgba(17, 25, 40, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    /* Reflejo interno superior (inset) para darle volumen al cristal oscuro */
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-/* Estados Hover Dinámicos */
-.card-clean:hover {
-    border-color: #cbd5e1;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+.card-glass:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-.dark .card-clean:hover {
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+.dark .card-glass:hover {
+    background: rgba(17, 25, 40, 0.6);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* 3. MANEJO INTERNO DEL AVATAR SELECTOR */
