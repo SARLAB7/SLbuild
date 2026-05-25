@@ -190,4 +190,140 @@
                 <div id="lista-facturas" class="grid gap-4"></div>
             </section>
 
-            <section id="sec-gastos" x-show="vistaActiva === 'sec-gastos'" style="display: none;" class="card-glass"><h1 class="text-2xl font-bold mb-6">Egresos</h1><p class="text-slate-500">Módulo en
+            <section id="sec-gastos" x-show="vistaActiva === 'sec-gastos'" style="display: none;" class="card-glass"><h1 class="text-2xl font-bold mb-6">Egresos</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+            <section id="sec-clientes" x-show="vistaActiva === 'sec-clientes'" style="display: none;" class="card-glass"><h1 class="text-2xl font-bold mb-6">Clientes</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+            <section id="sec-productos" x-show="vistaActiva === 'sec-productos'" style="display: none;" class="card-glass"><h1 class="text-2xl font-bold mb-6">Servicios</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+            <section id="sec-asientos" x-show="vistaActiva === 'sec-asientos'" style="display: none;" class="card-glass"><h1 class="text-2xl font-bold mb-6">Libro Diario</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+            <section id="sec-impuestos" x-show="vistaActiva === 'sec-impuestos'" style="display: none;" class="card-glass"><h1 class="text-2xl font-bold mb-6">DIAN</h1><p class="text-slate-500">Módulo en construcción...</p></section>
+
+            <section id="sec-configuracion" x-show="vistaActiva === 'sec-configuracion'" style="display: none;" class="card-glass" x-data="{ tabActiva: 'perfil' }">
+                <h1 class="text-2xl font-bold mb-6 border-b border-white/40 dark:border-white/10 pb-4">Ajustes del Sistema</h1>
+                
+                <div class="flex flex-col md:flex-row gap-6 md:gap-8 mt-4">
+                    <nav class="flex flex-row md:flex-col gap-2 overflow-x-auto w-full md:w-56 border-b md:border-b-0 md:border-r border-white/40 dark:border-white/10 pb-4 md:pb-0 md:pr-4">
+                        <button @click="tabActiva = 'perfil'" :class="tabActiva === 'perfil' ? 'bg-white/60 dark:bg-white/10 text-enterprise-500 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-white/40 dark:hover:bg-white/5'" class="px-4 py-2 text-sm rounded-xl text-left whitespace-nowrap flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-[18px]">person</span> Mi Perfil</button>
+                        <button @click="tabActiva = 'empresa'" :class="tabActiva === 'empresa' ? 'bg-white/60 dark:bg-white/10 text-enterprise-500 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-white/40 dark:hover:bg-white/5'" class="px-4 py-2 text-sm rounded-xl text-left whitespace-nowrap flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-[18px]">business</span> Datos Fiscales</button>
+                        <button @click="tabActiva = 'branding'" :class="tabActiva === 'branding' ? 'bg-white/60 dark:bg-white/10 text-enterprise-500 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-white/40 dark:hover:bg-white/5'" class="px-4 py-2 text-sm rounded-xl text-left whitespace-nowrap flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-[18px]">brush</span> Identidad Visual</button>
+                        <button @click="tabActiva = 'pagos'" :class="tabActiva === 'pagos' ? 'bg-white/60 dark:bg-white/10 text-enterprise-500 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-white/40 dark:hover:bg-white/5'" class="px-4 py-2 text-sm rounded-xl text-left whitespace-nowrap flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-[18px]">payments</span> Cuentas y Pagos</button>
+                    </nav>
+
+                    <div class="flex-1 min-w-0">
+                        <div x-show="tabActiva === 'perfil'">
+                            <h4 class="text-lg font-bold mb-6">Información de la Cuenta</h4>
+                            <form id="form-update-profile" class="flex flex-col gap-5 max-w-md">
+                                <sl-input id="config-name" label="Nombre Completo"></sl-input>
+                                <sl-input id="profile-email-display" type="email" label="Correo Electrónico" disabled></sl-input>
+                                <div class="flex justify-end"><sl-button variant="primary" type="submit">Actualizar</sl-button></div>
+                            </form>
+                        </div>
+
+                        <div x-show="tabActiva === 'empresa'" style="display:none;">
+                            <h4 class="text-lg font-bold mb-6">Datos Fiscales para Facturación</h4>
+                            <form id="form-update-empresa" class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl">
+                                <div class="col-span-1 md:col-span-2"><sl-input id="empresa-nombre" label="Razón Social"></sl-input></div>
+                                <div><sl-input id="empresa-nit" label="NIT / RUT"></sl-input></div>
+                                <div><sl-select id="empresa-regimen" label="Régimen" value="responsable"><sl-option value="responsable">Responsable de IVA</sl-option><sl-option value="no-responsable">No Responsable</sl-option></sl-select></div>
+                                <div><sl-input id="empresa-direccion" label="Dirección Principal"></sl-input></div>
+                                <div><sl-input id="empresa-ciudad" label="Ciudad"></sl-input></div>
+                                <div class="col-span-1 md:col-span-2 flex justify-end"><sl-button variant="primary" type="submit">Guardar</sl-button></div>
+                            </form>
+                        </div>
+
+                        <div x-show="tabActiva === 'branding'" style="display:none;">
+                            <h4 class="text-lg font-bold mb-6">Identidad Visual de la Empresa</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
+                                <div class="border-2 border-dashed border-slate-400/50 dark:border-white/10 bg-white/40 dark:bg-[#000000]/40 backdrop-blur-md rounded-2xl p-8 flex flex-col items-center justify-center text-slate-500 hover:border-enterprise-500 cursor-pointer transition-colors relative shadow-sm" id="zone-logo">
+                                    <input type="file" id="input-logo" accept="image/png, image/jpeg" class="hidden">
+                                    <img id="preview-logo" src="" class="hidden max-h-24 mx-auto rounded">
+                                    <div id="text-logo" class="text-center">
+                                        <span class="material-symbols-outlined text-4xl mb-2">upload_file</span>
+                                        <p class="font-medium text-sm">Subir Logo (.PNG, .JPG)</p>
+                                    </div>
+                                </div>
+                                <div class="border-2 border-dashed border-slate-400/50 dark:border-white/10 bg-white/40 dark:bg-[#000000]/40 backdrop-blur-md rounded-2xl p-8 flex flex-col items-center justify-center text-slate-500 hover:border-enterprise-500 cursor-pointer transition-colors relative shadow-sm" id="zone-firma">
+                                    <input type="file" id="input-firma" accept="image/png" class="hidden">
+                                    <img id="preview-firma" src="" class="hidden max-h-24 mx-auto">
+                                    <div id="text-firma" class="text-center">
+                                        <span class="material-symbols-outlined text-4xl mb-2">draw</span>
+                                        <p class="font-medium text-sm">Subir Firma (.PNG)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div x-show="tabActiva === 'pagos'" style="display:none;">
+                            <h4 class="text-lg font-bold mb-6">Preferencias de Recaudo</h4>
+                            <form id="form-update-pagos" class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl">
+                                <div><sl-select id="banco-principal" label="Entidad Bancaria" value="bancolombia"><sl-option value="bancolombia">Bancolombia</sl-option><sl-option value="nequi">Nequi</sl-option><sl-option value="nu">Nu (Nubank)</sl-option></sl-select></div>
+                                <div><sl-input id="cuenta-numero" label="Número de Cuenta"></sl-input></div>
+                                <div class="col-span-1 md:col-span-2"><sl-textarea id="instrucciones-pago" label="Instrucciones de Pago" rows="3"></sl-textarea></div>
+                                <div class="col-span-1 md:col-span-2 flex justify-end"><sl-button variant="primary" type="submit">Guardar Preferencias</sl-button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <sl-dialog label="Registrar Nueva Factura" id="modal-factura">
+        <form id="form-nueva-factura" class="flex flex-col gap-4">
+            <sl-input id="factura-cliente" label="Nombre del Cliente" required></sl-input>
+            <sl-input id="factura-monto" type="number" label="Monto Total ($)" required></sl-input>
+            <sl-select id="factura-estado" label="Estado" value="Pendiente">
+                <sl-option value="Pagada">Pagada</sl-option>
+                <sl-option value="Pendiente">Pendiente</sl-option>
+                <sl-option value="Borrador">Borrador</sl-option>
+            </sl-select>
+            <div class="flex justify-end mt-2"><sl-button variant="primary" type="submit">Guardar en Sistema</sl-button></div>
+        </form>
+    </sl-dialog>
+
+    <script type="module">
+        import { vigilarSesion } from './js/auth.js';
+        import { activarNavegacionPill, configurarAvatar, inicializarConfiguracion, inicializarFacturacion, inicializarDashboard } from './js/ui.js';
+        
+        activarNavegacionPill(); 
+        vigilarSesion(
+            (user) => { 
+                configurarAvatar(user); 
+                inicializarConfiguracion(user); 
+                inicializarFacturacion(); 
+                inicializarDashboard(); 
+            },
+            () => window.location.href = 'index.html'
+        );
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if(typeof tsParticles !== 'undefined') {
+                tsParticles.load("tsparticles", {
+                    background: {
+                        color: { value: "transparent" } 
+                    },
+                    fpsLimit: 60,
+                    interactivity: {
+                        events: {
+                            onHover: { enable: true, mode: "grab" }
+                        },
+                        modes: {
+                            grab: { distance: 180, links: { opacity: 0.3 } }
+                        }
+                    },
+                    particles: {
+                        color: { value: "#8b5cf6" },
+                        links: { color: "#ffffff", distance: 150, enable: true, opacity: 0.08, width: 1 },
+                        move: { enable: true, speed: 0.6, direction: "none", random: false, straight: false, outModes: { default: "bounce" } },
+                        number: { density: { enable: true, area: 800 }, value: 80 },
+                        opacity: { value: 0.4 },
+                        shape: { type: "circle" },
+                        size: { value: { min: 1, max: 2 } }
+                    },
+                    detectRetina: true
+                });
+            }
+        });
+    </script>
+</body>
+</html>
