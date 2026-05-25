@@ -20,51 +20,36 @@
 }
 
 /* ========================================================================= */
-/* TARJETAS GLASSMORPHISM (FROSTED GLASS PREMIUM)                            */
+/* GLASSMORPHISM DARK PREMIUM (NUEVA VERSIÓN)                                */
 /* ========================================================================= */
 
 .card-glass {
-    /* Fondo semi-transparente blanco */
-    background: rgba(255, 255, 255, 0.4);
-    /* Desenfoque fuerte y saturación para dar vida al color detrás */
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    /* Borde blanco muy fino que simula el borde del cristal tallado */
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    /* Fondo oscuro translúcido */
+    background: rgba(15, 15, 20, 0.6);
+    /* Desenfoque potente */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    
+    /* EL TRUCO DEL EFECTO ESPEJO: Un borde doble */
+    /* El primer borde es oscuro, el segundo es un reflejo blanco muy fino */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    
     border-radius: 1.5rem;
-    /* Sombra profunda pero muy transparente */
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    padding: 1.5rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Sombra técnica: Un ligero brillo hacia afuera y reflejo interno */
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.5), 
+        inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        
+    padding: 2rem;
+    transition: all 0.4s ease;
 }
 
-/* Modo Oscuro: Cristal Ahumado (Smoked Glass) */
-.dark .card-glass {
-    background: rgba(17, 25, 40, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    /* Reflejo interno superior (inset) para darle volumen al cristal oscuro */
-    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
+/* Efecto de luz al pasar el cursor (glow) */
 .card-glass:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-.dark .card-glass:hover {
-    background: rgba(17, 25, 40, 0.6);
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-/* 3. MANEJO INTERNO DEL AVATAR SELECTOR */
-.avatar-container .avatar-selector {
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    background: rgba(255, 255, 255, 0.95);
-    transition: all 0.2s ease;
-}
-
-.dark .avatar-container .avatar-selector {
-    background: rgba(9, 13, 22, 0.95);
+    border-color: rgba(139, 92, 246, 0.4); /* Un toque de tu morado */
+    box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.6), 
+        inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
