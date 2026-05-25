@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark sl-theme-dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/themes/light.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/themes/dark.css" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js"></script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -15,21 +16,25 @@
             theme: { extend: { colors: { enterprise: { 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9' } }, animation: { blob: "blob 10s infinite" }, keyframes: { blob: { "0%, 100%": { transform: "translate(0px, 0px) scale(1)" }, "50%": { transform: "translate(20px, -20px) scale(1.1)" } } } } }
         }
     </script>
-    <style>
-        .card-glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 1.5rem; box-shadow: 0 10px 40px -10px rgba(124, 58, 237, 0.2); }
-    </style>
+    
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 bg-slate-100">
-    <div class="fixed inset-0 z-[-1] overflow-hidden">
-        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-purple-400/30 rounded-full filter blur-[120px] animate-blob"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-400/20 rounded-full filter blur-[120px] animate-blob animation-delay-2000"></div>
+<body class="font-sans text-slate-100 min-h-screen flex items-center justify-center p-4 bg-[#030305] transition-colors duration-500">
+    
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-100">
+        <div class="absolute top-[-15%] left-[-10%] w-[600px] h-[600px] bg-purple-900/20 rounded-full mix-blend-screen filter blur-[140px] animate-blob"></div>
+        <div class="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-enterprise-900/15 rounded-full mix-blend-screen filter blur-[120px] animate-blob animation-delay-2000"></div>
+        <div class="absolute top-[30%] left-[40%] w-[300px] h-[300px] bg-fuchsia-900/10 rounded-full mix-blend-screen filter blur-[100px] animate-blob animation-delay-4000"></div>
     </div>
 
     <div class="w-full max-w-sm card-glass p-8">
+        
         <div id="login-view">
             <header class="mb-8 text-center">
-                <h1 class="text-3xl font-black text-slate-900 tracking-tighter mb-1">SAC<span class="text-enterprise-600">LAB</span></h1>
-                <p class="text-xs font-semibold text-slate-500 uppercase tracking-widest">Sistemas de Automatización</p>
+                <h1 class="text-3xl font-black text-white tracking-tighter mb-1">SAC<span class="text-enterprise-500">LAB</span></h1>
+                <p class="text-xs font-semibold text-slate-400 uppercase tracking-widest">Sistemas de Automatización</p>
             </header>
             <form id="login-form" class="flex flex-col gap-4">
                 <sl-input id="login-email" type="email" label="Correo Electrónico" required clearable></sl-input>
@@ -37,21 +42,21 @@
                 <sl-button variant="primary" type="submit" size="large" class="w-full mt-2">Entrar al Sistema</sl-button>
             </form>
             <footer class="mt-6 text-center">
-                <a href="#" id="link-forgot" class="text-sm font-medium text-enterprise-600 hover:text-enterprise-700">¿Olvidaste tu contraseña?</a>
+                <a href="#" id="link-forgot" class="text-sm font-medium text-enterprise-500 hover:text-enterprise-400 transition-colors">¿Olvidaste tu contraseña?</a>
             </footer>
         </div>
 
         <div id="forgot-view" style="display: none;">
             <header class="mb-8 text-center">
-                <h1 class="text-2xl font-bold text-slate-900 mb-1">Recuperar Acceso</h1>
-                <p class="text-sm text-slate-500">Enviaremos un enlace de restauración a tu correo.</p>
+                <h1 class="text-2xl font-bold text-white mb-1">Recuperar Acceso</h1>
+                <p class="text-sm text-slate-400">Enviaremos un enlace de restauración a tu correo.</p>
             </header>
             <form id="forgot-form" class="flex flex-col gap-4">
                 <sl-input id="forgot-email" type="email" label="Correo Electrónico" required clearable></sl-input>
                 <sl-button variant="primary" type="submit" size="large" class="w-full mt-2">Enviar Enlace</sl-button>
             </form>
             <footer class="mt-6 text-center">
-                <a href="#" id="link-back-login" class="text-sm font-medium text-slate-500 hover:text-slate-800">Volver al inicio</a>
+                <a href="#" id="link-back-login" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Volver al inicio</a>
             </footer>
         </div>
     </div>
