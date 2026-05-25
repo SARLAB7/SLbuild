@@ -1,12 +1,11 @@
-/* =========================================
-   COMPONENTES PERSONALIZADOS (SACLAB)
-   ========================================= 
-*/
+/* ========================================================================= */
+/* COMPONENTES PERSONALIZADOS REFINADOS (SACLAB UI)                          */
+/* ========================================================================= */
 
-/* 1. BLINDAJE DE ICONOS (Estilo premium y ligero) */
+/* 1. BLINDAJE DE ICONOS (Estilo Premium Ultrafino) */
 .material-symbols-outlined, .sel-icon {
     font-family: 'Material Symbols Outlined' !important;
-    font-weight: 300; /* Más delgado para un acabado más técnico y limpio */
+    font-weight: 300 !important; /* Estilo ultra limpio y estético */
     font-style: normal;
     font-size: 20px !important;
     display: inline-block !important;
@@ -17,9 +16,45 @@
     white-space: nowrap;
     direction: ltr;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* NOTA: Se ha eliminado toda la lógica vieja de .pill-navigation y .nav-group.
-  Al usar Alpine.js en el HTML (x-data="{ open: false }"), el menú ya no 
-  colapsa ni genera bugs visuales en modo responsive.
-*/
+/* 2. TARJETAS DE ALTA FIDELIDAD (SaaS Minimalist Concept) */
+.card-clean {
+    background: #ffffff;
+    border: 1px solid rgba(226, 232, 240, 0.7); /* Borde suavizado con opacidad */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+    border-radius: 1.25rem; /* Esquinas ligeramente más orgánicas */
+    padding: 2rem; /* Más aire interno para mejorar lectura contable */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Modo Oscuro: Negro absoluto de fondo con tarjeta flotante técnica */
+.dark .card-clean {
+    background: #090d16; /* Slate profundo de alto contraste */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Estados Hover Dinámicos */
+.card-clean:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.dark .card-clean:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+}
+
+/* 3. MANEJO INTERNO DEL AVATAR SELECTOR */
+.avatar-container .avatar-selector {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.95);
+    transition: all 0.2s ease;
+}
+
+.dark .avatar-container .avatar-selector {
+    background: rgba(9, 13, 22, 0.95);
+}
