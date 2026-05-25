@@ -5,7 +5,7 @@
 /* 1. BLINDAJE DE ICONOS (Estilo Premium Ultrafino) */
 .material-symbols-outlined, .sel-icon {
     font-family: 'Material Symbols Outlined' !important;
-    font-weight: 300 !important; /* Estilo ultra limpio y estético */
+    font-weight: 300 !important;
     font-style: normal;
     font-size: 20px !important;
     display: inline-block !important;
@@ -20,36 +20,39 @@
 }
 
 /* ========================================================================= */
-/* GLASSMORPHISM DARK PREMIUM (NUEVA VERSIÓN)                                */
+/* GLASSMORPHISM DARK PREMIUM (ESPEJO OPACO DEFINITIVO)                      */
 /* ========================================================================= */
 
 .card-glass {
-    /* Fondo oscuro translúcido */
-    background: rgba(15, 15, 20, 0.6);
-    /* Desenfoque potente */
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    /* Fondo oscuro translúcido para dejar pasar los destellos */
+    background: rgba(15, 15, 20, 0.55);
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
     
-    /* EL TRUCO DEL EFECTO ESPEJO: Un borde doble */
-    /* El primer borde es oscuro, el segundo es un reflejo blanco muy fino */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    /* EL TRUCO DEL ESPEJO: Borde superior e izquierdo ligeramente más claros simulando luz */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
     
     border-radius: 1.5rem;
     
-    /* Sombra técnica: Un ligero brillo hacia afuera y reflejo interno */
-    box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.5), 
-        inset 0 1px 1px rgba(255, 255, 255, 0.15);
-        
-    padding: 2rem;
-    transition: all 0.4s ease;
+    /* Sombra profunda exterior y un filo de luz interior (inset) */
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    padding: 1.5rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Efecto de luz al pasar el cursor (glow) */
+/* Interacción: Brillo sutil hacia los tonos morados de la marca */
 .card-glass:hover {
-    border-color: rgba(139, 92, 246, 0.4); /* Un toque de tu morado */
-    box-shadow: 
-        0 15px 40px rgba(0, 0, 0, 0.6), 
-        inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    background: rgba(20, 20, 28, 0.65);
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Ajustes para modo claro en caso de que el usuario cambie el switch */
+html:not(.dark) .card-glass {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 1);
 }
