@@ -45,7 +45,7 @@
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <style>
+   <style>
         :root {
             --sl-input-border-radius-medium: 0.75rem; 
             --sl-button-border-radius-medium: 0.75rem;
@@ -53,60 +53,66 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* MAGIA GLASSMORPHISM CENTRALIZADA */
+        /* MAGIA GLASSMORPHISM: EFECTO ESPEJO OPACO */
         .card-glass {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            /* Fondo oscuro translúcido para dejar pasar los destellos */
+            background: rgba(15, 15, 20, 0.55);
+            backdrop-filter: blur(24px) saturate(150%);
+            -webkit-backdrop-filter: blur(24px) saturate(150%);
+            
+            /* EL TRUCO DEL ESPEJO: Borde superior e izquierdo ligeramente más claros simulando luz */
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            
             border-radius: 1.5rem;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            
+            /* Sombra profunda exterior y un filo de luz interior (inset) */
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
             padding: 1.5rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .dark .card-glass {
-            background: rgba(17, 25, 40, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        }
-
+        /* Interacción: Brillo sutil hacia los tonos morados/enterprise de la marca */
         .card-glass:hover {
             transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            background: rgba(20, 20, 28, 0.65);
+            border-color: rgba(139, 92, 246, 0.3); /* enterprise-500 con opacidad */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
-        .dark .card-glass:hover {
-            background: rgba(17, 25, 40, 0.6);
-            border-color: rgba(255, 255, 255, 0.2);
+        /* Ajustes para modo claro en caso de que el usuario cambie el switch */
+        html:not(.dark) .card-glass {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 1);
         }
     </style>
 </head>
 
-<body x-data="{ isDark: localStorage.getItem('theme') === 'dark', vistaActiva: 'sec-inicio', menuMovil: false }" 
-      x-init="$watch('isDark', val => localStorage.setItem('theme', val ? 'dark' : 'light'))"
+<body x-data="{ isDark: true, vistaActiva: 'sec-inicio', menuMovil: false }" 
+      x-init="$watch('isDark', val => { localStorage.setItem('theme', val ? 'dark' : 'light'); if(val) document.documentElement.classList.add('dark'); else document.documentElement.classList.remove('dark'); })"
       :class="isDark ? 'dark sl-theme-dark' : ''"
-      class="font-sans text-slate-800 dark:text-slate-100 min-h-screen flex flex-col overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-[#050505]">
+      class="font-sans text-slate-800 dark:text-slate-100 min-h-screen flex flex-col overflow-hidden transition-colors duration-500 bg-slate-50 dark:bg-[#030305]">
     
-    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-60 dark:opacity-40">
-        <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-enterprise-400/30 dark:bg-enterprise-600/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] animate-blob"></div>
-        <div class="absolute top-[20%] right-[-5%] w-96 h-96 bg-purple-400/20 dark:bg-purple-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] animate-blob animation-delay-2000"></div>
-        <div class="absolute bottom-[-20%] left-[20%] w-[500px] h-[500px] bg-blue-300/20 dark:bg-blue-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob animation-delay-4000"></div>
+    <div class="fixed inset-0 z-[-1] pointer-events-none opacity-100">
+        <div class="absolute top-[-15%] left-[-10%] w-[600px] h-[600px] bg-purple-900/20 rounded-full mix-blend-screen filter blur-[140px] animate-blob"></div>
+        <div class="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-enterprise-900/15 rounded-full mix-blend-screen filter blur-[120px] animate-blob animation-delay-2000"></div>
+        <div class="absolute top-[30%] left-[40%] w-[300px] h-[300px] bg-fuchsia-900/10 rounded-full mix-blend-screen filter blur-[100px] animate-blob animation-delay-4000"></div>
     </div>
     
-    <header class="h-16 flex items-center justify-between px-6 md:px-8 border-b border-white/40 dark:border-white/10 sticky top-0 z-50 backdrop-blur-xl bg-white/40 dark:bg-[#050608]/40 transition-colors duration-300 shadow-sm">
+    <header class="h-16 flex items-center justify-between px-6 md:px-8 border-b border-slate-200/40 dark:border-white/5 sticky top-0 z-50 backdrop-blur-2xl bg-white/40 dark:bg-[#0a0a0f]/60 transition-colors duration-300 shadow-sm">
         
         <div class="flex items-center gap-4">
             <button @click="menuMovil = !menuMovil" class="md:hidden text-slate-500 dark:text-slate-400 p-2 hover:bg-white/50 dark:hover:bg-white/10 rounded-xl transition-colors">
                 <span class="material-symbols-outlined">menu</span>
             </button>
             <div class="logo font-black text-xl tracking-tighter text-slate-900 dark:text-white select-none">
-                SAC<span class="text-enterprise-600 dark:text-enterprise-400">LAB</span>
+                SAC<span class="text-enterprise-500">LAB</span>
             </div>
         </div>
         
-        <nav class="hidden md:flex items-center bg-white/30 dark:bg-black/20 backdrop-blur-md border border-white/50 dark:border-white/10 rounded-xl p-1 gap-1 shadow-sm">
+        <nav class="hidden md:flex items-center bg-white/30 dark:bg-[#0f0f14]/80 backdrop-blur-md border border-white/50 dark:border-white/10 rounded-xl p-1 gap-1 shadow-sm">
             <button @click="vistaActiva = 'sec-inicio'" 
                     :class="vistaActiva === 'sec-inicio' ? 'bg-white/80 dark:bg-white/10 text-enterprise-600 dark:text-white shadow-sm font-semibold' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 font-medium'" 
                     class="flex items-center gap-2 px-4 py-1.5 text-sm rounded-lg transition-all duration-200">
@@ -134,9 +140,9 @@
                     <span class="material-symbols-outlined text-[18px]">business_center</span> Gestión
                     <span class="material-symbols-outlined text-[16px] transition-transform duration-200" :class="open ? 'rotate-180' : ''">keyboard_arrow_down</span>
                 </button>
-                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" class="absolute top-full left-0 mt-2 w-44 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl shadow-xl p-1.5 z-50 flex flex-col gap-0.5" style="display: none;">
-                    <button @click="vistaActiva = 'sec-clientes'; open = false" class="text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/10 rounded-lg transition-colors">Clientes</button>
-                    <button @click="vistaActiva = 'sec-productos'; open = false" class="text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/10 rounded-lg transition-colors">Servicios</button>
+                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" class="absolute top-full left-0 mt-2 w-44 bg-white/80 dark:bg-[#0a0a0f]/90 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl shadow-xl p-1.5 z-50 flex flex-col gap-0.5" style="display: none;">
+                    <button @click="vistaActiva = 'sec-clientes'; open = false" class="text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/5 rounded-lg transition-colors">Clientes</button>
+                    <button @click="vistaActiva = 'sec-productos'; open = false" class="text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/5 rounded-lg transition-colors">Servicios</button>
                 </div>
             </div>
 
@@ -147,9 +153,9 @@
                     <span class="material-symbols-outlined text-[18px]">receipt_long</span> Contabilidad
                     <span class="material-symbols-outlined text-[16px] transition-transform duration-200" :class="open ? 'rotate-180' : ''">keyboard_arrow_down</span>
                 </button>
-                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" class="absolute top-full right-0 mt-2 w-44 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl shadow-xl p-1.5 z-50 flex flex-col gap-0.5" style="display: none;">
-                    <button @click="vistaActiva = 'sec-asientos'; open = false" class="text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/10 rounded-lg transition-colors">Libro Diario</button>
-                    <button @click="vistaActiva = 'sec-impuestos'; open = false" class="text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/10 rounded-lg transition-colors">DIAN</button>
+                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" class="absolute top-full right-0 mt-2 w-44 bg-white/80 dark:bg-[#0a0a0f]/90 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl shadow-xl p-1.5 z-50 flex flex-col gap-0.5" style="display: none;">
+                    <button @click="vistaActiva = 'sec-asientos'; open = false" class="text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/5 rounded-lg transition-colors">Libro Diario</button>
+                    <button @click="vistaActiva = 'sec-impuestos'; open = false" class="text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/5 rounded-lg transition-colors">DIAN</button>
                 </div>
             </div>
         </nav>
@@ -160,7 +166,7 @@
             </button>
             
             <button @click="vistaActiva = 'sec-configuracion'" 
-                    :class="vistaActiva === 'sec-configuracion' ? 'text-enterprise-600 bg-white/80 dark:bg-white/10 dark:text-enterprise-400 shadow-sm' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/10'" 
+                    :class="vistaActiva === 'sec-configuracion' ? 'text-enterprise-500 bg-white/80 dark:bg-white/10 shadow-sm' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/10'" 
                     class="w-9 h-9 flex items-center justify-center rounded-xl transition-all" title="Configuración">
                 <span class="material-symbols-outlined">settings</span>
             </button>
@@ -168,20 +174,20 @@
             <div class="w-px h-5 bg-slate-300 dark:bg-slate-700 mx-0.5 hidden sm:block"></div>
             
             <div class="avatar-container relative">
-                <div class="avatar w-9 h-9 rounded-xl bg-white/50 text-slate-900 dark:bg-white/10 dark:text-white backdrop-blur-md flex items-center justify-center font-bold text-sm cursor-pointer border border-white/60 dark:border-white/20 hover:ring-2 hover:ring-enterprise-500/50 transition-all duration-200 shadow-sm" id="user-avatar">
+                <div class="avatar w-9 h-9 rounded-xl bg-white/50 text-slate-900 dark:bg-white/10 dark:text-white backdrop-blur-md flex items-center justify-center font-bold text-sm cursor-pointer border border-white/60 dark:border-white/10 hover:border-enterprise-500/50 transition-all duration-200 shadow-sm" id="user-avatar">
                     <span id="avatar-content"></span> 
                 </div>
-                <div class="avatar-selector hidden absolute top-12 right-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl p-4 shadow-xl z-50 w-52 flex flex-col" id="avatar-selector">
+                <div class="avatar-selector hidden absolute top-12 right-0 bg-white/80 dark:bg-[#0a0a0f]/90 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-2xl p-4 shadow-xl z-50 w-52 flex flex-col" id="avatar-selector">
                     <p class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider mb-2.5 px-1">Identidad Visual</p>
-                    <div class="icons-grid flex flex-wrap gap-1.5 bg-white/40 dark:bg-black/20 backdrop-blur-md p-2 rounded-xl border border-white/40 dark:border-white/5 mb-3">
-                        <span class="sel-icon text-slate-500 dark:text-slate-400 hover:text-enterprise-600 dark:hover:text-enterprise-400 cursor-pointer p-1 hover:bg-white/60 dark:hover:bg-white/10 rounded-md transition-all text-center flex-1" data-type="icon">person</span>
-                        <span class="sel-icon text-slate-500 dark:text-slate-400 hover:text-enterprise-600 dark:hover:text-enterprise-400 cursor-pointer p-1 hover:bg-white/60 dark:hover:bg-white/10 rounded-md transition-all text-center flex-1" data-type="icon">account_balance</span>
-                        <span class="sel-icon text-slate-500 dark:text-slate-400 hover:text-enterprise-600 dark:hover:text-enterprise-400 cursor-pointer p-1 hover:bg-white/60 dark:hover:bg-white/10 rounded-md transition-all text-center flex-1" data-type="icon">monitoring</span>
-                        <span class="sel-icon text-slate-500 dark:text-slate-400 hover:text-enterprise-600 dark:hover:text-enterprise-400 cursor-pointer p-1 hover:bg-white/60 dark:hover:bg-white/10 rounded-md transition-all text-center flex-1" data-type="icon">shield</span>
-                        <span class="sel-icon text-slate-500 dark:text-slate-400 hover:text-enterprise-600 dark:hover:text-enterprise-400 cursor-pointer font-sans font-bold text-xs flex items-center justify-center hover:bg-white/60 dark:hover:bg-white/10 rounded-md transition-all flex-1" data-type="initials" title="Usar iniciales">Abc</span>
+                    <div class="icons-grid flex flex-wrap gap-1.5 bg-white/40 dark:bg-black/40 backdrop-blur-md p-2 rounded-xl border border-white/40 dark:border-white/5 mb-3">
+                        <span class="sel-icon text-slate-500 dark:text-slate-400 hover:text-enterprise-500 dark:hover:text-enterprise-400 cursor-pointer p-1 hover:bg-white/60 dark:hover:bg-white/10 rounded-md transition-all text-center flex-1" data-type="icon">person</span>
+                        <span class="sel-icon text-slate-500 dark:text-slate-400 hover:text-enterprise-500 dark:hover:text-enterprise-400 cursor-pointer p-1 hover:bg-white/60 dark:hover:bg-white/10 rounded-md transition-all text-center flex-1" data-type="icon">account_balance</span>
+                        <span class="sel-icon text-slate-500 dark:text-slate-400 hover:text-enterprise-500 dark:hover:text-enterprise-400 cursor-pointer p-1 hover:bg-white/60 dark:hover:bg-white/10 rounded-md transition-all text-center flex-1" data-type="icon">monitoring</span>
+                        <span class="sel-icon text-slate-500 dark:text-slate-400 hover:text-enterprise-500 dark:hover:text-enterprise-400 cursor-pointer p-1 hover:bg-white/60 dark:hover:bg-white/10 rounded-md transition-all text-center flex-1" data-type="icon">shield</span>
+                        <span class="sel-icon text-slate-500 dark:text-slate-400 hover:text-enterprise-500 dark:hover:text-enterprise-400 cursor-pointer font-sans font-bold text-xs flex items-center justify-center hover:bg-white/60 dark:hover:bg-white/10 rounded-md transition-all flex-1" data-type="initials" title="Usar iniciales">Abc</span>
                     </div>
-                    <hr class="border-slate-200/50 dark:border-white/10 mb-2">
-                    <button class="w-full text-left text-red-500 dark:text-red-400 hover:bg-red-50/50 dark:hover:bg-red-950/30 p-2 rounded-xl text-sm flex items-center gap-2 transition-colors font-medium" id="btn-logout">
+                    <hr class="border-slate-200/50 dark:border-white/5 mb-2">
+                    <button class="w-full text-left text-red-500 dark:text-red-400 hover:bg-red-50/50 dark:hover:bg-red-900/20 p-2 rounded-xl text-sm flex items-center gap-2 transition-colors font-medium" id="btn-logout">
                         <span class="material-symbols-outlined text-[18px]">logout</span> Cerrar Sesión
                     </button>
                 </div>
@@ -189,13 +195,13 @@
         </div>
     </header>
 
-    <div x-show="menuMovil" @click.away="menuMovil = false" x-transition class="fixed top-16 left-0 w-64 h-[calc(100vh-64px)] bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border-r border-white/40 dark:border-white/10 z-50 p-4 shadow-2xl md:hidden">
+    <div x-show="menuMovil" @click.away="menuMovil = false" x-transition class="fixed top-16 left-0 w-64 h-[calc(100vh-64px)] bg-white/80 dark:bg-[#0a0a0f]/90 backdrop-blur-2xl border-r border-white/40 dark:border-white/10 z-50 p-4 shadow-2xl md:hidden">
         <div class="flex flex-col gap-2">
             <p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2 px-2">Navegación</p>
-            <button @click="vistaActiva = 'sec-inicio'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-white/50 dark:hover:bg-white/10 rounded-xl font-medium"><span class="material-symbols-outlined">dashboard</span> Dashboard</button>
-            <button @click="vistaActiva = 'sec-facturas'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-white/50 dark:hover:bg-white/10 rounded-xl font-medium"><span class="material-symbols-outlined">receipt</span> Facturación</button>
-            <button @click="vistaActiva = 'sec-gastos'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-white/50 dark:hover:bg-white/10 rounded-xl font-medium"><span class="material-symbols-outlined">payments</span> Egresos</button>
-            <button @click="vistaActiva = 'sec-configuracion'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-white/50 dark:hover:bg-white/10 rounded-xl font-medium text-enterprise-600 dark:text-enterprise-400 mt-4 border-t border-slate-200/50 dark:border-white/10 pt-4"><span class="material-symbols-outlined">settings</span> Ajustes</button>
+            <button @click="vistaActiva = 'sec-inicio'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-white/50 dark:hover:bg-white/5 rounded-xl font-medium"><span class="material-symbols-outlined">dashboard</span> Dashboard</button>
+            <button @click="vistaActiva = 'sec-facturas'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-white/50 dark:hover:bg-white/5 rounded-xl font-medium"><span class="material-symbols-outlined">receipt</span> Facturación</button>
+            <button @click="vistaActiva = 'sec-gastos'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-white/50 dark:hover:bg-white/5 rounded-xl font-medium"><span class="material-symbols-outlined">payments</span> Egresos</button>
+            <button @click="vistaActiva = 'sec-configuracion'; menuMovil = false" class="flex items-center gap-3 text-left p-3 hover:bg-white/50 dark:hover:bg-white/5 rounded-xl font-medium text-enterprise-500 mt-4 border-t border-slate-200/50 dark:border-white/10 pt-4"><span class="material-symbols-outlined">settings</span> Ajustes</button>
         </div>
     </div>
 
@@ -205,14 +211,14 @@
             <section id="sec-inicio" x-show="vistaActiva === 'sec-inicio'" class="card-glass">
                 <h1 class="text-2xl font-bold mb-6">Dashboard General</h1>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <div class="bg-white/40 dark:bg-black/20 backdrop-blur-md border border-white/40 dark:border-white/10 p-5 rounded-2xl shadow-sm">
+                    <div class="bg-white/40 dark:bg-[#000000]/40 backdrop-blur-md border border-white/40 dark:border-white/10 p-5 rounded-2xl shadow-sm">
                         <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Ingresos del Mes</p>
                         <h3 class="text-2xl font-extrabold text-enterprise-600 dark:text-enterprise-400 mt-1">$4.5M</h3>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="col-span-1 lg:col-span-2 bg-white/40 dark:bg-black/20 backdrop-blur-md border border-white/40 dark:border-white/10 p-6 rounded-2xl shadow-sm"><div id="chart-flujo"></div></div>
-                    <div class="col-span-1 bg-white/40 dark:bg-black/20 backdrop-blur-md border border-white/40 dark:border-white/10 p-6 rounded-2xl shadow-sm"><div id="chart-estados"></div></div>
+                    <div class="col-span-1 lg:col-span-2 bg-white/40 dark:bg-[#000000]/40 backdrop-blur-md border border-white/40 dark:border-white/10 p-6 rounded-2xl shadow-sm"><div id="chart-flujo"></div></div>
+                    <div class="col-span-1 bg-white/40 dark:bg-[#000000]/40 backdrop-blur-md border border-white/40 dark:border-white/10 p-6 rounded-2xl shadow-sm"><div id="chart-estados"></div></div>
                 </div>
             </section>
 
@@ -235,10 +241,10 @@
                 
                 <div class="flex flex-col md:flex-row gap-6 md:gap-8 mt-4">
                     <nav class="flex flex-row md:flex-col gap-2 overflow-x-auto w-full md:w-56 border-b md:border-b-0 md:border-r border-white/40 dark:border-white/10 pb-4 md:pb-0 md:pr-4">
-                        <button @click="tabActiva = 'perfil'" :class="tabActiva === 'perfil' ? 'bg-white/60 dark:bg-white/10 text-enterprise-600 font-bold shadow-sm' : 'text-slate-600 hover:bg-white/40 dark:hover:bg-white/5'" class="px-4 py-2 text-sm rounded-xl text-left whitespace-nowrap flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-[18px]">person</span> Mi Perfil</button>
-                        <button @click="tabActiva = 'empresa'" :class="tabActiva === 'empresa' ? 'bg-white/60 dark:bg-white/10 text-enterprise-600 font-bold shadow-sm' : 'text-slate-600 hover:bg-white/40 dark:hover:bg-white/5'" class="px-4 py-2 text-sm rounded-xl text-left whitespace-nowrap flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-[18px]">business</span> Datos Fiscales</button>
-                        <button @click="tabActiva = 'branding'" :class="tabActiva === 'branding' ? 'bg-white/60 dark:bg-white/10 text-enterprise-600 font-bold shadow-sm' : 'text-slate-600 hover:bg-white/40 dark:hover:bg-white/5'" class="px-4 py-2 text-sm rounded-xl text-left whitespace-nowrap flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-[18px]">brush</span> Identidad Visual</button>
-                        <button @click="tabActiva = 'pagos'" :class="tabActiva === 'pagos' ? 'bg-white/60 dark:bg-white/10 text-enterprise-600 font-bold shadow-sm' : 'text-slate-600 hover:bg-white/40 dark:hover:bg-white/5'" class="px-4 py-2 text-sm rounded-xl text-left whitespace-nowrap flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-[18px]">payments</span> Cuentas y Pagos</button>
+                        <button @click="tabActiva = 'perfil'" :class="tabActiva === 'perfil' ? 'bg-white/60 dark:bg-white/10 text-enterprise-500 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-white/40 dark:hover:bg-white/5'" class="px-4 py-2 text-sm rounded-xl text-left whitespace-nowrap flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-[18px]">person</span> Mi Perfil</button>
+                        <button @click="tabActiva = 'empresa'" :class="tabActiva === 'empresa' ? 'bg-white/60 dark:bg-white/10 text-enterprise-500 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-white/40 dark:hover:bg-white/5'" class="px-4 py-2 text-sm rounded-xl text-left whitespace-nowrap flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-[18px]">business</span> Datos Fiscales</button>
+                        <button @click="tabActiva = 'branding'" :class="tabActiva === 'branding' ? 'bg-white/60 dark:bg-white/10 text-enterprise-500 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-white/40 dark:hover:bg-white/5'" class="px-4 py-2 text-sm rounded-xl text-left whitespace-nowrap flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-[18px]">brush</span> Identidad Visual</button>
+                        <button @click="tabActiva = 'pagos'" :class="tabActiva === 'pagos' ? 'bg-white/60 dark:bg-white/10 text-enterprise-500 font-bold shadow-sm' : 'text-slate-600 dark:text-slate-400 hover:bg-white/40 dark:hover:bg-white/5'" class="px-4 py-2 text-sm rounded-xl text-left whitespace-nowrap flex items-center gap-2 transition-all"><span class="material-symbols-outlined text-[18px]">payments</span> Cuentas y Pagos</button>
                     </nav>
 
                     <div class="flex-1 min-w-0">
@@ -266,7 +272,7 @@
                         <div x-show="tabActiva === 'branding'" style="display:none;">
                             <h4 class="text-lg font-bold mb-6">Identidad Visual de la Empresa</h4>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
-                                <div class="border-2 border-dashed border-slate-400/50 dark:border-white/20 bg-white/40 dark:bg-black/20 backdrop-blur-md rounded-2xl p-8 flex flex-col items-center justify-center text-slate-500 hover:border-enterprise-500 cursor-pointer transition-colors relative shadow-sm" id="zone-logo">
+                                <div class="border-2 border-dashed border-slate-400/50 dark:border-white/10 bg-white/40 dark:bg-[#000000]/40 backdrop-blur-md rounded-2xl p-8 flex flex-col items-center justify-center text-slate-500 hover:border-enterprise-500 cursor-pointer transition-colors relative shadow-sm" id="zone-logo">
                                     <input type="file" id="input-logo" accept="image/png, image/jpeg" class="hidden">
                                     <img id="preview-logo" src="" class="hidden max-h-24 mx-auto rounded">
                                     <div id="text-logo" class="text-center">
@@ -274,7 +280,7 @@
                                         <p class="font-medium text-sm">Subir Logo (.PNG, .JPG)</p>
                                     </div>
                                 </div>
-                                <div class="border-2 border-dashed border-slate-400/50 dark:border-white/20 bg-white/40 dark:bg-black/20 backdrop-blur-md rounded-2xl p-8 flex flex-col items-center justify-center text-slate-500 hover:border-enterprise-500 cursor-pointer transition-colors relative shadow-sm" id="zone-firma">
+                                <div class="border-2 border-dashed border-slate-400/50 dark:border-white/10 bg-white/40 dark:bg-[#000000]/40 backdrop-blur-md rounded-2xl p-8 flex flex-col items-center justify-center text-slate-500 hover:border-enterprise-500 cursor-pointer transition-colors relative shadow-sm" id="zone-firma">
                                     <input type="file" id="input-firma" accept="image/png" class="hidden">
                                     <img id="preview-firma" src="" class="hidden max-h-24 mx-auto">
                                     <div id="text-firma" class="text-center">
