@@ -3,7 +3,7 @@
 /* ========================================================================= */
 
 body {
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11"; /* Optimizaciones tipográficas modernas */
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
 }
@@ -26,15 +26,15 @@ body {
     background: transparent; 
 }
 ::-webkit-scrollbar-thumb {
-    background: rgba(203, 213, 225, 0.6); /* slate-300 transparente */
+    background: rgba(203, 213, 225, 0.6);
     border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(148, 163, 184, 0.8); /* slate-400 */
+    background: rgba(148, 163, 184, 0.8);
 }
 
 .dark ::-webkit-scrollbar-thumb {
-    background: rgba(51, 65, 85, 0.5); /* slate-700 */
+    background: rgba(51, 65, 85, 0.5);
 }
 .dark ::-webkit-scrollbar-thumb:hover {
     background: rgba(71, 85, 105, 0.8);
@@ -62,20 +62,4 @@ body {
 h3, .font-mono-financial {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
     letter-spacing: -0.05em;
-}
-
-/* ========================================================================= */
-/* EFECTOS GLASSMORPHISM (HEADER & SIDEBARS)                                 */
-/* ========================================================================= */
-
-.glass-header {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(12px) saturate(190%);
-    -webkit-backdrop-filter: blur(12px) saturate(190%);
-}
-
-.dark .glass-header {
-    background: rgba(5, 6, 8, 0.8); /* Conectado al fondo exacto de tu body oscuro */
-    backdrop-filter: blur(12px) saturate(150%);
-    -webkit-backdrop-filter: blur(12px) saturate(150%);
 }
