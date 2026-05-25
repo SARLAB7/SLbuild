@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('link-back-login').onclick = (e) => { e.preventDefault(); forgotView.style.display = 'none'; loginView.style.display = 'block'; };
     }
 
-    // Login
+  // Login
     if (loginForm) {
         loginForm.onsubmit = async (e) => {
             e.preventDefault();
@@ -26,7 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
                 notify("Bienvenido a SACLAB");
-                // No necesitamos el setTimeout aquí, el vigilarSesion hará el redireccionamiento
+                
+                // ¡ESTA ES LA LÍNEA CLAVE QUE FALTABA!
+                setTimeout(() => window.location.href = "panel.html", 800);
+                
             } catch (error) {
                 console.error(error.code);
                 let msg = error.code === 'auth/wrong-password' ? "Contraseña incorrecta" : "Error de acceso";
