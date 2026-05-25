@@ -72,35 +72,40 @@
             </div>
         </div>
         
-        <nav class="hidden md:flex items-center bg-white/30 dark:bg-[#0f0f14]/80 backdrop-blur-md border border-white/50 dark:border-white/10 rounded-xl p-1 gap-1 shadow-sm">
+        <nav class="hidden md:flex items-center bg-white/30 dark:bg-[#0f0f14]/80 backdrop-blur-md border border-white/50 dark:border-white/10 rounded-2xl p-1.5 gap-1 shadow-sm">
+            
             <button @click="vistaActiva = 'sec-inicio'" 
-                    :class="vistaActiva === 'sec-inicio' ? 'bg-white/80 dark:bg-white/10 text-enterprise-600 dark:text-white shadow-sm font-semibold' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 font-medium'" 
-                    class="flex items-center gap-2 px-4 py-1.5 text-sm rounded-lg transition-all duration-200">
-                <span class="material-symbols-outlined text-[18px]">dashboard</span> Dashboard
+                    :class="vistaActiva === 'sec-inicio' ? 'nav-btn-active font-semibold' : 'text-slate-600 dark:text-slate-400 font-medium'" 
+                    class="nav-btn">
+                <div class="nav-icon-box"><span class="material-symbols-outlined text-[18px]">dashboard</span></div>
+                Dashboard
             </button>
             
             <button @click="vistaActiva = 'sec-facturas'" 
-                    :class="vistaActiva === 'sec-facturas' ? 'bg-white/80 dark:bg-white/10 text-enterprise-600 dark:text-white shadow-sm font-semibold' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 font-medium'" 
-                    class="flex items-center gap-2 px-4 py-1.5 text-sm rounded-lg transition-all duration-200">
-                <span class="material-symbols-outlined text-[18px]">receipt</span> Facturación
+                    :class="vistaActiva === 'sec-facturas' ? 'nav-btn-active font-semibold' : 'text-slate-600 dark:text-slate-400 font-medium'" 
+                    class="nav-btn">
+                <div class="nav-icon-box"><span class="material-symbols-outlined text-[18px]">receipt</span></div>
+                Facturación
             </button>
             
             <button @click="vistaActiva = 'sec-gastos'" 
-                    :class="vistaActiva === 'sec-gastos' ? 'bg-white/80 dark:bg-white/10 text-enterprise-600 dark:text-white shadow-sm font-semibold' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 font-medium'" 
-                    class="flex items-center gap-2 px-4 py-1.5 text-sm rounded-lg transition-all duration-200">
-                <span class="material-symbols-outlined text-[18px]">payments</span> Egresos
+                    :class="vistaActiva === 'sec-gastos' ? 'nav-btn-active font-semibold' : 'text-slate-600 dark:text-slate-400 font-medium'" 
+                    class="nav-btn">
+                <div class="nav-icon-box"><span class="material-symbols-outlined text-[18px]">payments</span></div>
+                Egresos
             </button>
             
-            <div class="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1"></div>
+            <div class="w-px h-6 bg-slate-300 dark:bg-slate-700/50 mx-1"></div>
             
             <div class="relative" x-data="{ open: false }" @click.away="open = false">
                 <button @click="open = !open" 
-                        :class="(vistaActiva === 'sec-clientes' || vistaActiva === 'sec-productos') ? 'text-enterprise-600 dark:text-white font-semibold' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 font-medium'"
-                        class="flex items-center gap-1.5 px-4 py-1.5 text-sm rounded-lg transition-all duration-200">
-                    <span class="material-symbols-outlined text-[18px]">business_center</span> Gestión
-                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200" :class="open ? 'rotate-180' : ''">keyboard_arrow_down</span>
+                        :class="(vistaActiva === 'sec-clientes' || vistaActiva === 'sec-productos') ? 'nav-btn-active font-semibold' : 'text-slate-600 dark:text-slate-400 font-medium'"
+                        class="nav-btn">
+                    <div class="nav-icon-box"><span class="material-symbols-outlined text-[18px]">business_center</span></div>
+                    Gestión
+                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200 ml-[-4px]" :class="open ? 'rotate-180' : ''">keyboard_arrow_down</span>
                 </button>
-                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" class="absolute top-full left-0 mt-2 w-44 bg-white/80 dark:bg-[#0a0a0f]/90 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl shadow-xl p-1.5 z-50 flex flex-col gap-0.5" style="display: none;">
+                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" class="absolute top-full left-0 mt-3 w-44 bg-white/80 dark:bg-[#0a0a0f]/90 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl shadow-xl p-1.5 z-50 flex flex-col gap-1" style="display: none;">
                     <button @click="vistaActiva = 'sec-clientes'; open = false" class="text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/5 rounded-lg transition-colors">Clientes</button>
                     <button @click="vistaActiva = 'sec-productos'; open = false" class="text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/5 rounded-lg transition-colors">Servicios</button>
                 </div>
@@ -108,12 +113,13 @@
 
             <div class="relative" x-data="{ open: false }" @click.away="open = false">
                 <button @click="open = !open" 
-                        :class="(vistaActiva === 'sec-asientos' || vistaActiva === 'sec-impuestos') ? 'text-enterprise-600 dark:text-white font-semibold' : 'text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 font-medium'"
-                        class="flex items-center gap-1.5 px-4 py-1.5 text-sm rounded-lg transition-all duration-200">
-                    <span class="material-symbols-outlined text-[18px]">receipt_long</span> Contabilidad
-                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200" :class="open ? 'rotate-180' : ''">keyboard_arrow_down</span>
+                        :class="(vistaActiva === 'sec-asientos' || vistaActiva === 'sec-impuestos') ? 'nav-btn-active font-semibold' : 'text-slate-600 dark:text-slate-400 font-medium'"
+                        class="nav-btn">
+                    <div class="nav-icon-box"><span class="material-symbols-outlined text-[18px]">receipt_long</span></div>
+                    Contabilidad
+                    <span class="material-symbols-outlined text-[16px] transition-transform duration-200 ml-[-4px]" :class="open ? 'rotate-180' : ''">keyboard_arrow_down</span>
                 </button>
-                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" class="absolute top-full right-0 mt-2 w-44 bg-white/80 dark:bg-[#0a0a0f]/90 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl shadow-xl p-1.5 z-50 flex flex-col gap-0.5" style="display: none;">
+                <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" class="absolute top-full right-0 mt-3 w-44 bg-white/80 dark:bg-[#0a0a0f]/90 backdrop-blur-xl border border-white/40 dark:border-white/10 rounded-xl shadow-xl p-1.5 z-50 flex flex-col gap-1" style="display: none;">
                     <button @click="vistaActiva = 'sec-asientos'; open = false" class="text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/5 rounded-lg transition-colors">Libro Diario</button>
                     <button @click="vistaActiva = 'sec-impuestos'; open = false" class="text-left px-3 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-white/50 dark:hover:bg-white/5 rounded-lg transition-colors">DIAN</button>
                 </div>
