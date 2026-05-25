@@ -63,3 +63,60 @@ html:not(.dark) .card-glass {
     border: 1px solid rgba(255, 255, 255, 0.9);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08), inset 0 1px 1px rgba(255, 255, 255, 1);
 }
+/* ========================================================================= */
+/* MENÚ DE NAVEGACIÓN: ESTILO "ICON BOX" Y BORDES ACTIVOS                    */
+/* ========================================================================= */
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.75rem 0.4rem 0.4rem; /* Menos padding a la izquierda para la caja del icono */
+    border-radius: 0.85rem;
+    border: 1px solid transparent; 
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.875rem; /* text-sm */
+}
+
+/* El cuadrito que envuelve al icono */
+.nav-icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 0.5rem; /* Curva suave interior */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+/* ESTADO ACTIVO (El recuadro de bordes iluminados que te gustó) */
+.nav-btn-active {
+    background: rgba(139, 92, 246, 0.08) !important; /* Fondo sutil morado */
+    border: 1px solid rgba(139, 92, 246, 0.3) !important; /* Borde morado iluminado */
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1), inset 0 0 8px rgba(139, 92, 246, 0.05) !important;
+    color: #fff !important;
+}
+
+/* El icono cuando está activo resalta en morado */
+.nav-btn-active .nav-icon-box {
+    background: rgba(139, 92, 246, 0.2);
+    border-color: rgba(139, 92, 246, 0.4);
+    color: #a78bfa; /* Morado claro brillante */
+}
+
+/* Efecto hover para los botones inactivos */
+.nav-btn:hover:not(.nav-btn-active) {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+html:not(.dark) .nav-btn-active {
+    background: rgba(139, 92, 246, 0.05) !important;
+    color: #6d28d9 !important;
+}
+html:not(.dark) .nav-btn:hover:not(.nav-btn-active) {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.05);
+}
