@@ -280,3 +280,26 @@ export function inicializarCalculoAutomatico() {
         // document.getElementById('display-total').innerText = total;
     });
 }
+// Necesitarás incluir esto en tu HTML o vía import:
+// <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+export function generarPDF(factura) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(20);
+    doc.text("FACTURA DE VENTA", 105, 20, { align: "center" });
+    
+    doc.setFontSize(12);
+    doc.text(`Cliente: ${factura.cliente}`, 20, 40);
+    doc.text(`Fecha: ${new Date().toLocaleDateString()}`, 20, 50);
+    
+    doc.line(20, 60, 190, 60);
+    
+    doc.text(`Monto Base: $${factura.montoBase.toLocaleString()}`, 20, 80);
+    doc.text(`IVA (19%): $${factura.iva.toLocaleString()}`, 20, 90);
+    doc.setFontSize(14);
+    doc.text(`TOTAL: $${factura.montoTotal.toLocaleString()}`, 20, 110);
+
+    doc.save(`Factura_${factura.cliente}.pdf`);
+}
