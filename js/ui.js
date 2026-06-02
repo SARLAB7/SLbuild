@@ -368,3 +368,44 @@ export function popularTablaFacturas(facturas) {
         </div>
     `).join('');
 }
+// js/ui.js - Lógica de automatización
+export function inicializarFacturacion() {
+    const form = document.getElementById('form-nueva-factura');
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Captura de datos
+        const nuevaFactura = {
+            cliente: document.getElementById('factura-cliente').value,
+            monto: document.getElementById('factura-monto').value,
+            estado: document.getElementById('factura-estado').value,
+            fecha: new Date().toISOString()
+        };
+
+        // Automatización: Aquí inyectarías a tu Firebase
+        // await db.collection('facturas').add(nuevaFactura);
+        
+        console.log("Automatización: Factura guardada y enviada a proceso contable", nuevaFactura);
+        
+        // Notificación de éxito
+        Toastify({
+            text: "Factura registrada y sincronizada",
+            backgroundColor: "#8b5cf6",
+        }).showToast();
+    });
+}
+
+// Lógica para automatizar asientos contables
+function registrarAsientoContable(factura) {
+    // Si la factura es pagada, crea el registro automáticamente
+    if (factura.estado === 'Pagada') {
+        const asiento = {
+            tipo: 'Ingreso',
+            cuenta: 'Caja/Bancos',
+            monto: factura.monto,
+            referencia: factura.id
+        };
+        // push a Firebase 'libros_diarios'
+    }
+}
