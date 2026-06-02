@@ -303,3 +303,29 @@ export function generarPDF(factura) {
 
     doc.save(`Factura_${factura.cliente}.pdf`);
 }
+// js/ui.js
+
+export function activarActualizacionKPIs() {
+    // Nos suscribimos a las facturas desde Firebase
+    suscribirFacturas((facturas) => {
+        // Filtramos y sumamos los datos
+        const ingresos = facturas
+            .filter(f => f.estado === 'Pagada')
+            .reduce((sum, f) => sum + parseFloat(f.monto || 0), 0);
+            
+        const pendientes = facturas.filter(f => f.estado === 'Pendiente').length;
+        
+        // Formateador de moneda
+        const formatter = new Intl.NumberFormat('es-CO', { 
+            style: 'currency', currency: 'COP', notation: "compact", maximumFractionDigits: 1 
+        });
+
+        // Actualizamos el DOM (asegúrate de que los elementos tengan estos ID)
+        // Nota: Para que esto funcione, en tu HTML debes poner id="kpi-ingresos", etc.
+        const elIngresos = document.getElementById('kpi-ingresos');
+        const elPendientes = document.getElementById('kpi-pendientes');
+        
+        if (elIngresos) elIngresos.innerText = formatter.format(ingresos);
+        if (elPendientes) elPendientes.innerText = pendientes;
+    });
+}
