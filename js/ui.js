@@ -222,190 +222,46 @@ export async function inicializarConfiguracion(user) {
     procesarImagen('zone-logo', 'input-logo', 'preview-logo', 'text-logo', 'logo');
     procesarImagen('zone-firma', 'input-firma', 'preview-firma', 'text-firma', 'firma');
 }
-export function inicializarFacturacion() {
-    const listaFacturas = document.getElementById('lista-facturas');
-    if (!listaFacturas) return;
 
-    // Nos suscribimos a los cambios en tiempo real
-    suscribirFacturas((facturas) => {
-        listaFacturas.innerHTML = ''; // Limpiamos la lista actual
-
-        if (facturas.length === 0) {
-            listaFacturas.innerHTML = `
-                <div class="text-center p-8 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-2xl text-slate-400">
-                    <span class="material-symbols-outlined text-4xl mb-2">receipt_long</span>
-                    <p>No hay facturas registradas aún.</p>
-                </div>`;
-            return;
-        }
-
-        // Renderizamos cada factura
-        facturas.forEach(factura => {
-            const card = document.createElement('div');
-            // Estilos de tarjeta premium Apple/Android
-          card.className = "bg-white dark:bg-slate-800 p-4 md:p-5 rounded-2xl border border-slate-100 dark:border-slate-700/50 shadow-[0_2px_10px_rgb(0,0,0,0.02)] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 md:gap-4 hover:shadow-md transition-shadow cursor-pointer";            
-            // Colores por estado
-            let badgeClass = "bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300"; // Borrador
-            if (factura.estado === 'Pagada') badgeClass = "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400";
-            if (factura.estado === 'Pendiente') badgeClass = "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400";
-
-            // Formatear moneda (Pesos Colombianos)
-            const montoFormateado = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(factura.monto);
-
-            card.innerHTML = `
-    <div class="flex items-center gap-3 w-full sm:w-auto">
-        <div class="w-10 h-10 rounded-full bg-enterprise-50 dark:bg-enterprise-900/20 text-enterprise-600 flex items-center justify-center shrink-0">
-            <span class="material-symbols-outlined text-xl">person</span>
-        </div>
-        <div class="flex-1 min-w-0">
-            <!-- truncate evita que nombres muy largos rompan el diseño -->
-            <h4 class="font-bold text-slate-800 dark:text-slate-100 truncate">${factura.cliente}</h4>
-            <span class="text-[10px] md:text-xs font-semibold px-2 py-1 rounded-md ${badgeClass} inline-block mt-0.5">${factura.estado}</span>
-        </div>
-    </div>
-    <!-- En celular el texto se alinea a la izquierda con padding, en PC a la derecha -->
-<!-- Cambia pl-13 por pl-12 -->
-<div class="text-left sm:text-right w-full sm:w-auto pl-12 sm:pl-0 mt-2 sm:mt-0">
-<p class="font-extrabold text-lg text-slate-800 dark:text-slate-100">${montoFormateado}</p>
-    </div>
-`;
-           
-            listaFacturas.appendChild(card);
-        });
-    });
-}
-
-// js/ui.js (añadir al final)
-
+// --- DASHBOARD: KPIs + GRÁFICOS ---
 export function inicializarDashboard() {
-    // Comprobamos que el contenedor exista y que ApexCharts esté cargado
-    if (!document.getElementById('chart-flujo') || typeof ApexCharts === 'undefined') return;
+    // 1. Inyectar KPIs (Aquí podrías hacer un fetch a Firestore)
+    console.log("Dashboard: Renderizando KPIs dinámicos...");
 
-    // 1. Gráfico de Flujo (Área Suave)
-    const opcionesFlujo = {
-        series: [{
-            name: 'Ingresos',
-            data: [3100000, 4000000, 2800000, 5100000, 4200000, 6000000]
-        }],
-        chart: {
-            type: 'area',
-            height: 300,
-            toolbar: { show: false }, // Oculta menú feo de opciones
-            fontFamily: 'inherit',
-            background: 'transparent' // Respeta el modo oscuro
-        },
-        colors: ['#2563eb'], // Enterprise Blue
-        fill: {
-            type: 'gradient',
-            gradient: { shadeIntensity: 1, opacityFrom: 0.4, opacityTo: 0.05, stops: [0, 100] }
-        },
-        dataLabels: { enabled: false },
-        stroke: { curve: 'smooth', width: 3 },
-        xaxis: {
-            categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-            axisBorder: { show: false },
-            axisTicks: { show: false },
-            labels: { style: { colors: '#64748b' } }
-        },
-        yaxis: {
-            labels: { 
-                style: { colors: '#64748b' },
-                formatter: (value) => "$" + (value / 1000000).toFixed(1) + "M"
-            }
-        },
-        grid: { borderColor: 'rgba(148, 163, 184, 0.1)', strokeDashArray: 4 }
-    };
-
-    const chartFlujo = new ApexCharts(document.querySelector("#chart-flujo"), opcionesFlujo);
-    chartFlujo.render();
-
-    // 2. Gráfico de Estados (Dona)
-    const opcionesEstados = {
-        series: [65, 25, 10], // Pagadas, Pendientes, Borrador
-        labels: ['Pagadas', 'Pendientes', 'Borrador'],
-        chart: { type: 'donut', height: 280, fontFamily: 'inherit', background: 'transparent' },
-        colors: ['#10b981', '#f59e0b', '#cbd5e1'], // Verde, Naranja, Gris
-        plotOptions: {
-            pie: { donut: { size: '75%' } } // Dona más delgada y elegante
-        },
-        dataLabels: { enabled: false },
-        stroke: { show: false },
-        legend: { position: 'bottom', labels: { colors: '#64748b' } }
-    };
-
-    const chartEstados = new ApexCharts(document.querySelector("#chart-estados"), opcionesEstados);
-    chartEstados.render();
+    // 2. Renderizar Gráficos (ApexCharts)
+    if (document.getElementById('chart-flujo') && typeof ApexCharts !== 'undefined') {
+        const opcionesFlujo = { /* ... tus opciones actuales ... */ };
+        new ApexCharts(document.querySelector("#chart-flujo"), opcionesFlujo).render();
+        
+        const opcionesEstados = { /* ... tus opciones actuales ... */ };
+        new ApexCharts(document.querySelector("#chart-estados"), opcionesEstados).render();
+    }
 }
 
-
-// js/ui.js
-
-export function inicializarDashboard() {
-    // Aquí puedes cargar datos de Firebase
-    const kpis = [
-        { titulo: 'Ingresos', valor: '$4.5M', color: 'text-enterprise-600' },
-        { titulo: 'Egresos', valor: '$1.2M', color: 'text-red-500' },
-        { titulo: 'Pendientes', valor: '8', color: 'text-amber-500' },
-        { titulo: 'Margen', valor: '73%', color: 'text-emerald-500' }
-    ];
-    
-    // Si tuvieras un contenedor, inyectarías los datos aquí dinámicamente
-    console.log("Dashboard inicializado con:", kpis);
-}
-
-export function popularTablaFacturas(facturas) {
-    const contenedor = document.getElementById('lista-facturas');
-    if (!contenedor) return;
-    
-    // Generamos el HTML dinámico
-    contenedor.innerHTML = facturas.map(f => `
-        <div class="flex justify-between items-center bg-white/40 dark:bg-black/20 p-4 rounded-xl border border-white/5 shadow-sm">
-            <div>
-                <p class="font-bold text-sm">${f.cliente}</p>
-                <p class="text-[10px] text-slate-400">ID: ${f.id}</p>
-            </div>
-            <div class="font-bold text-enterprise-500">${f.monto}</div>
-        </div>
-    `).join('');
-}
-// js/ui.js - Lógica de automatización
+// --- FACTURACIÓN: LÓGICA + AUTOMATIZACIÓN ---
 export function inicializarFacturacion() {
     const form = document.getElementById('form-nueva-factura');
-    
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Captura de datos
-        const nuevaFactura = {
-            cliente: document.getElementById('factura-cliente').value,
-            monto: document.getElementById('factura-monto').value,
-            estado: document.getElementById('factura-estado').value,
-            fecha: new Date().toISOString()
-        };
+    const listaFacturas = document.getElementById('lista-facturas');
 
-        // Automatización: Aquí inyectarías a tu Firebase
-        // await db.collection('facturas').add(nuevaFactura);
-        
-        console.log("Automatización: Factura guardada y enviada a proceso contable", nuevaFactura);
-        
-        // Notificación de éxito
-        Toastify({
-            text: "Factura registrada y sincronizada",
-            backgroundColor: "#8b5cf6",
-        }).showToast();
+    // Suscripción en tiempo real (Firebase)
+    suscribirFacturas((facturas) => {
+        if (!listaFacturas) return;
+        listaFacturas.innerHTML = facturas.map(f => `...template card...`).join('');
     });
-}
 
-// Lógica para automatizar asientos contables
-function registrarAsientoContable(factura) {
-    // Si la factura es pagada, crea el registro automáticamente
-    if (factura.estado === 'Pagada') {
-        const asiento = {
-            tipo: 'Ingreso',
-            cuenta: 'Caja/Bancos',
-            monto: factura.monto,
-            referencia: factura.id
-        };
-        // push a Firebase 'libros_diarios'
-    }
+    // Envío de formulario
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+        const datos = { /* capturar de inputs */ };
+        
+        // Guardar en Firestore
+        const docRef = await guardarFactura(datos);
+        
+        // Automatización contable si es pagada
+        if(datos.estado === 'Pagada') {
+            await registrarAsientoContable(datos, docRef.id);
+        }
+
+        Toastify({ text: "Factura registrada", backgroundColor: "#8b5cf6" }).showToast();
+    };
 }
