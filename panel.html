@@ -640,5 +640,30 @@
         });
     </script>
 
-</body>
+<script type="module">
+        import { vigilarSesion } from './js/auth.js';
+        import {
+            activarNavegacionPill,
+            configurarAvatar,
+            inicializarConfiguracion,
+            inicializarFacturacion,
+            inicializarDashboard,
+            activarActualizacionKPIs 
+        } from './js/ui.js';
+
+        activarNavegacionPill();
+        
+        vigilarSesion(
+            (user) => {
+                configurarAvatar(user);
+                inicializarConfiguracion(user);
+                inicializarFacturacion();
+                inicializarDashboard();
+                activarActualizacionKPIs(); // Aquí es donde arranca la magia de los datos en vivo
+            },
+            () => window.location.href = 'index.html'
+        );
+    </script>
+
+</body> <!-- Cierre del body -->
 </html>
