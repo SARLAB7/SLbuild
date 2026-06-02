@@ -113,3 +113,18 @@ export function inicializarFacturacion() {
         }
     };
 }
+export function exportarReporteCSV(facturas) {
+    if (!facturas || facturas.length === 0) return notify("No hay datos para exportar", "error");
+
+    const csvContent = [
+        ["Cliente", "Monto", "Estado"],
+        ...facturas.map(f => [f.cliente, f.monto, f.estado])
+    ].map(e => e.join(",")).join("\n");
+
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.setAttribute("href", url);
+    a.setAttribute("download", `Reporte_Facturas_${new Date().toLocaleDateString()}.csv`);
+    a.click();
+}
