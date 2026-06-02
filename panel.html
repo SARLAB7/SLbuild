@@ -303,36 +303,37 @@
                 x-transition:leave-end="opacity-0"
                 class="card-glass">
                 <h1 class="text-2xl font-bold mb-6">Dashboard General</h1>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <div class="bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/40 dark:border-white/10 p-5 rounded-2xl shadow-sm">
-                        <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Ingresos del Mes</p>
-                        <h3 class="text-2xl font-extrabold text-enterprise-600 dark:text-enterprise-400 mt-1">$4.5M</h3>
-                    </div>
-                    <div class="bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/40 dark:border-white/10 p-5 rounded-2xl shadow-sm">
-                        <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Egresos del Mes</p>
-                        <h3 class="text-2xl font-extrabold text-red-500 dark:text-red-400 mt-1">$1.2M</h3>
-                    </div>
-                    <div class="bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/40 dark:border-white/10 p-5 rounded-2xl shadow-sm">
-                        <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Facturas Pendientes</p>
-                        <h3 class="text-2xl font-extrabold text-amber-500 dark:text-amber-400 mt-1">8</h3>
-                    </div>
-                    <div class="bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/40 dark:border-white/10 p-5 rounded-2xl shadow-sm">
-                        <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Margen Neto</p>
-                        <h3 class="text-2xl font-extrabold text-emerald-500 dark:text-emerald-400 mt-1">73%</h3>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <template x-for="stat in [{title: 'Ingresos', val: '$4.5M', trend: '+12%'}, {title: 'Egresos', val: '$1.2M', trend: '-2%'}, {title: 'Pendientes', val: '8', trend: '0%'}, {title: 'Margen', val: '73%', trend: '+5%'}]">
+            <div class="card-glass flex flex-col justify-between h-28 hover:border-enterprise-500/30 transition-all duration-300">
+                <span class="text-[10px] font-bold uppercase text-slate-400" x-text="stat.title"></span>
+                <div class="flex items-end justify-between">
+                    <span class="text-2xl font-black text-slate-800 dark:text-white" x-text="stat.val"></span>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-enterprise-500/10 text-enterprise-500" x-text="stat.trend"></span>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="col-span-1 lg:col-span-2 bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/40 dark:border-white/10 p-6 rounded-2xl shadow-sm">
-                        <p class="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-4">Flujo de Ingresos</p>
-                        <div id="chart-flujo"></div>
-                    </div>
-                    <div class="col-span-1 bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/40 dark:border-white/10 p-6 rounded-2xl shadow-sm">
-                        <p class="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-4">Estado de Facturas</p>
-                        <div id="chart-estados"></div>
-                    </div>
-                </div>
-            </section>
-
+            </div>
+        </template>
+    </div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 card-glass">
+            <h2 class="text-lg font-bold mb-4">Análisis de Flujo</h2>
+            <div id="chart-flujo"></div>
+        </div>
+        <div class="card-glass flex flex-col">
+            <h2 class="text-lg font-bold mb-4">Acciones Rápidas</h2>
+            <div class="flex flex-col gap-3">
+                <button onclick="document.getElementById('modal-factura').show()" class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/50 dark:hover:bg-white/5 transition-colors border border-transparent hover:border-enterprise-500/20">
+                    <span class="material-symbols-outlined text-enterprise-500">add_circle</span>
+                    <span class="text-sm font-medium">Nueva Factura</span>
+                </button>
+                <button class="flex items-center gap-3 p-3 rounded-xl hover:bg-white/50 dark:hover:bg-white/5 transition-colors border border-transparent hover:border-emerald-500/20">
+                    <span class="material-symbols-outlined text-emerald-500">cloud_download</span>
+                    <span class="text-sm font-medium">Exportar Reporte</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
             <!-- ===== SECCIÓN: FACTURACIÓN ===== -->
             <section
                 x-show="vistaActiva === 'sec-facturas'"
