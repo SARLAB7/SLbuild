@@ -336,3 +336,35 @@ export function inicializarDashboard() {
     const chartEstados = new ApexCharts(document.querySelector("#chart-estados"), opcionesEstados);
     chartEstados.render();
 }
+
+
+// js/ui.js
+
+export function inicializarDashboard() {
+    // Aquí puedes cargar datos de Firebase
+    const kpis = [
+        { titulo: 'Ingresos', valor: '$4.5M', color: 'text-enterprise-600' },
+        { titulo: 'Egresos', valor: '$1.2M', color: 'text-red-500' },
+        { titulo: 'Pendientes', valor: '8', color: 'text-amber-500' },
+        { titulo: 'Margen', valor: '73%', color: 'text-emerald-500' }
+    ];
+    
+    // Si tuvieras un contenedor, inyectarías los datos aquí dinámicamente
+    console.log("Dashboard inicializado con:", kpis);
+}
+
+export function popularTablaFacturas(facturas) {
+    const contenedor = document.getElementById('lista-facturas');
+    if (!contenedor) return;
+    
+    // Generamos el HTML dinámico
+    contenedor.innerHTML = facturas.map(f => `
+        <div class="flex justify-between items-center bg-white/40 dark:bg-black/20 p-4 rounded-xl border border-white/5 shadow-sm">
+            <div>
+                <p class="font-bold text-sm">${f.cliente}</p>
+                <p class="text-[10px] text-slate-400">ID: ${f.id}</p>
+            </div>
+            <div class="font-bold text-enterprise-500">${f.monto}</div>
+        </div>
+    `).join('');
+}
