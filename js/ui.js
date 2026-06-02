@@ -265,3 +265,18 @@ export function inicializarFacturacion() {
         Toastify({ text: "Factura registrada", backgroundColor: "#8b5cf6" }).showToast();
     };
 }
+export function inicializarCalculoAutomatico() {
+    const inputMonto = document.getElementById('factura-monto');
+    // Supongamos que añadiste un campo oculto o display para el IVA
+    // Si no lo tienes, podemos agregarlo al form en tu HTML
+    
+    inputMonto.addEventListener('input', (e) => {
+        const base = parseFloat(e.target.value) || 0;
+        const iva = base * 0.19; // IVA del 19% en Colombia
+        const total = base + iva;
+        
+        console.log(`Base: ${base}, IVA: ${iva}, Total: ${total}`);
+        // Aquí podrías actualizar un texto en pantalla:
+        // document.getElementById('display-total').innerText = total;
+    });
+}
