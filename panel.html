@@ -79,7 +79,11 @@
 
     <!-- ===================== HEADER ===================== -->
     <header class="h-16 flex items-center justify-between px-6 md:px-8 border-b border-slate-200/40 dark:border-white/5 sticky top-0 z-50 backdrop-blur-2xl bg-white/40 dark:bg-[#0a0a0f]/60 transition-colors duration-300 shadow-sm">
-        
+       
+        <div class="hidden md:flex items-center bg-slate-100/50 dark:bg-[#1a1a20] rounded-xl px-3 py-1.5 border border-slate-200/50 dark:border-white/5 mx-4">
+    <span class="material-symbols-outlined text-[18px] text-slate-400 mr-2">search</span>
+    <input type="text" placeholder="Buscar módulo..." class="bg-transparent border-none outline-none text-sm w-32 placeholder:text-slate-400 dark:text-white">
+</div>
         <!-- Logo + burger móvil -->
         <div class="flex items-center gap-4">
             <button
@@ -299,6 +303,12 @@
                 x-transition:leave-end="opacity-0"
                 class="card-glass">
                 <h1 class="text-2xl font-bold mb-6">Dashboard General</h1>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/40 dark:border-white/10 p-5 rounded-2xl shadow-sm hover:scale-[1.02] transition-transform">
+        <p class="text-[10px] font-bold text-slate-500 uppercase">Ingresos</p>
+        <h3 class="text-2xl font-black text-enterprise-600">$4.5M</h3>
+    </div>
+    </div>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                     <div class="bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/40 dark:border-white/10 p-5 rounded-2xl shadow-sm">
                         <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Ingresos del Mes</p>
@@ -346,6 +356,10 @@
                     </sl-button>
                 </div>
                 <div id="lista-facturas" class="grid gap-4"></div>
+                <div class="bg-white/40 dark:bg-black/20 p-4 rounded-2xl border border-dashed border-slate-300 dark:border-white/10 mb-6 flex gap-4">
+    <sl-input placeholder="Filtrar por cliente..." class="flex-1"></sl-input>
+    <sl-button variant="default">Descargar Reporte</sl-button>
+</div>
             </section>
 
             <!-- ===== SECCIÓN: EGRESOS ===== -->
