@@ -293,28 +293,26 @@
         <main class="main-content flex-1 overflow-y-auto p-4 md:p-8">
 
             <!-- ===== SECCIÓN: DASHBOARD ===== -->
-            <section
-                x-show="vistaActiva === 'sec-inicio'"
-                x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-y-3"
-                x-transition:enter-end="opacity-100 translate-y-0"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100"
-                x-transition:leave-end="opacity-0"
-                class="card-glass">
-                <h1 class="text-2xl font-bold mb-6">Dashboard General</h1>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <template x-for="stat in [{title: 'Ingresos', val: '$4.5M', trend: '+12%'}, {title: 'Egresos', val: '$1.2M', trend: '-2%'}, {title: 'Pendientes', val: '8', trend: '0%'}, {title: 'Margen', val: '73%', trend: '+5%'}]">
+            <section x-show="vistaActiva === 'sec-inicio'" class="space-y-6" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 translate-y-3"
+         x-transition:enter-end="opacity-100 translate-y-0">
+    
+    <h1 class="text-2xl font-bold">Dashboard General</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <template x-for="stat in [{id: 'kpi-ingresos', title: 'Ingresos', val: '$0', trend: '+0%'}, {id: 'kpi-egresos', title: 'Egresos', val: '$0', trend: '0%'}, {id: 'kpi-pendientes', title: 'Pendientes', val: '0', trend: '0%'}, {id: 'kpi-margen', title: 'Margen', val: '0%', trend: '0%'}]">
             <div class="card-glass flex flex-col justify-between h-28 hover:border-enterprise-500/30 transition-all duration-300">
                 <span class="text-[10px] font-bold uppercase text-slate-400" x-text="stat.title"></span>
                 <div class="flex items-end justify-between">
-                    <span class="text-2xl font-black text-slate-800 dark:text-white" x-text="stat.val"></span>
+                    <span :id="stat.id" class="text-2xl font-black text-slate-800 dark:text-white" x-text="stat.val"></span>
                     <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-enterprise-500/10 text-enterprise-500" x-text="stat.trend"></span>
                 </div>
             </div>
         </template>
     </div>
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 card-glass">
             <h2 class="text-lg font-bold mb-4">Análisis de Flujo</h2>
             <div id="chart-flujo"></div>
