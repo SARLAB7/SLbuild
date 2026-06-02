@@ -25,10 +25,7 @@ export async function guardarFactura(datos) {
     }
 }
 
-export async function cargarFacturas() {
-    console.log("Cargando facturas desde Firestore...");
-    return []; 
-}
+
 
 export async function guardarConfiguracion(uid, seccion, datos) {
     try {
@@ -73,4 +70,20 @@ export function suscribirFacturas(callback) {
         console.error("Error al cargar facturas:", error);
         notify("Error al cargar la lista de facturas", "error");
     });
+}
+// Automatización: Crea un registro contable al marcar como pagada
+export async function registrarAsientoContable(facturaId, monto, cliente) {
+    try {
+        const diarioRef = collection(db, "libro_diario");
+        await addDoc(diarioRef, {
+            fecha: serverTimestamp(),
+            descripcion: `Pago recibido: ${cliente}`,
+            monto: parseFloat(monto),
+            tipo: "Ingreso",
+            facturaId: facturaId
+        });
+        console.log("Asiento contable generado automáticamente.");
+    } catch (e) {
+        console.error("Error al automatizar asiento:", e);
+    }
 }
