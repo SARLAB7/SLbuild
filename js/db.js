@@ -9,24 +9,23 @@ import { notify } from './utils.js';
 
 export async function guardarFactura(datos) {
     try {
+        const base = parseFloat(datos.monto);
+        const iva = base * 0.19;
+        
         const facturasRef = collection(db, "facturas");
         await addDoc(facturasRef, {
             ...datos,
-            monto: parseFloat(datos.monto),
+            montoBase: base,
+            iva: iva,
+            montoTotal: base + iva, // Total calculado
             fechaCreacion: serverTimestamp(),
             estado: datos.estado || 'Pendiente'
         });
-        notify("Factura registrada en SACLAB con éxito");
         return true;
     } catch (e) {
-        console.error("Error al guardar factura:", e);
-        notify("Error al guardar en sistema", "error");
         return false;
     }
 }
-
-
-
 export async function guardarConfiguracion(uid, seccion, datos) {
     try {
         const userRef = doc(db, "usuarios", uid);
