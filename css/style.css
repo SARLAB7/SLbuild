@@ -63,3 +63,6 @@ h3, .font-mono-financial {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
     letter-spacing: -0.05em;
 }
+.card-glass {
+    @apply bg-white/60 dark:bg-[#0a0a0f]/80 backdrop-blur-2xl border border-white/20 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.05)] rounded-3xl p-6 transition-all duration-300;
+}
