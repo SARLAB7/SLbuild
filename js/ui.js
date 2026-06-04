@@ -98,6 +98,25 @@ export function activarActualizacionKPIs() {
    ========================================= */
 export function inicializarFacturacion() {
     const form = document.getElementById('form-nueva-factura');
+    const listaFacturas = document.getElementById('lista-facturas');
+
+    // 1. Esto es lo que hace que las facturas aparezcan solas
+    suscribirFacturas((facturas) => {
+        if (!listaFacturas) return;
+        
+        // Renderizamos las facturas en el contenedor
+        listaFacturas.innerHTML = facturas.map(f => `
+            <div class="card-glass flex justify-between items-center p-4">
+                <div>
+                    <h3 class="font-bold text-slate-800 dark:text-white">${f.cliente}</h3>
+                    <p class="text-sm text-slate-500">Estado: ${f.estado}</p>
+                </div>
+                <div class="font-black text-lg text-enterprise-500">$${parseFloat(f.monto).toLocaleString()}</div>
+            </div>
+        `).join('');
+    });
+
+    // 2. Lógica del formulario
     form.onsubmit = async (e) => {
         e.preventDefault();
         const datos = {
@@ -109,7 +128,7 @@ export function inicializarFacturacion() {
         if (exito) {
             document.getElementById('modal-factura').hide();
             form.reset();
-            notify("Factura registrada y sincronizada");
+            notify("Factura registrada");
         }
     };
 }
