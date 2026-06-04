@@ -2,7 +2,7 @@ import { auth } from './firebase-config.js';
 import { signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { notify } from './utils.js';
 import { activarNavegacionPill } from './ui.js';
-import { cargarFacturas } from './db.js';
+import { suscribirFacturas } from './db.js';
 
 // 1. EVENTOS DE LA INTERFAZ (Solo se ejecutan si los elementos existen, ej. en index.html)
 document.addEventListener('DOMContentLoaded', () => {
