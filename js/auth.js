@@ -52,22 +52,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // 2. EXPORTACIÓN DEL VIGILANTE
+// Asegúrate de que vigilarSesion no dependa de funciones de UI que no existen en el login
 export function vigilarSesion(encontrado, noEncontrado) {
     onAuthStateChanged(auth, async (user) => {
         const esPanel = window.location.pathname.includes('panel.html');
         
         if (user) {
-            // Si está logueado y está en el panel, inicializa UI
-            if (esPanel) {
-                activarNavegacionPill(); 
-                // Nota: Ya no llamamos a db.js aquí. 
-                // La inicialización de datos ocurre en el index.html vía inicializarFacturacion()
-            } else {
+            // Si el usuario ya está logueado y entra al index, mándalo al panel
+            if (!esPanel) {
                 window.location.href = 'panel.html';
             }
+            // Si le pasamos una función 'encontrado', ejecútala (esto es para el panel.html)
             if (encontrado) encontrado(user);
         } else {
-            // Si no está logueado y trata de entrar al panel, redirige al index
+            // Si no está logueado y está en el panel, mándalo al index
             if (esPanel) window.location.href = 'index.html';
             if (noEncontrado) noEncontrado();
         }
