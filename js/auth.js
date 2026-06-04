@@ -2,22 +2,21 @@ import { auth } from './firebase-config.js';
 import { signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { notify } from './utils.js';
 import { activarNavegacionPill } from './ui.js';
-import { suscribirFacturas } from './db.js';
 
-// 1. EVENTOS DE LA INTERFAZ (Solo se ejecutan si los elementos existen, ej. en index.html)
+// 1. EVENTOS DE LA INTERFAZ
 document.addEventListener('DOMContentLoaded', () => {
     const loginView = document.getElementById('login-view');
     const forgotView = document.getElementById('forgot-view');
     const loginForm = document.getElementById('login-form');
     const forgotForm = document.getElementById('forgot-form');
 
-    // Cambios de vista
+    // Navegación entre vistas de Login y Olvido de contraseña
     if (document.getElementById('link-forgot')) {
         document.getElementById('link-forgot').onclick = (e) => { e.preventDefault(); loginView.style.display = 'none'; forgotView.style.display = 'block'; };
         document.getElementById('link-back-login').onclick = (e) => { e.preventDefault(); forgotView.style.display = 'none'; loginView.style.display = 'block'; };
     }
 
-  // Login
+    // Login
     if (loginForm) {
         loginForm.onsubmit = async (e) => {
             e.preventDefault();
@@ -26,10 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
                 notify("Bienvenido a SACLAB");
-                
-                // ¡ESTA ES LA LÍNEA CLAVE QUE FALTABA!
                 setTimeout(() => window.location.href = "panel.html", 800);
-                
             } catch (error) {
                 console.error(error.code);
                 let msg = error.code === 'auth/wrong-password' ? "Contraseña incorrecta" : "Error de acceso";
@@ -39,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // Recuperar
+    // Recuperar Contraseña
     if (forgotForm) {
         forgotForm.onsubmit = async (e) => {
             e.preventDefault();
@@ -55,20 +51,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// 2. EXPORTACIÓN DEL VIGILANTE (VITAL PARA VITE Y PANEL.HTML)
+// 2. EXPORTACIÓN DEL VIGILANTE
 export function vigilarSesion(encontrado, noEncontrado) {
     onAuthStateChanged(auth, async (user) => {
         const esPanel = window.location.pathname.includes('panel.html');
+        
         if (user) {
+            // Si está logueado y está en el panel, inicializa UI
             if (esPanel) {
                 activarNavegacionPill(); 
-                await cargarFacturas(); 
+                // Nota: Ya no llamamos a db.js aquí. 
+                // La inicialización de datos ocurre en el index.html vía inicializarFacturacion()
             } else {
-                // Si está logueado pero está en el login, lo mandamos al panel
                 window.location.href = 'panel.html';
             }
             if (encontrado) encontrado(user);
         } else {
+            // Si no está logueado y trata de entrar al panel, redirige al index
             if (esPanel) window.location.href = 'index.html';
             if (noEncontrado) noEncontrado();
         }
